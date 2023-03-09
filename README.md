@@ -2,10 +2,10 @@
 
 ## Prerequisites
 
-PHP 7.4 or higher
-Composer
-Node.js
-npm
+* PHP 7.4 or higher
+* Composer
+* Node.js
+* npm
 
 ## Installation
 
