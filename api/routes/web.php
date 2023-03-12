@@ -19,6 +19,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/api/products/{page?}', [ProductController::class, 'index']);
-Route::get('/api/products/code/{code}', [ProductController::class, 'show']);
-Route::get('/api/products/search/{search}/{page?}', [ProductController::class, 'search']);
+Route::prefix('/api/products')->group(function () {
+    Route::get('/{page?}', [ProductController::class, 'index']);
+    Route::get('/code/{code}', [ProductController::class, 'show']);
+    Route::get('/search/{search}/{page?}', [ProductController::class, 'search']);
+});
