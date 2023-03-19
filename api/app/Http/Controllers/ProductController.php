@@ -10,6 +10,8 @@ class ProductController extends Controller
 {
     protected static $pageSize = 20;
 
+    protected static $fields = "code,product_name,brands,image_url";
+
     protected $client;
 
     public function __construct()
@@ -20,12 +22,13 @@ class ProductController extends Controller
         ]);
     }
 
-    public function index($page = 1)
+    public function index(int $page = 1)
     {
         $response = $this->client->request('GET', 'search', [
             'query' => [
                 'page_size' => self::$pageSize,
                 'page' => $page,
+                'fields' => self::$fields
             ],
         ]);
         
@@ -36,15 +39,30 @@ class ProductController extends Controller
 
     public function show(string $code)
     {
-        $response = $this->client->request('GET', "product/$code");
+        $response = $this->client->request('GET', "product/$code", [
+            'query' => [
+                'fields' => self::$fields
+            ]
+        ]);
 
         $product = $response->getBody()->getContents();
 
         return $product;
     }
 
-    public function search(string $search)
+    public function search(string $search, int $page = 1)
     {
-        // TODO
+        $response = $this->client->request('GET', "search", [
+            'query' => [
+                'categories_tags_fr' => $search,
+                'page_size' => self::$pageSize,
+                'page' => $page,
+                'fields' => self::$fields
+            ]
+        ]);
+
+        $product = $response->getBody()->getContents();
+
+        return $product;
     }
 }
