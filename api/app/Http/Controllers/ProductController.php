@@ -17,7 +17,7 @@ class ProductController extends Controller
     public function __construct()
     {
         $this->client = new Client([
-            'base_uri' => 'https://world.openfoodfacts.org/api/v2/',
+            'base_uri' => 'https://fr.openfoodfacts.org/api/v2/',
             'verify' => false
         ]);
     }

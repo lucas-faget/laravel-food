@@ -2,6 +2,7 @@
     import { Router, Route, Link } from "svelte-routing";
     import Home from "./routes/Home.svelte";
     import Products from "./routes/Products.svelte";
+    import Product from "./routes/Product.svelte";
 </script>
   
 <Router>
@@ -12,4 +13,5 @@
     
     <Route path="/" component="{Home}" />
     <Route path="/products" component="{Products}" />
+    <Route path="/products/:code" component="{Product}" />
 </Router>
