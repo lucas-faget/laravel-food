@@ -10,7 +10,7 @@
     let isLoading: boolean = false;
 
     onMount(async () => {
-        handleSearch();
+        // handleSearch();
     });
 
     const handleSearch = async () => {

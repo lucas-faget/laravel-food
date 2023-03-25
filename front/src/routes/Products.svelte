@@ -1,17 +1,20 @@
 <script lang="ts">
     import ProductCategories from '../lib/ProductCategories.svelte';
     import ProductCatalog from '../lib/ProductCatalog.svelte';
+    import { Category } from '../enums/Category';
+
+    let currentCategory: Category = Category.All_products;
 </script>
   
 <div class="products">
     <div class="header">
         <div class="title">
-            All Products
+            { currentCategory }
         </div>
     </div>
     <div class="catalog">
         <div class="categories">
-            <ProductCategories />
+            <ProductCategories bind:currentCategory={currentCategory} />
         </div>
         <div class="list">
             <ProductCatalog />
@@ -37,6 +40,7 @@
     }
 
     .title {
+        color: var(--color-green);
         font-size: 100px;
         font-family: 'Anton', sans-serif;
         text-transform: uppercase;

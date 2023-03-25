@@ -1,20 +1,21 @@
 <script lang="ts">
+    import { Category } from "../enums/Category";
+
+    const categories = Object.values(Category);
+
+    export let currentCategory: Category;
     
+    function handleClickCategory(category: Category) {
+        currentCategory = category;
+    }
 </script>
   
 <div class="product-categories">
-    <div class="category">
-        All Products
-    </div>
-    <div class="category">
-        Beverages
-    </div>
-    <div class="category">
-        Fruit and Vegetable
-    </div>
-    <div class="category">
-        Meat and Fish
-    </div>
+    {#each categories as category}
+        <div tabindex="0" on:click={() => handleClickCategory(category)} class={currentCategory === category ? "category color-green" : "category color-light-green"}>
+            { category }
+        </div>
+    {/each}
 </div>
 
 <style>
@@ -24,6 +25,19 @@
         padding-left: 20px;
         font-size: 40px;
         font-family: 'Anton', sans-serif;
+        text-transform: capitalize;
+    }
+
+    .category {
+        cursor: pointer;
+    }
+
+    .color-green {
+        color: var(--color-green);
+    }
+
+    .color-light-green {
+        color: var(--color-light-green);
     }
 </style>
   

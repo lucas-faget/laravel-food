@@ -40,12 +40,13 @@
     }
 
     .product-name {
+        color: var(--color-green);
         font-size: 18px;
         font-family: 'Anton', sans-serif;
     }
 
     .product-brand {
-
+        color: var(--color-light-green);
     }
 </style>
   

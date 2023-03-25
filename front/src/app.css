@@ -1,9 +1,15 @@
+:root {
+    --color-light: hsl(0, 0%, 95%);
+    --color-green: hsl(162, 42%, 25%);
+    --color-light-green: hsl(162, 42%, 25%, 0.5);
+}
+
 * {
     padding: 0;
     margin: 0;
 }
 
 body {
-    background-color: hsl(0, 0%, 95%);
+    background-color: var(--color-light);
     font-family: 'Roboto', sans-serif;
 }
