@@ -12,11 +12,11 @@
             { currentCategory }
         </div>
     </div>
-    <div class="catalog">
+    <div class="catalog-with-categories">
         <div class="categories">
             <ProductCategories bind:currentCategory={currentCategory} />
         </div>
-        <div class="list">
+        <div class="catalog">
             <ProductCatalog />
         </div>
     </div>
@@ -35,7 +35,7 @@
         width: 70%;
     }
 
-    .catalog {
+    .catalog-with-categories {
         display: flex;
     }
 
@@ -50,8 +50,26 @@
         width: 30%;
     }
 
-    .list {
+    .catalog {
         width: 70%;
+    }
+
+    @media (max-width: 800px) {
+        .header {
+            display: none;
+        }
+
+        .catalog-with-categories {
+            flex-direction: column;
+        }
+
+        .categories {
+            width: 100%;
+        }
+
+        .catalog {
+            width: 100%;
+        }
     }
 </style>
   

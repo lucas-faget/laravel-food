@@ -8,11 +8,20 @@
     function handleClickCategory(category: Category) {
         currentCategory = category;
     }
+
+    function handleKeyDown(event: KeyboardEvent, category: Category) {
+    if (event.key === 'Enter' || event.key === ' ') {
+        handleClickCategory(category);
+    }
+}
 </script>
   
 <div class="product-categories">
     {#each categories as category}
-        <div tabindex="0" on:click={() => handleClickCategory(category)} class={currentCategory === category ? "category color-green" : "category color-light-green"}>
+        <div 
+            on:click={() => handleClickCategory(category)} 
+            on:keydown={(event) => handleKeyDown(event, category)} 
+            class={currentCategory === category ? "category color-green" : "category color-light-green"}>
             { category }
         </div>
     {/each}
@@ -22,7 +31,7 @@
     .product-categories {
         display: flex;
         flex-direction: column;
-        padding-left: 20px;
+        padding-inline: 20px;
         font-size: 40px;
         font-family: 'Anton', sans-serif;
         text-transform: capitalize;
@@ -38,6 +47,12 @@
 
     .color-light-green {
         color: var(--color-light-green);
+    }
+
+    @media (max-width: 800px) {
+        .product-categories {
+            padding-block: 50px;
+        }
     }
 </style>
   

@@ -2,6 +2,8 @@
     --color-light: hsl(0, 0%, 95%);
     --color-green: hsl(162, 42%, 25%);
     --color-light-green: hsl(162, 42%, 25%, 0.5);
+
+    --mobile-max-width: 800px;
 }
 
 * {

@@ -5,7 +5,21 @@
     import { getFilteredProducts } from '../api';
     import ProductCard from './ProductCard.svelte';
 
+    const fakeProducts = () => {
+        let products = [];
+        for (let i=1 ; i<=20 ; i++) {
+            products.push({
+                code: i,
+                product_name: "Product name",
+                brands: "Brand",
+                image_url: "https://picsum.photos/200/300"
+            });
+        }
+        return products;
+    }
+
     let products = writable([]);
+    products.set(fakeProducts());
     let searchTerm: string = "";
     let isLoading: boolean = false;
 
@@ -14,15 +28,15 @@
     });
 
     const handleSearch = async () => {
-        isLoading = true;
-        let data: any;
-        if (searchTerm === "") {
-            data = await getProducts();
-        } else {
-            data = await getFilteredProducts(searchTerm);
-        }
-        products.set(data);
-        isLoading = false;
+        // isLoading = true;
+        // let data: any;
+        // if (searchTerm === "") {
+        //     data = await getProducts();
+        // } else {
+        //     data = await getFilteredProducts(searchTerm);
+        // }
+        // products.set(data);
+        // isLoading = false;
     }
 </script>
   
@@ -69,6 +83,14 @@
         display: flex;
         flex-wrap: wrap;
         gap: 50px 20px;
+        padding-right: 20px;
+    }
+
+    @media (max-width: 800px) {
+        .product-list {
+            justify-content: center;
+            padding-inline: 20px;
+        }
     }
 </style>
   

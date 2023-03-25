@@ -5,7 +5,7 @@
 <div class="product-card">
     <!-- <p>{product.code}</p> -->
     <div class="square">
-        <!-- <img class="product-image" src={product.image_url} alt={product.product_name} /> -->
+        <img class="product-image" src={product.image_url} alt={product.product_name} />
     </div>
     <div>
         <div class="product-name">
@@ -22,7 +22,7 @@
         display: flex;
         flex-direction: column;
         gap: 10px;
-        width: 300px;
+        width: 250px;
     }
 
     .square {
@@ -30,13 +30,13 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 400px;
-        width: 300px;
+        height: 350px;
+        width: 100%;
         border-radius: 20px;
     }
 
     .product-image {
-        width: 80px;
+        width: 150px;
     }
 
     .product-name {
