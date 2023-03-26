@@ -1,9 +1,11 @@
 <script lang="ts">
+    import InputText from './InputText.svelte';
+    import Button from './Button.svelte';
+    import ProductCard from './ProductCard.svelte';
     import { onMount } from 'svelte';
     import { writable } from 'svelte/store';
     import { getProducts } from '../api';
     import { getFilteredProducts } from '../api';
-    import ProductCard from './ProductCard.svelte';
 
     const fakeProducts = () => {
         let products = [];
@@ -24,10 +26,10 @@
     let isLoading: boolean = false;
 
     onMount(async () => {
-        // handleSearch();
+        // handleProductSearch();
     });
 
-    const handleSearch = async () => {
+    const handleProductSearch = async () => {
         // isLoading = true;
         // let data: any;
         // if (searchTerm === "") {
@@ -43,8 +45,12 @@
 <div class="product-catalog">
 
     <div class="search-filter">
-        <input type="text" bind:value={searchTerm} />
-        <button on:click={handleSearch}>Search</button>
+        <div>
+            <Button handleClick={handleProductSearch}>Search</Button>
+        </div>
+        <div class="input-text">
+            <InputText bind:searchTerm={searchTerm} />
+        </div>
     </div>
 
     {#if isLoading}
@@ -77,6 +83,12 @@
 
     .search-filter {
         display: flex;
+        gap: 20px;
+        padding-right: 50px;
+    }
+
+    .input-text {
+        flex: 1;
     }
 
     .product-list {
@@ -87,6 +99,10 @@
     }
 
     @media (max-width: 800px) {
+        .search-filter {
+            padding-inline: 20px;
+        }
+
         .product-list {
             justify-content: center;
             padding-inline: 20px;

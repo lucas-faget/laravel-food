@@ -36,7 +36,7 @@
     }
 
     .product-image {
-        width: 150px;
+        width: 100px;
     }
 
     .product-name {
