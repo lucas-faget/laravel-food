@@ -10,6 +10,7 @@
 <style scoped>
     .mobile-nav-toggle
     {
+        position: relative;
         display: none;
         width: 30px;
         aspect-ratio: 1/1;
