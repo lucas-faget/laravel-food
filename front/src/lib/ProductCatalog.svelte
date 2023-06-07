@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { Link } from "svelte-routing";
     import InputText from './InputText.svelte';
     import Button from './Button.svelte';
     import ProductCard from './ProductCard.svelte';
@@ -45,7 +46,9 @@
         {#if products && $products.length !== 0}
             <div class="product-list">
                 {#each $products as product}
-                    <ProductCard product={product} />
+                    <Link to={`/products/${product.code}`} style="text-decoration: none;">
+                        <ProductCard product={product} />
+                    </Link>
                 {/each}
             </div>
         {:else}
