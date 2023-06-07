@@ -86,7 +86,7 @@
     }
 
     .nav-light {
-        background-color: var(--color-light);
+        background-color: transparent;
     }
 
     .nav-wide {

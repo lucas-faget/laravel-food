@@ -24,6 +24,7 @@
 
 <style>
     .products {
+        padding-top: 100px;
         display: flex;
         flex-direction: column;
     }
