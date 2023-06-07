@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { getProduct } from '../api';
+    import { getProduct, fakeProducts } from '../api';
 
     export let code: number;
 
@@ -10,6 +10,8 @@
         const data = await getProduct(code);
         if (data) {
             product = data;
+        } else {
+            product = fakeProducts(1).shift();
         }
     });
 </script>

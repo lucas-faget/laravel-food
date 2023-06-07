@@ -4,24 +4,10 @@
     import ProductCard from './ProductCard.svelte';
     import { onMount } from 'svelte';
     import { writable } from 'svelte/store';
-    import { getProducts } from '../api';
-    import { getFilteredProducts } from '../api';
-
-    const fakeProducts = () => {
-        let products = [];
-        for (let i=1 ; i<=20 ; i++) {
-            products.push({
-                code: i,
-                product_name: "Product name",
-                brands: "Brand",
-                image_url: "https://picsum.photos/200/300"
-            });
-        }
-        return products;
-    }
+    import { getProducts, getFilteredProducts, fakeProducts } from '../api';
 
     let products = writable([]);
-    products.set(fakeProducts());
+    products.set(fakeProducts(20));
     let searchTerm: string = "";
     let isLoading: boolean = false;
 

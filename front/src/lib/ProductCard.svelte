@@ -4,6 +4,9 @@
   
 <div class="product-card">
     <!-- <p>{product.code}</p> -->
+    <div class="icon">
+        <img src="icons/heart.svg" alt="hearth" />
+    </div>
     <div class="square">
         <img class="product-image" src={product.image_url} alt={product.product_name} />
     </div>
@@ -19,10 +22,17 @@
 
 <style>
     .product-card {
+        position: relative;
         display: flex;
         flex-direction: column;
         gap: 10px;
         width: 250px;
+    }
+
+    .icon {
+        position: absolute;
+        top: 10px;
+        right: 10px;
     }
 
     .square {
