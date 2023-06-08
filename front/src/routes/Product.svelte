@@ -2,6 +2,7 @@
     import { onMount } from 'svelte';
     import { getProduct, fakeProducts } from '../api';
     import List from '../lib/List.svelte';
+    import Table from '../lib/Table.svelte';
 
     export let code: number;
 
@@ -40,6 +41,15 @@
             </div>
         </div>
         <div class="bottom">
+            <Table header={
+                [product.product_name, "100g", "0g"]
+            } rows={[
+                ["Protein", "20g", "0g"],
+                ["Carbohydrates", "20g", "0g"],
+                ["Lipids", "20g", "0g"]
+            ]}></Table>
+        </div>
+        <div class="bottom">
             <List title="composition" items={["water", "protein", "sugar", "salt",]}></List>
         </div>
     {:else}
@@ -61,6 +71,7 @@
     .product {
         display: flex;
         flex-direction: column;
+        padding-bottom: min(100px, 10vw);
     }
 
     .top {
@@ -149,6 +160,7 @@
     }
 
     .bottom {
-        padding: min(100px, 10vw);
+        padding-top: min(100px, 10vw);
+        padding-inline: min(100px, 10vw);
     }
 </style>
