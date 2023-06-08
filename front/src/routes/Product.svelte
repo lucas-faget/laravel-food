@@ -1,6 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { getProduct, fakeProducts } from '../api';
+    import List from '../lib/List.svelte';
 
     export let code: number;
 
@@ -16,9 +17,9 @@
     });
 </script>
 
-<div>
+<div class="product">
     {#if product}
-        <div class="product">
+        <div class="top">
             <div class="left">
                 <img class="product-image" src={product.image_url} alt={product.product_name} />
             </div>
@@ -38,13 +39,31 @@
                 </div>
             </div>
         </div>
+        <div class="bottom">
+            <List title="composition" items={["water", "protein", "sugar", "salt",]}></List>
+        </div>
     {:else}
-        <img src="/loading-icon.gif" alt="Loading icon" />
+        <div class="loading-icon">
+            <img src="/loading-icon.gif" alt="Loading icon" style="height: 100%; width: 100%;"/>
+        </div>
     {/if}
 </div>
 
 <style>
+    .loading-icon {
+        position: fixed;
+        top: calc(50vh - 50px);
+        left: calc(50vw - 50px);
+        height: 100px;
+        width: 100px;
+    }
+
     .product {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .top {
         display: flex;
     }
 
@@ -109,7 +128,7 @@
     }
 
     @media only screen and (max-width: 800px) {
-        .product {
+        .top {
             flex-direction: column;
             margin-top: 100px;
         }
@@ -127,5 +146,9 @@
         .right {
             padding-block: calc(100px + 5vw);
         }
+    }
+
+    .bottom {
+        padding: min(100px, 10vw);
     }
 </style>

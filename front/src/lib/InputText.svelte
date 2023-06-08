@@ -22,4 +22,3 @@
         border-bottom: 5px solid var(--color-green);
     }
 </style>
-  

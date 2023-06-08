@@ -41,7 +41,9 @@
     </div>
 
     {#if isLoading}
-        <img class="loading-icon" src="/loading-icon.gif" alt="Loading icon" />
+        <div class="loading-icon">
+            <img src="/loading-icon.gif" alt="Loading icon" style="height: 100%; width: 100%;"/>
+        </div>
     {:else}
         {#if products && $products.length !== 0}
             <div class="product-list">
@@ -58,6 +60,14 @@
 </div>
 
 <style>
+    .loading-icon {
+        position: fixed;
+        top: calc(50vh - 50px);
+        left: calc(50vw - 50px);
+        height: 100px;
+        width: 100px;
+    }
+
     .product-catalog {
         display: flex;
         flex-direction: column;
@@ -98,4 +108,3 @@
         }
     }
 </style>
-  

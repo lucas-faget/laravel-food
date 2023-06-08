@@ -12,6 +12,10 @@
     box-sizing: border-box;
 }
 
+h1, h2, h3 {
+    font-weight: normal;
+}
+
 body {
     background-color: var(--color-light);
     /* padding-top: 100px; */

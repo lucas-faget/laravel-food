@@ -24,4 +24,3 @@
         background-color: var(--color-light-green);
     }
 </style>
-  
