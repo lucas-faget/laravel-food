@@ -4,6 +4,7 @@
     import Product from "../routes/Product.svelte";
     import Products from "../routes/Products.svelte";
     import MobileNavToggle from "./MobileNavToggle.svelte";
+    import SvgIcon from "./SvgIcon.svelte";
   
     const maxMobileNavViewportWidth: number = 600;
     let viewportHeight: number = window.innerHeight || document.documentElement.clientHeight;
@@ -51,13 +52,16 @@
         
         <ul aria-expanded={isMobileNavOpen}>
             <Link to="/" style={isMobileNavVisible ? "text-decoration: none;" : "text-decoration: none; height: 100%;"}>
-                <li>Home</li>
+                <li>
+                    <SvgIcon name="home"></SvgIcon>
+                    <span>Home</span>
+                </li>
             </Link>
             <Link to="/products" style={isMobileNavVisible ? "text-decoration: none;" : "text-decoration: none; height: 100%;"}>
-                <li>Products</li>
-            </Link>
-            <Link to="/" style={isMobileNavVisible ? "text-decoration: none;" : "text-decoration: none; height: 100%;"}>
-                <li>Home</li>
+                <li>
+                    <SvgIcon name="sort"></SvgIcon>
+                    <span>Products</span>
+                </li>
             </Link>
         </ul>
     </nav>
@@ -111,6 +115,7 @@
     nav ul li {
         display: flex;
         align-items: center;
+        gap: 10px;
         border-radius: 20px 0 20px 0;
         font-size: 20px;
         font-family: 'Anton', sans-serif;

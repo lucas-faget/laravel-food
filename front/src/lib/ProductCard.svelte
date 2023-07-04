@@ -1,11 +1,13 @@
 <script lang="ts">
+    import SvgIcon from "./SvgIcon.svelte";
+
     export let product;
 </script>
   
 <div class="product-card">
     <!-- <p>{product.code}</p> -->
-    <div class="icon">
-        <img src="icons/heart.svg" alt="hearth" />
+    <div class="favorite-icon">
+        <SvgIcon name="favorite"></SvgIcon>
     </div>
     <div class="square">
         <img class="product-image" src={product.image_url} alt={product.product_name} />
@@ -29,7 +31,7 @@
         width: 250px;
     }
 
-    .icon {
+    .favorite-icon {
         position: absolute;
         top: 10px;
         right: 10px;

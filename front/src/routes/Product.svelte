@@ -3,10 +3,15 @@
     import { getProduct, fakeProducts } from '../api';
     import List from '../lib/List.svelte';
     import Table from '../lib/Table.svelte';
+    import SvgIcon from '../lib/SvgIcon.svelte';
 
     export let code: number;
 
+    const Unit = 'g';
+
     let product = null;
+    let quantity = 0;
+    $: quantityString = (quantity ?? 0) + Unit;
 
     onMount(async () => {
         const data = await getProduct(code);
@@ -37,12 +42,18 @@
                     <p>
                         Food is any substance consumed by an organism for nutritional support. Food is usually of plant, animal, or fungal origin, and contains essential nutrients, such as carbohydrates, fats, proteins, vitamins, or minerals.
                     </p>
+                    <input class="input" type="number" placeholder="Quantity" bind:value="{quantity}" />
+                    <input class="input" type="date" />
+                    <button class="button">
+                        <span>Add intake</span>
+                        <SvgIcon name="add"></SvgIcon>
+                    </button>
                 </div>
             </div>
         </div>
         <div class="bottom">
             <Table header={
-                [product.product_name, "100g", "0g"]
+                [product.product_name, "100g", quantityString]
             } rows={[
                 ["Protein", "20g", "0g"],
                 ["Carbohydrates", "20g", "0g"],
@@ -136,6 +147,52 @@
         border: 1px solid var(--color-green);
         border-radius: 20px;
         font-size: 15px;
+    }
+
+    .input {
+        color: #000;
+        background-color: #fff;
+        height: 50px;
+        padding-inline: 20px;
+        border: none;
+        font-size: 16px;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .input::placeholder {
+        color: var(--color-light-green);
+    }
+
+    .input:focus {
+        outline: 2px solid var(--color-green);
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .input[type="date"]::-webkit-calendar-picker-indicator {
+        font-size: 24px;
+    }
+
+    .button {
+        color: var(--color-light);
+        background-color: var(--color-green);
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: none;
+        border-radius: 50px;
+        font-size: 20px;
+        font-family: 'Anton', sans-serif;
+        cursor: pointer;
+    }
+
+    .button:hover {
+        background-color: var(--color-light-green);
     }
 
     @media only screen and (max-width: 800px) {

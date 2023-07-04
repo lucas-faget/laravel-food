@@ -25,6 +25,7 @@
         text-align: left;
         font-size: 20px;
         border-collapse: collapse;
+        table-layout: fixed;
     }
 
     tr {

@@ -1,9 +1,16 @@
 <script lang="ts">
+    import SvgIcon from "./SvgIcon.svelte";
+
+    export let text: string;
     export let handleClick: () => void;
+    export let iconName: string|null = null;
 </script>
 
 <button class="button" on:click={handleClick}>
-    <slot></slot>
+    <span>{text}</span>
+    {#if iconName}
+        <SvgIcon name={iconName}></SvgIcon>
+    {/if}
 </button>
   
 <style>
@@ -12,6 +19,9 @@
         background-color: var(--color-green);
         height: 50px;
         padding-inline: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
         border: none;
         outline: none;
         font-size: 20px;
