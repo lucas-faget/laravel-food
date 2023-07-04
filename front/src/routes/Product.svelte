@@ -4,10 +4,13 @@
     import List from '../lib/List.svelte';
     import Table from '../lib/Table.svelte';
     import SvgIcon from '../lib/SvgIcon.svelte';
+    import Button from '../lib/Button.svelte';
 
     export let code: number;
 
     const Unit = 'g';
+    const MinQuantity = 0;
+    const MaxQuantity = 10000;
 
     let product = null;
     let quantity = 0;
@@ -42,7 +45,17 @@
                     <p>
                         Food is any substance consumed by an organism for nutritional support. Food is usually of plant, animal, or fungal origin, and contains essential nutrients, such as carbohydrates, fats, proteins, vitamins, or minerals.
                     </p>
-                    <input class="input" type="number" placeholder="Quantity" bind:value="{quantity}" />
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <input class="input" type="number" min="{MinQuantity}" max="{MaxQuantity}" placeholder="Quantity" bind:value="{quantity}" />
+                        <div style="display: flex; gap: 5px; flex: 1;">
+                            <Button text="-100g" handleClick={() => {quantity -= 100}}></Button>
+                            <Button text="-10g"  handleClick={() => {quantity -= 10 }}></Button>
+                            <Button text="-1g"   handleClick={() => {quantity -= 1}}></Button>
+                            <Button text="+1g"   handleClick={() => {quantity += 1}}></Button>
+                            <Button text="+10g"  handleClick={() => {quantity += 10}}></Button>
+                            <Button text="+100g" handleClick={() => {quantity += 100}}></Button>
+                        </div>
+                    </div>
                     <input class="input" type="date" />
                     <button class="button">
                         <span>Add intake</span>

@@ -33,7 +33,7 @@
 
     <div class="search-filter">
         <div>
-            <Button text="Search" handleClick={handleProductSearch} iconName="search"></Button>
+            <Button text="SEARCH" handleClick={handleProductSearch} iconName="search"></Button>
         </div>
         <div class="input-text">
             <InputText bind:searchTerm={searchTerm} />

@@ -26,7 +26,6 @@
         outline: none;
         font-size: 20px;
         font-family: 'Anton', sans-serif;
-        text-transform: uppercase;
         cursor: pointer;
     }
 
