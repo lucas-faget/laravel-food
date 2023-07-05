@@ -5,11 +5,30 @@
     const dispatch = createEventDispatcher();
 
     const MinPage = 1;
-    const MaxPage = 100;
-    let pageList: number[] = [1,2,3,4,5];
+    const MaxPage = 10;
 
     export let currentPage: number;
     let previousPage: number;
+
+    const pageRange: number = 2;
+    let pageList: number[];
+
+    $: {
+        let start = currentPage - pageRange;
+        let end = currentPage + pageRange;
+
+        if (start < MinPage) {
+            start = MinPage;
+            end = Math.min(start + 4, MaxPage);
+        }
+
+        if (end > MaxPage) {
+            end = MaxPage;
+            start = Math.max(end - 4, MinPage);
+        }
+
+        pageList = Array.from({ length: end - start + 1 }, (_, index) => start + index);
+    }
 
     onMount(() => {
         previousPage = currentPage;
@@ -47,7 +66,3 @@
         on:keypress={() => setCurrentPage(currentPage + 1)}
     ><SvgIcon name="chevron_right"></SvgIcon></div>
 </div>
-
-<style>
-    
-</style>
