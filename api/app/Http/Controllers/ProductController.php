@@ -8,7 +8,7 @@ use GuzzleHttp\Client;
 
 class ProductController extends Controller
 {
-    protected static $pageSize = 20;
+    protected static $pageSize = 12;
 
     protected static $fields = "code,product_name,brands,image_url";
 

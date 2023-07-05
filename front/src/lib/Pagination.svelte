@@ -1,35 +1,50 @@
 <script lang="ts">
+    import { afterUpdate, createEventDispatcher, onMount } from "svelte";
     import SvgIcon from "./SvgIcon.svelte";
 
-    const MinPageIndex = 1;
-    const MaxPageIndex = 100;
-    let pageIndexList: number[] = [1,2,3,4,5];
+    const dispatch = createEventDispatcher();
 
-    let currentPageIndex: number = 1;
+    const MinPage = 1;
+    const MaxPage = 100;
+    let pageList: number[] = [1,2,3,4,5];
 
-    function setCurrentPageIndex(pageIndex: number): void {
-        if (pageIndex >= MinPageIndex && pageIndex <= MaxPageIndex)
-            currentPageIndex = pageIndex;
+    export let currentPage: number;
+    let previousPage: number;
+
+    onMount(() => {
+        previousPage = currentPage;
+    });
+
+    function setCurrentPage(page: number): void {
+        if (page >= MinPage && page <= MaxPage)
+            currentPage = page;
     }
+
+    afterUpdate(() => {
+        if (currentPage !== previousPage) {
+            previousPage = currentPage;
+            dispatch("pageChanged");
+        }
+    });
 </script>
 
 <div class="pagination flex" style="gap: 5px;">
     <div
         class="button-light"
-        on:click={() => setCurrentPageIndex(currentPageIndex - 1)}
-        on:keypress={() => setCurrentPageIndex(currentPageIndex - 1)}
+        on:click={() => setCurrentPage(currentPage - 1)}
+        on:keypress={() => setCurrentPage(currentPage - 1)}
     ><SvgIcon name="chevron_left"></SvgIcon></div>
-    {#each pageIndexList as pageIndex}
+    {#each pageList as page}
         <div
-            class={pageIndex === currentPageIndex ? "button-light" : "button"}
-            on:click={() => setCurrentPageIndex(pageIndex)}
-            on:keypress={() => setCurrentPageIndex(pageIndex)}
-        >{pageIndex}</div>
+            class={page === currentPage ? "button-light" : "button"}
+            on:click={() => setCurrentPage(page)}
+            on:keypress={() => setCurrentPage(page)}
+        >{page}</div>
     {/each}
     <div
         class="button-light"
-        on:click={() => setCurrentPageIndex(currentPageIndex + 1)}
-        on:keypress={() => setCurrentPageIndex(currentPageIndex + 1)}
+        on:click={() => setCurrentPage(currentPage + 1)}
+        on:keypress={() => setCurrentPage(currentPage + 1)}
     ><SvgIcon name="chevron_right"></SvgIcon></div>
 </div>
 

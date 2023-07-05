@@ -10,6 +10,7 @@
 
     let products = writable([]);
     //products.set(fakeProducts(20));
+    let currentPage: number = 1;
     let searchTerm: string = "";
     let isLoading: boolean = false;
 
@@ -21,12 +22,16 @@
         isLoading = true;
         let data: any;
         if (searchTerm === "") {
-            data = await getProducts();
+            data = await getProducts(currentPage);
         } else {
-            data = await getFilteredProducts(searchTerm);
+            data = await getFilteredProducts(searchTerm, currentPage);
         }
         products.set(data);
         isLoading = false;
+    }
+
+    function handlePageChange() {
+        handleProductSearch();
     }
 </script>
   
@@ -61,14 +66,12 @@
         {/if}
     {/if}
 
-    <Pagination></Pagination>
+    <Pagination bind:currentPage={currentPage} on:pageChanged={handlePageChange}></Pagination>
 </div>
 
 <style>
     .loading-icon {
-        position: fixed;
-        top: calc(50vh - 50px);
-        left: calc(50vw - 50px);
+        position: relative;
         height: 100px;
         width: 100px;
     }

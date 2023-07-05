@@ -4,7 +4,6 @@
     import List from '../lib/List.svelte';
     import Table from '../lib/Table.svelte';
     import SvgIcon from '../lib/SvgIcon.svelte';
-    import Button from '../lib/Button.svelte';
 
     export let code: number;
 
