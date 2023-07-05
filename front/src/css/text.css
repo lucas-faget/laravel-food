@@ -1,0 +1,22 @@
+h1, h2, h3 {
+    font-weight: normal;
+}
+
+h2 {
+    color: var(--color-green);
+    font-size: 50px;
+    font-family: 'Anton', sans-serif;
+    text-transform: uppercase;
+}
+
+h3 {
+    color: var(--color-light-green);
+    font-size: 30px;
+    font-family: 'Anton', sans-serif;
+    text-transform: capitalize;
+}
+
+p {
+    color: var(--color-green);
+    font-size: 20px;
+}

@@ -1,3 +1,7 @@
+@import "../src/css/text.css";
+@import "../src/css/flex.css";
+@import "../src/css/components.css";
+
 :root {
     --color-light: hsl(0, 0%, 95%);
     --color-green: hsl(162, 42%, 25%);
@@ -12,12 +16,7 @@
     box-sizing: border-box;
 }
 
-h1, h2, h3 {
-    font-weight: normal;
-}
-
 body {
     background-color: var(--color-light);
-    /* padding-top: 100px; */
     font-family: 'Roboto', sans-serif;
 }

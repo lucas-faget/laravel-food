@@ -33,10 +33,10 @@
                 <img class="product-image" src={product.image_url} alt={product.product_name} />
             </div>
             <div class="right">
-                <div class="product-details">
-                    <div class="product-name">
+                <div class="flex flex-column" style="gap: 30px;">
+                    <div class="flex flex-column">
                         <h2>{product.product_name}</h2>
-                        <p class="brand">{product.brands}</p>
+                        <h3>{product.brands}</h3>
                     </div>
                     <div class="labels">
                         <div class="label">Product</div>
@@ -45,19 +45,17 @@
                     <p>
                         Food is any substance consumed by an organism for nutritional support. Food is usually of plant, animal, or fungal origin, and contains essential nutrients, such as carbohydrates, fats, proteins, vitamins, or minerals.
                     </p>
-                    <div style="display: flex; flex-direction: column; gap: 5px;">
-                        <input class="input" type="number" min="{MinQuantity}" max="{MaxQuantity}" placeholder="Quantity" bind:value="{quantity}" />
-                        <div style="display: flex; gap: 5px; flex: 1;">
-                            <Button text="-100g" handleClick={() => {quantity -= 100}}></Button>
-                            <Button text="-10g"  handleClick={() => {quantity -= 10 }}></Button>
-                            <Button text="-1g"   handleClick={() => {quantity -= 1}}></Button>
-                            <Button text="+1g"   handleClick={() => {quantity += 1}}></Button>
-                            <Button text="+10g"  handleClick={() => {quantity += 10}}></Button>
-                            <Button text="+100g" handleClick={() => {quantity += 100}}></Button>
-                        </div>
+                    <div class="flex" style="gap: 1px;">
+                        <button class="button justify-center flex-1" on:click={() => {quantity -= 100}}>-100</button>
+                        <button class="button justify-center flex-1" on:click={() => {quantity -= 10 }}>-10</button>
+                        <button class="button justify-center flex-1" on:click={() => {quantity -= 1}}>-1</button>
+                        <input class="input justify-center flex-1" type="number" min="{MinQuantity}" max="{MaxQuantity}" placeholder="Quantity" bind:value="{quantity}" />
+                        <button class="button justify-center flex-1" on:click={() => {quantity += 1}}>+1</button>
+                        <button class="button justify-center flex-1" on:click={() => {quantity += 10}}>+10</button>
+                        <button class="button justify-center flex-1" on:click={() => {quantity += 100}}>+100</button>
                     </div>
                     <input class="input" type="date" />
-                    <button class="button">
+                    <button class="button justify-between" style="border-radius: 50px;">
                         <span>Add intake</span>
                         <SvgIcon name="add"></SvgIcon>
                     </button>
@@ -116,96 +114,6 @@
 
     .right {
         padding-inline: min(100px, 10vw);
-    }
-
-    .product-details {
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
-    }
-
-    .product-details > p {
-        color: var(--color-green);
-        font-size: 20px;
-    }
-
-    .product-name {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .product-name > h2 {
-        color: var(--color-green);
-        font-size: 50px;
-        font-family: 'Anton', sans-serif;
-        text-transform: uppercase;
-    }
-
-    .product-name > .brand {
-        color: var(--color-light-green);
-        font-size: 30px;
-        font-family: 'Anton', sans-serif;
-        text-transform: capitalize;
-    }
-
-    .labels {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-
-    .label {
-        color: var(--color-green);
-        padding: 10px 20px;
-        border: 1px solid var(--color-green);
-        border-radius: 20px;
-        font-size: 15px;
-    }
-
-    .input {
-        color: #000;
-        background-color: #fff;
-        height: 50px;
-        padding-inline: 20px;
-        border: none;
-        font-size: 16px;
-        font-family: 'Roboto', sans-serif;
-    }
-
-    .input::placeholder {
-        color: var(--color-light-green);
-    }
-
-    .input:focus {
-        outline: 2px solid var(--color-green);
-    }
-
-    input[type="number"]::-webkit-inner-spin-button,
-    input[type="number"]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-
-    .input[type="date"]::-webkit-calendar-picker-indicator {
-        font-size: 24px;
-    }
-
-    .button {
-        color: var(--color-light);
-        background-color: var(--color-green);
-        padding: 10px 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border: none;
-        border-radius: 50px;
-        font-size: 20px;
-        font-family: 'Anton', sans-serif;
-        cursor: pointer;
-    }
-
-    .button:hover {
-        background-color: var(--color-light-green);
     }
 
     @media only screen and (max-width: 800px) {

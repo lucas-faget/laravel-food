@@ -5,9 +5,9 @@
 
 <div class="list">
     {#if title}
-        <h3 class="list-title">
+        <span class="list-title">
             {title}
-        </h3>
+        </span>
     {/if}
     <ul>
         {#each items as item}

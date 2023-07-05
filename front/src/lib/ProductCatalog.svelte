@@ -1,11 +1,12 @@
 <script lang="ts">
     import { Link } from "svelte-routing";
-    import InputText from './InputText.svelte';
+    import SearchBar from './SearchBar.svelte';
     import Button from './Button.svelte';
     import ProductCard from './ProductCard.svelte';
     import { onMount } from 'svelte';
     import { writable } from 'svelte/store';
     import { getProducts, getFilteredProducts, fakeProducts } from '../api';
+  import SvgIcon from "./SvgIcon.svelte";
 
     let products = writable([]);
     products.set(fakeProducts(20));
@@ -33,10 +34,13 @@
 
     <div class="search-filter">
         <div>
-            <Button text="SEARCH" handleClick={handleProductSearch} iconName="search"></Button>
+            <button class="button flex" style="height: 50px; gap: 8px;" on:click={handleProductSearch}>
+                <span>SEARCH</span>
+                <SvgIcon name="search"></SvgIcon>
+            </button>
         </div>
-        <div class="input-text">
-            <InputText bind:searchTerm={searchTerm} />
+        <div class="flex-1">
+            <SearchBar bind:searchTerm={searchTerm}></SearchBar>
         </div>
     </div>
 
@@ -84,10 +88,6 @@
         display: flex;
         gap: 20px;
         padding-right: 50px;
-    }
-
-    .input-text {
-        flex: 1;
     }
 
     .product-list {
