@@ -7,7 +7,7 @@
     <div></div>
 </div>
 
-<style scoped>
+<style>
     .mobile-nav-toggle
     {
         position: relative;

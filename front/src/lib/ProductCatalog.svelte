@@ -1,37 +1,36 @@
 <script lang="ts">
     import { Link } from "svelte-routing";
     import SearchBar from './SearchBar.svelte';
-    import Button from './Button.svelte';
     import ProductCard from './ProductCard.svelte';
     import { onMount } from 'svelte';
     import { writable } from 'svelte/store';
     import { getProducts, getFilteredProducts, fakeProducts } from '../api';
-  import SvgIcon from "./SvgIcon.svelte";
+    import SvgIcon from "./SvgIcon.svelte";
+    import Pagination from "./Pagination.svelte";
 
     let products = writable([]);
-    products.set(fakeProducts(20));
+    //products.set(fakeProducts(20));
     let searchTerm: string = "";
     let isLoading: boolean = false;
 
     onMount(async () => {
-        // handleProductSearch();
+        handleProductSearch();
     });
 
     const handleProductSearch = async () => {
-        // isLoading = true;
-        // let data: any;
-        // if (searchTerm === "") {
-        //     data = await getProducts();
-        // } else {
-        //     data = await getFilteredProducts(searchTerm);
-        // }
-        // products.set(data);
-        // isLoading = false;
+        isLoading = true;
+        let data: any;
+        if (searchTerm === "") {
+            data = await getProducts();
+        } else {
+            data = await getFilteredProducts(searchTerm);
+        }
+        products.set(data);
+        isLoading = false;
     }
 </script>
   
 <div class="product-catalog">
-
     <div class="search-filter">
         <div>
             <button class="button flex" style="height: 50px; gap: 8px;" on:click={handleProductSearch}>
@@ -61,6 +60,8 @@
             <p>No product found</p>
         {/if}
     {/if}
+
+    <Pagination></Pagination>
 </div>
 
 <style>
