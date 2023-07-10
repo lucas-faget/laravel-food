@@ -9,9 +9,13 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $table = 'products';
+    protected $primaryKey = 'id';
     protected $fillable = [
         'barcode',
         'name',
+        'brand',
+        'image_url',
         'calories',
         'carbohydrates',
         'lipids',
@@ -24,8 +28,4 @@ class Product extends Model
         'fat' => 'float',
         'protein' => 'float'
     ];
-
-    protected $primaryKey = 'id';
-
-    protected $table = 'products';
 }
