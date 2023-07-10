@@ -23,6 +23,15 @@
             product = fakeProducts(1).shift();
         }
     });
+
+    function changeQuantity(grams: number)
+    {
+        if (quantity + grams < 0) {
+            quantity = 0;
+        } else {
+            quantity += grams  
+        }
+    }
 </script>
 
 <div class="product">
@@ -44,21 +53,47 @@
                     <p>
                         Food is any substance consumed by an organism for nutritional support. Food is usually of plant, animal, or fungal origin, and contains essential nutrients, such as carbohydrates, fats, proteins, vitamins, or minerals.
                     </p>
-                    <div class="flex" style="gap: 1px;">
-                        <button class="button justify-center flex-1" on:click={() => {quantity -= 100}}>-100</button>
-                        <button class="button justify-center flex-1" on:click={() => {quantity -= 10 }}>-10</button>
-                        <button class="button justify-center flex-1" on:click={() => {quantity -= 1}}>-1</button>
-                        <input class="input justify-center flex-1" type="number" min="{MinQuantity}" max="{MaxQuantity}" placeholder="Quantity" bind:value="{quantity}" />
-                        <button class="button justify-center flex-1" on:click={() => {quantity += 1}}>+1</button>
-                        <button class="button justify-center flex-1" on:click={() => {quantity += 10}}>+10</button>
-                        <button class="button justify-center flex-1" on:click={() => {quantity += 100}}>+100</button>
-                    </div>
-                    <input class="input" type="date" />
                     <button class="button justify-between" style="border-radius: 50px;">
-                        <span>Add intake</span>
+                        <span>Add to favorite</span>
+                        <SvgIcon name="favorite"></SvgIcon>
+                    </button>
+                    <button class="button justify-between" style="border-radius: 50px;">
+                        <span>Add an intake</span>
                         <SvgIcon name="add"></SvgIcon>
                     </button>
                 </div>
+            </div>
+        </div>
+        <div class="bottom flex flex-column" style="gap: 20px;">
+            <div class="flex align-stretch" style="gap: 1px;">
+                <div class="flex flex-column flex-1" style="gap: 1px;">
+                    <button class="button justify-center" on:click={() => changeQuantity(-10)}>-10</button>
+                    <button class="button justify-center" on:click={() => changeQuantity(-100)}>-100</button>
+                </div>
+                <div class="flex-2">
+                    <button class="button justify-center h-100 w-100" on:click={() => changeQuantity(-1)}>
+                        <SvgIcon name="remove_circle"></SvgIcon>
+                    </button>
+                </div>
+                <div class="flex-5">
+                    <input class="input text-center" style="height: 100%; width: 100%; font-size: 30px;" type="number" min="{MinQuantity}" max="{MaxQuantity}" placeholder="Quantity" bind:value="{quantity}" />
+                </div>
+                <div class="flex-2">
+                    <button class="button justify-center h-100 w-100" on:click={() => changeQuantity(1)}>
+                        <SvgIcon name="add_circle"></SvgIcon>
+                    </button>
+                </div>
+                <div class="flex flex-column flex-1" style="gap: 1px;">
+                    <button class="button justify-center" on:click={() => changeQuantity(10)}>+10</button>
+                    <button class="button justify-center" on:click={() => changeQuantity(100)}>+100</button>
+                </div>
+            </div>
+              
+              
+            
+            <div class="flex" style="gap: 10px;">
+                <input class="input" style="flex: 2;" type="date" />
+                <button class="button justify-center" style="flex: 1;">Add intake</button>
             </div>
         </div>
         <div class="bottom">
