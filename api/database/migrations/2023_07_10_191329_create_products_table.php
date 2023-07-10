@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,10 +17,14 @@ return new class extends Migration
             $table->string('name');
             $table->string('brand');
             $table->string('image_url')->nullable();
-            $table->float('calories');
-            $table->float('carbohydrates');
-            $table->float('lipids');
+            $table->integer('serving_size');
+            $table->integer('energy');
             $table->float('protein');
+            $table->float('total_fat');
+            $table->float('saturated_fat');
+            $table->float('carbohydrates');
+            $table->float('sugars');
+            $table->float('sodium');
             $table->timestamps();
         });
     }
@@ -32,4 +36,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('products');
     }
-};
+}

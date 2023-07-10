@@ -16,16 +16,24 @@ class Product extends Model
         'name',
         'brand',
         'image_url',
-        'calories',
+        'serving_size',
+        'energy',
+        'protein',
+        'total_fat',
+        'saturated_fat',
         'carbohydrates',
-        'lipids',
-        'protein'
+        'sugars',
+        'sodium'
     ];
 
     protected $casts = [
-        'calories' => 'float',
+        'serving_size' => 'integer',
+        'energy' => 'integer',
+        'protein' => 'float',
+        'total_fat' => 'float',
+        'saturated_fat' => 'float',
         'carbohydrates' => 'float',
-        'fat' => 'float',
-        'protein' => 'float'
+        'sugars' => 'float',
+        'sodium' => 'float'
     ];
 }
