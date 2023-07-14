@@ -33,9 +33,9 @@ export const createProduct = async (product: Product) => {
     }
 };
 
-export const updateProduct = async (productId: number, product: Product) => {
+export const updateProduct = async (product: Product) => {
     try {
-        const response = await axios.put(`${API_BASE_URL}/${productId}`, product);
+        const response = await axios.put(`${API_BASE_URL}/${product.id}`, product);
         return response.data;
     } catch (error) {
         console.error(error);
