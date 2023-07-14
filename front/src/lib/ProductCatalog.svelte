@@ -4,7 +4,7 @@
     import ProductCard from './ProductCard.svelte';
     import { onMount } from 'svelte';
     import { writable } from 'svelte/store';
-    import { getProducts, getFilteredProducts, fakeProducts } from '../api/openProductApiClient';
+    import { getOpenProducts, getFilteredOpenProducts, fakeProducts } from '../api/openProductApiClient';
     import SvgIcon from "./SvgIcon.svelte";
     import Pagination from "./Pagination.svelte";
 
@@ -22,9 +22,9 @@
         isLoading = true;
         let data: any;
         if (searchTerm === "") {
-            data = await getProducts(currentPage);
+            data = await getOpenProducts(currentPage);
         } else {
-            data = await getFilteredProducts(searchTerm, currentPage);
+            data = await getFilteredOpenProducts(searchTerm, currentPage);
         }
         products.set(data);
         isLoading = false;

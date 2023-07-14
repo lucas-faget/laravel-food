@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { getProduct, fakeProducts } from '../api/openProductApiClient';
+    import { getOpenProduct, fakeProducts } from '../api/openProductApiClient';
     import List from '../lib/List.svelte';
     import Table from '../lib/Table.svelte';
     import SvgIcon from '../lib/SvgIcon.svelte';
@@ -16,7 +16,7 @@
     $: quantityString = (quantity ?? 0) + Unit;
 
     onMount(async () => {
-        const data = await getProduct(code);
+        const data = await getOpenProduct(code);
         if (data) {
             product = data;
         } else {

@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const API_BASE_URL = "http://localhost:8000/api/products";
+
 export const fakeProducts = (productNumber: number) => {
     let products = [];
     for (let i=1 ; i <= productNumber ; i++) {
@@ -13,27 +15,27 @@ export const fakeProducts = (productNumber: number) => {
     return products;
 }
 
-export async function getProducts(page: number = 1) {
+export async function getOpenProducts(page: number = 1) {
     try {
-        const response = await axios.get(`http://localhost:8000/api/products/${page}`);
+        const response = await axios.get(`${API_BASE_URL}/${page}`);
         return response.data.products;
     } catch (error) {
         console.error(error);
     }
 }
 
-export async function getProduct(barcode: number) {
+export async function getOpenProduct(barcode: number) {
     try {
-        const response = await axios.get(`http://localhost:8000/api/products/barcode/${barcode}`);
+        const response = await axios.get(`${API_BASE_URL}/${barcode}`);
         return response.data.product;
     } catch (error) {
         console.error(error);
     }
 }
 
-export async function getFilteredProducts(search: string, page: number = 1) {
+export async function getFilteredOpenProducts(search: string, page: number = 1) {
     try {
-        const response = await axios.get(`http://localhost:8000/api/products/search/${search}/${page}`);
+        const response = await axios.get(`${API_BASE_URL}/search/${search}/${page}`);
         return response.data.products;
     } catch (error) {
         console.error(error);
