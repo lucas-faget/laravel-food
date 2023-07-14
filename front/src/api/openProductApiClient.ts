@@ -24,7 +24,7 @@ export async function getProducts(page: number = 1) {
 
 export async function getProduct(barcode: number) {
     try {
-        const response = await axios.get(`http://localhost:8000/api/products/code/${barcode}`);
+        const response = await axios.get(`http://localhost:8000/api/products/barcode/${barcode}`);
         return response.data.product;
     } catch (error) {
         console.error(error);

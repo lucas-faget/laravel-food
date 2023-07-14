@@ -4,7 +4,7 @@
     import ProductCard from './ProductCard.svelte';
     import { onMount } from 'svelte';
     import { writable } from 'svelte/store';
-    import { getProducts, getFilteredProducts, fakeProducts } from '../api';
+    import { getProducts, getFilteredProducts, fakeProducts } from '../api/openProductApiClient';
     import SvgIcon from "./SvgIcon.svelte";
     import Pagination from "./Pagination.svelte";
 

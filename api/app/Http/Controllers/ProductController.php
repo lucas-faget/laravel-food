@@ -2,67 +2,80 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
-
-use GuzzleHttp\Client;
 
 class ProductController extends Controller
 {
-    protected static $pageSize = 12;
-
-    protected static $fields = "code,product_name,brands,image_url";
-
-    protected $client;
-
-    public function __construct()
+    /**
+     * Display a listing of the products.
+     */
+    public function index()
     {
-        $this->client = new Client([
-            'base_uri' => 'https://fr.openfoodfacts.org/api/v2/',
-            'verify' => false
-        ]);
+        $products = Product::all();
+
+        return response()->json($products);
     }
 
-    public function index(int $page = 1)
+    /**
+     * Store a newly created product in storage.
+     */
+    public function store(Request $request)
     {
-        $response = $this->client->request('GET', 'search', [
-            'query' => [
-                'page_size' => self::$pageSize,
-                'page' => $page,
-                'fields' => self::$fields
-            ],
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'serving_size' => 'required',
+            'energy' => 'required',
+            'protein' => 'required',
+            'total_fat' => 'required',
+            'saturated_fat' => 'required',
+            'carbohydrates' => 'required',
+            'sugars' => 'required',
+            'sodium' => 'required'
         ]);
-        
-        $products = $response->getBody()->getContents();
 
-        return $products;
+        $product = Product::create($validatedData);
+
+        return response()->json($product, 201);
     }
 
-    public function show(string $code)
+    /**
+     * Display the specified product.
+     */
+    public function show(Product $product)
     {
-        $response = $this->client->request('GET', "product/$code", [
-            'query' => [
-                'fields' => self::$fields
-            ]
-        ]);
-
-        $product = $response->getBody()->getContents();
-
-        return $product;
+        return response()->json($product);
     }
 
-    public function search(string $search, int $page = 1)
+    /**
+     * Update the specified product in storage.
+     */
+    public function update(Request $request, Product $product)
     {
-        $response = $this->client->request('GET', "search", [
-            'query' => [
-                'categories_tags_fr' => $search,
-                'page_size' => self::$pageSize,
-                'page' => $page,
-                'fields' => self::$fields
-            ]
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'serving_size' => 'required',
+            'energy' => 'required',
+            'protein' => 'required',
+            'total_fat' => 'required',
+            'saturated_fat' => 'required',
+            'carbohydrates' => 'required',
+            'sugars' => 'required',
+            'sodium' => 'required'
         ]);
 
-        $product = $response->getBody()->getContents();
+        $product->update($validatedData);
 
-        return $product;
+        return response()->json($product);
+    }
+
+    /**
+     * Remove the specified product from storage.
+     */
+    public function destroy(Product $product)
+    {
+        $product->delete();
+
+        return response()->json(null, 204);
     }
 }

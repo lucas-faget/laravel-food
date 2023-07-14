@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OpenProductController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +19,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::prefix('/products')->group(function () {
+    Route::get('/', [ProductController::class, 'index']);
+    Route::post('/', [ProductController::class, 'store']);
+    Route::get('/{product}', [ProductController::class, 'show']);
+    Route::put('/{product}', [ProductController::class, 'update']);
+    Route::delete('/{product}', [ProductController::class, 'destroy']);
+});
+
 Route::prefix('/api/products')->group(function () {
-    Route::get('/{page?}', [ProductController::class, 'index']);
-    Route::get('/code/{code}', [ProductController::class, 'show']);
-    Route::get('/search/{search}/{page?}', [ProductController::class, 'search']);
+    Route::get('/{page?}', [OpenProductController::class, 'index']);
+    Route::get('/barcode/{barcode}', [OpenProductController::class, 'show']);
+    Route::get('/search/{search}/{page?}', [OpenProductController::class, 'search']);
 });

@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { getProduct, fakeProducts } from '../api';
+    import { getProduct, fakeProducts } from '../api/openProductApiClient';
     import List from '../lib/List.svelte';
     import Table from '../lib/Table.svelte';
     import SvgIcon from '../lib/SvgIcon.svelte';
