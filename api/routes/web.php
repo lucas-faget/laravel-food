@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\OpenProductController;
+use App\Http\Controllers\OpenFoodFactsApiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,7 +28,7 @@ Route::prefix('/products')->group(function () {
 });
 
 Route::prefix('/api/products')->group(function () {
-    Route::get('/{page?}', [OpenProductController::class, 'index']);
-    Route::get('/barcode/{barcode}', [OpenProductController::class, 'show']);
-    Route::get('/search/{search}/{page?}', [OpenProductController::class, 'search']);
+    Route::get('/{page?}', [OpenFoodFactsApiController::class, 'index']);
+    Route::get('/barcode/{barcode}', [OpenFoodFactsApiController::class, 'show']);
+    Route::get('/search/{search}/{page?}', [OpenFoodFactsApiController::class, 'search']);
 });

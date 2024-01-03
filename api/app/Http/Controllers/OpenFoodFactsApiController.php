@@ -4,13 +4,11 @@ namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
 
-class OpenProductController extends Controller
+class OpenFoodFactsApiController extends Controller
 {
-    protected static $pageSize = 12;
-
-    protected static $fields = "code,product_name,brands,image_url";
-
     protected $client;
+    protected static $pageSize = 12;
+    protected static $fields = "";
 
     public function __construct()
     {
