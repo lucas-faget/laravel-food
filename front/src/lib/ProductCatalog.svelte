@@ -1,17 +1,16 @@
 <script lang="ts">
-    import { Link } from "svelte-routing";
     import SearchBar from './SearchBar.svelte';
     import ProductCard from './ProductCard.svelte';
     import { onMount } from 'svelte';
     import { writable } from 'svelte/store';
-    import { getOpenProducts, getFilteredOpenProducts, fakeProducts } from '../api/openProductApiClient';
+    import { getProductSearch, fakeProducts } from '../api/SpoonacularApiClient';
     import SvgIcon from "./SvgIcon.svelte";
     import Pagination from "./Pagination.svelte";
 
     let products = writable([]);
     //products.set(fakeProducts(20));
     let currentPage: number = 1;
-    let searchTerm: string = "";
+    let searchQuery: string = "";
     let isLoading: boolean = false;
 
     onMount(async () => {
@@ -21,10 +20,10 @@
     const handleProductSearch = async () => {
         isLoading = true;
         let data: any;
-        if (searchTerm === "") {
-            data = await getOpenProducts(currentPage);
+        if (searchQuery === "") {
+            data = await getProductSearch("apple");
         } else {
-            data = await getFilteredOpenProducts(searchTerm, currentPage);
+            data = await getProductSearch(searchQuery, currentPage);
         }
         products.set(data);
         isLoading = false;
@@ -44,7 +43,7 @@
             </button>
         </div>
         <div class="flex-1">
-            <SearchBar bind:searchTerm={searchTerm}></SearchBar>
+            <SearchBar bind:searchQuery={searchQuery}></SearchBar>
         </div>
     </div>
 
@@ -56,9 +55,9 @@
         {#if products && $products.length !== 0}
             <div class="product-list">
                 {#each $products as product}
-                    <Link to={`/products/${product.code}`} style="text-decoration: none;">
+                    <a href="/products/{product.api_id}" style="text-decoration: none;">
                         <ProductCard product={product} />
-                    </Link>
+                    </a>
                 {/each}
             </div>
         {:else}

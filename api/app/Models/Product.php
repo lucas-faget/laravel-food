@@ -12,28 +12,23 @@ class Product extends Model
     protected $table = 'products';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'barcode',
+        'api_id',
         'name',
+        'image',
         'brand',
-        'image_url',
-        'serving_size',
-        'energy',
-        'protein',
-        'total_fat',
-        'saturated_fat',
+        'category',
+        'tags',
+        'calories',
+        'fat',
         'carbohydrates',
-        'sugars',
-        'sodium'
+        'protein',
+        'ingredients'
     ];
 
     protected $casts = [
-        'serving_size' => 'integer',
-        'energy' => 'integer',
+        'calories' => 'float',
         'protein' => 'float',
-        'total_fat' => 'float',
-        'saturated_fat' => 'float',
-        'carbohydrates' => 'float',
-        'sugars' => 'float',
-        'sodium' => 'float'
+        'fat' => 'float',
+        'carbohydrates' => 'float'
     ];
 }

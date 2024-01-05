@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OpenFoodFactsApiController;
+use App\Http\Controllers\SpoonacularApiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,8 +28,11 @@ Route::prefix('/products')->group(function () {
     Route::delete('/{product}', [ProductController::class, 'destroy']);
 });
 
-Route::prefix('/api/products')->group(function () {
-    Route::get('/{page?}', [OpenFoodFactsApiController::class, 'index']);
-    Route::get('/barcode/{barcode}', [OpenFoodFactsApiController::class, 'show']);
-    Route::get('/search/{search}/{page?}', [OpenFoodFactsApiController::class, 'search']);
+Route::prefix('/spoonacular')->group(function () {
+    $controller = SpoonacularApiController::class;
+
+    Route::get('/ingredients/search/{searchQuery}/{pageNumber?}', [$controller, 'ingredientSearch']);
+    Route::get('/ingredients/{id}', [$controller, 'ingredient']);
+    Route::get('/products/search/{searchQuery}/{pageNumber?}', [$controller, 'productSearch']);
+    Route::get('/products/{id}', [$controller, 'product']);
 });

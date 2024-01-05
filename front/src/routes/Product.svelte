@@ -1,11 +1,11 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { getOpenProduct, fakeProducts } from '../api/openProductApiClient';
+    import { getProduct, fakeProducts } from '../api/SpoonacularApiClient';
     import List from '../lib/List.svelte';
     import Table from '../lib/Table.svelte';
     import SvgIcon from '../lib/SvgIcon.svelte';
 
-    export let code: number;
+    export let id: number|string;
 
     const Unit = 'g';
     const MinQuantity = 0;
@@ -16,7 +16,7 @@
     $: quantityString = (quantity ?? 0) + Unit;
 
     onMount(async () => {
-        const data = await getOpenProduct(code);
+        const data = await getProduct(id);
         if (data) {
             product = data;
         } else {
@@ -29,7 +29,7 @@
         if (quantity + grams < 0) {
             quantity = 0;
         } else {
-            quantity += grams  
+            quantity += grams
         }
     }
 </script>
@@ -38,13 +38,13 @@
     {#if product}
         <div class="top">
             <div class="left">
-                <img class="product-image" src={product.image_url} alt={product.product_name} />
+                <img class="product-image" src={product.image} alt={product.name} />
             </div>
             <div class="right">
                 <div class="flex flex-column" style="gap: 30px;">
                     <div class="flex flex-column">
-                        <h2>{product.product_name}</h2>
-                        <h3>{product.brands}</h3>
+                        <h2>{product.name}</h2>
+                        <h3>{product.brand}</h3>
                     </div>
                     <div class="labels">
                         <div class="label">Product</div>
@@ -98,7 +98,7 @@
         </div>
         <div class="bottom">
             <Table header={
-                [product.product_name, "100g", quantityString]
+                [product.name, "100g", quantityString]
             } rows={[
                 ["Protein", "20g", "0g"],
                 ["Carbohydrates", "20g", "0g"],

@@ -1,8 +1,8 @@
 <script lang="ts">
-    export let searchTerm: string;
+    export let searchQuery: string;
 </script>
 
-<input class="input-text" type="text" placeholder="What are you searching for ?" bind:value={searchTerm} />
+<input class="input-text" type="text" placeholder="What are you searching for ?" bind:value={searchQuery} />
 
 <style>
     .input-text {

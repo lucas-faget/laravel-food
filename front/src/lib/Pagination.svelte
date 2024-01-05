@@ -4,8 +4,8 @@
 
     const dispatch = createEventDispatcher();
 
-    const MinPage = 1;
-    const MaxPage = 10;
+    const MinPage: number = 1;
+    const MaxPage: number = 10;
 
     export let currentPage: number;
     let previousPage: number;
@@ -14,8 +14,8 @@
     let pageList: number[];
 
     $: {
-        let start = currentPage - pageRange;
-        let end = currentPage + pageRange;
+        let start: number = currentPage - pageRange;
+        let end: number = currentPage + pageRange;
 
         if (start < MinPage) {
             start = MinPage;

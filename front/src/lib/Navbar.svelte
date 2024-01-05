@@ -68,7 +68,7 @@
     <div>
         <Route path="/" component="{Home}" />
         <Route path="/products" component="{Products}" />
-        <Route path="/products/:code" component="{Product}" />
+        <Route path="/products/:id" component="{Product}" />
     </div>
 </Router>
   

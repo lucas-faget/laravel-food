@@ -5,19 +5,18 @@
 </script>
   
 <div class="product-card">
-    <!-- <p>{product.code}</p> -->
     <div class="favorite-icon">
         <SvgIcon name="favorite"></SvgIcon>
     </div>
     <div class="square">
-        <img class="product-image" src={product.image_url} alt={product.product_name} />
+        <img class="product-image" src={product.image} alt={product.name} />
     </div>
     <div>
         <div class="product-name">
-            {product.product_name}
+            {product.name}
         </div>
         <div class="product-brand">
-            {product.brands}
+            {product.brand}
         </div>
     </div>
 </div>
