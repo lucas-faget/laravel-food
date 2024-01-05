@@ -15,20 +15,25 @@ class Product extends Model
         'api_id',
         'name',
         'image',
+        'country',
         'brand',
+        'description',
         'category',
         'tags',
+        'ingredients',
+        'serving_size_unit',
+        'serving_size',
         'calories',
         'fat',
         'carbohydrates',
-        'protein',
-        'ingredients'
+        'protein'
     ];
 
     protected $casts = [
+        'serving_size' => 'float',
         'calories' => 'float',
-        'protein' => 'float',
         'fat' => 'float',
-        'carbohydrates' => 'float'
+        'carbohydrates' => 'float',
+        'protein' => 'float'
     ];
 }

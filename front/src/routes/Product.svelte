@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { getProduct, fakeProducts } from '../api/SpoonacularApiClient';
+    import { getFood, fakeProducts } from '../api/FdcApiClient';
     import List from '../lib/List.svelte';
     import Table from '../lib/Table.svelte';
     import SvgIcon from '../lib/SvgIcon.svelte';
@@ -16,7 +16,7 @@
     $: quantityString = (quantity ?? 0) + Unit;
 
     onMount(async () => {
-        const data = await getProduct(id);
+        const data = await getFood(id);
         if (data) {
             product = data;
         } else {
@@ -44,15 +44,20 @@
                 <div class="flex flex-column" style="gap: 30px;">
                     <div class="flex flex-column">
                         <h2>{product.name}</h2>
-                        <h3>{product.brand}</h3>
+                        {#if product.brand}
+                            <h3>{product.brand}</h3>
+                        {/if}
                     </div>
-                    <div class="labels">
-                        <div class="label">Product</div>
-                        <div class="label">Fruit And Vegetables</div>
-                    </div>
-                    <p>
-                        Food is any substance consumed by an organism for nutritional support. Food is usually of plant, animal, or fungal origin, and contains essential nutrients, such as carbohydrates, fats, proteins, vitamins, or minerals.
-                    </p>
+                    {#if product.tags}
+                        <div class="labels">
+                            {#each product.tags.split(',') as tag}
+                                <div class="label">{tag}</div>
+                            {/each}
+                        </div>
+                    {/if}
+                    {#if product.description}
+                        <p class="text-capitalize">{product.description}</p>
+                    {/if}
                     <button class="button justify-between" style="border-radius: 50px;">
                         <span>Add to favorite</span>
                         <SvgIcon name="favorite"></SvgIcon>
@@ -64,7 +69,7 @@
                 </div>
             </div>
         </div>
-        <div class="bottom flex flex-column" style="gap: 20px;">
+        <!-- <div class="bottom flex flex-column" style="gap: 20px;">
             <div class="flex align-stretch" style="gap: 1px;">
                 <div class="flex flex-column flex-1" style="gap: 1px;">
                     <button class="button justify-center" on:click={() => changeQuantity(-10)}>-10</button>
@@ -89,25 +94,26 @@
                 </div>
             </div>
               
-              
-            
             <div class="flex" style="gap: 10px;">
                 <input class="input" style="flex: 2;" type="date" />
                 <button class="button justify-center" style="flex: 1;">Add intake</button>
             </div>
-        </div>
+        </div> -->
         <div class="bottom">
             <Table header={
-                [product.name, "100g", quantityString]
+                ["Serving size", `${product.serving_size}${product.serving_size_unit}`, quantityString]
             } rows={[
-                ["Protein", "20g", "0g"],
-                ["Carbohydrates", "20g", "0g"],
-                ["Lipids", "20g", "0g"]
+                ["Calories",      `${product.calories}${product.serving_size_unit}`, "0g"],
+                ["Fat",           `${product.fat}${product.serving_size_unit}`, "0g"],
+                ["Carbohydrates", `${product.carbohydrates}${product.serving_size_unit}`, "0g"],
+                ["Protein",       `${product.protein}${product.serving_size_unit}`, "0g"],
             ]}></Table>
         </div>
-        <div class="bottom">
-            <List title="composition" items={["water", "protein", "sugar", "salt",]}></List>
-        </div>
+        {#if product.ingredients}
+            <div class="bottom">
+                <List title="composition" items={product.ingredients.split(',')}></List>
+            </div>
+        {/if}
     {:else}
         <div class="loading-icon">
             <img src="/loading-icon.gif" alt="Loading icon" style="height: 100%; width: 100%;"/>

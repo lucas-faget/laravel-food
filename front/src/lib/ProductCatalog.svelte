@@ -3,7 +3,7 @@
     import ProductCard from './ProductCard.svelte';
     import { onMount } from 'svelte';
     import { writable } from 'svelte/store';
-    import { getProductSearch, fakeProducts } from '../api/SpoonacularApiClient';
+    import { getFoodSearch, fakeProducts } from '../api/FdcApiClient';
     import SvgIcon from "./SvgIcon.svelte";
     import Pagination from "./Pagination.svelte";
 
@@ -20,11 +20,7 @@
     const handleProductSearch = async () => {
         isLoading = true;
         let data: any;
-        if (searchQuery === "") {
-            data = await getProductSearch("apple");
-        } else {
-            data = await getProductSearch(searchQuery, currentPage);
-        }
+        data = await getFoodSearch(searchQuery, currentPage);
         products.set(data);
         isLoading = false;
     }

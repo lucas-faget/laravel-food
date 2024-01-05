@@ -15,9 +15,11 @@
         <div class="product-name">
             {product.name}
         </div>
-        <div class="product-brand">
-            {product.brand}
-        </div>
+        {#if product.brand}
+            <div class="product-brand">
+                {product.brand}
+            </div>
+        {/if}
     </div>
 </div>
 
