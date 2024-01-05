@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use GuzzleHttp\Client;
+use App\Http\Controllers\GoogleApiController;
 
 class FoodDataCentralApiController extends Controller
 {
@@ -40,12 +41,19 @@ class FoodDataCentralApiController extends Controller
         $apiResult = json_decode($response->getBody()->getContents(), true);
 
         $products = collect($apiResult['foods'])->map(function ($apiFood) {
-            return new Product([
+            $product = new Product([
                 'api_id' => $apiFood['fdcId'] ?? null,
                 'name'   => $apiFood['description'] ?? null,
                 'image'  => null,
                 'brand'  => $apiFood['brandName'] ?? ($apiFood['brandOwner'] ?? null),
             ]);
+
+            // $googleApiController = new GoogleApiController();
+            // $query = $product->brand ? "$product->brand $product->name" : $product->name;
+            // $googleImage = $googleApiController->getGoogleImage($query);
+            // $product->image = $googleImage;
+
+            return $product;
         });
         
         return response()->json([
@@ -64,6 +72,7 @@ class FoodDataCentralApiController extends Controller
 
         $apiFood = json_decode($response->getBody()->getContents(), true);
 
+
         $product = new Product([
             'api_id'            => $apiFood['fdcId'] ?? null,
             'name'              => $apiFood['description'] ?? null,
@@ -81,6 +90,11 @@ class FoodDataCentralApiController extends Controller
             'carbohydrates'     => $apiFood['labelNutrients']['carbohydrates']['value'] ?? 0,
             'protein'           => $apiFood['labelNutrients']['protein']['value'] ?? 0,
         ]);
+
+        $googleApiController = new GoogleApiController();
+        $query = $product->brand ? "$product->brand $product->name" : $product->name;
+        $googleImage = $googleApiController->getGoogleImage($query);
+        $product->image = $googleImage;
 
         return response()->json($product);
     }

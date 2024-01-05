@@ -136,6 +136,10 @@
         padding-bottom: min(100px, 10vw);
     }
 
+    .product-image {
+        height: 500px;
+    }
+
     .top {
         display: flex;
     }
