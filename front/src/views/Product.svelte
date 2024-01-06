@@ -8,11 +8,15 @@
     export let id: number|string;
 
     const MinServingSize = 0;
-    const MaxServingSize = 10000;
+    const MaxServingSize = 999999;
     const StandardServingSize: number = 100;
 
     let product = null;
     let servingSize = 0;
+
+    $: {
+        servingSize = clamp(servingSize, MinServingSize, MaxServingSize)
+    }
 
     onMount(async () => {
         const data = await getFood(id);
@@ -22,6 +26,10 @@
             product = fakeProducts(1).shift();
         }
     });
+
+    function clamp(value: number, min: number, max: number) {
+        return value > max ? max : value < min ? min : value;
+    }
 
     function getAmountString(amount: number): string {
         return `${Math.round(amount)} ${product.serving_size_unit}`;
@@ -33,10 +41,6 @@
 
     function getProportionalAmountString(amount: number, servingSize: number): string {
         return getAmountString(getProportionalAmount(amount, servingSize));
-    }
-
-    function addToServingSize(amount: number): void {
-        servingSize += amount;
     }
 </script>
 
@@ -80,11 +84,11 @@
         </div>
         <div class="bottom grid">
             <div class="flex">
-                <button class="square-button button-dark" style="border-radius: 100% 0 0 100%;" on:click={() => addToServingSize(-1)}>
+                <button class="square-button button-dark" style="border-radius: 100% 0 0 100%;" on:click={() => servingSize--}>
                     <SvgIcon name="remove_circle" size={35}></SvgIcon>
                 </button>
-                <input class="input flex-1" type="number" placeholder="Serving size" bind:value="{servingSize}" min={MinServingSize} max={MaxServingSize} />
-                <button class="square-button button-dark" style="border-radius: 0 100% 100% 0;" on:click={() => addToServingSize(1)}>
+                <input class="input flex-1" type="number" placeholder="Serving size" bind:value="{servingSize}" min="{MinServingSize}" max={MaxServingSize} />
+                <button class="square-button button-dark" style="border-radius: 0 100% 100% 0;" on:click={() => servingSize++}>
                     <SvgIcon name="add_circle" size={35}></SvgIcon>
                 </button>
             </div>
