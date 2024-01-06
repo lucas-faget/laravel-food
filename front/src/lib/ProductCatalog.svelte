@@ -8,6 +8,7 @@
     import Pagination from "./Pagination.svelte";
 
     let products = writable([]);
+    let maxPage: number;
     //products.set(fakeProducts(20));
     let currentPage: number = 1;
     let searchQuery: string = "";
@@ -21,7 +22,9 @@
         isLoading = true;
         let data: any;
         data = await getFoodSearch(searchQuery, currentPage);
-        products.set(data);
+        products.set(data.products);
+        maxPage = data.totalPages;
+        console.log(maxPage)
         isLoading = false;
     }
 
@@ -33,9 +36,9 @@
 <div class="product-catalog">
     <div class="search-filter">
         <div>
-            <button class="button flex" style="height: 50px; gap: 8px;" on:click={handleProductSearch}>
+            <button class="button button-dark flex" style="height: 50px; gap: 8px;" on:click={handleProductSearch}>
                 <span>SEARCH</span>
-                <SvgIcon name="search_white"></SvgIcon>
+                <SvgIcon name="search_white" size={30}></SvgIcon>
             </button>
         </div>
         <div class="flex-1">
@@ -61,7 +64,7 @@
         {/if}
     {/if}
 
-    <Pagination bind:currentPage={currentPage} on:pageChanged={handlePageChange}></Pagination>
+    <Pagination bind:currentPage={currentPage} bind:maxPage={maxPage} on:pageChanged={handlePageChange}></Pagination>
 </div>
 
 <style>

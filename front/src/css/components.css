@@ -1,29 +1,36 @@
 .button {
-    color: var(--color-light);
-    background-color: var(--color-green);
     padding: 10px 20px;
     display: flex;
     align-items: center;
-    border: none;
     font-size: 20px;
     font-family: 'Anton', sans-serif;
     cursor: pointer;
 }
 
-.button:hover {
+.square-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-family: 'Anton', sans-serif;
+    cursor: pointer;
+    aspect-ratio: 1/1;
+}
+
+.button-dark {
+    color: var(--color-light);
+    background-color: var(--color-green);
+    border: none;
+}
+
+.button-dark:hover {
     background-color: var(--color-light-green);
 }
 
 .button-light {
     color: var(--color-green);
     background-color: var(--color-light);
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
     border: 2px solid var(--color-green);
-    font-size: 20px;
-    font-family: 'Anton', sans-serif;
-    cursor: pointer;
 }
 
 .button-light:hover {
@@ -42,6 +49,7 @@
 
 .input::placeholder {
     color: var(--color-light-green);
+    font-size: 16px;
 }
 
 .input:focus {

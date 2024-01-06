@@ -5,8 +5,7 @@
     const dispatch = createEventDispatcher();
 
     const MinPage: number = 1;
-    const MaxPage: number = 10;
-
+    export let maxPage: number = 1;
     export let currentPage: number;
     let previousPage: number;
 
@@ -19,11 +18,11 @@
 
         if (start < MinPage) {
             start = MinPage;
-            end = Math.min(start + 4, MaxPage);
+            end = Math.min(start + 4, maxPage);
         }
 
-        if (end > MaxPage) {
-            end = MaxPage;
+        if (end > maxPage) {
+            end = maxPage;
             start = Math.max(end - 4, MinPage);
         }
 
@@ -35,7 +34,7 @@
     });
 
     function setCurrentPage(page: number): void {
-        if (page >= MinPage && page <= MaxPage)
+        if (page >= MinPage && page <= maxPage)
             currentPage = page;
     }
 
@@ -49,20 +48,34 @@
 
 <div class="pagination flex" style="gap: 5px;">
     <div
-        class="button-light"
+        class="square-button button-light"
         on:click={() => setCurrentPage(currentPage - 1)}
         on:keypress={() => setCurrentPage(currentPage - 1)}
     ><SvgIcon name="chevron_left"></SvgIcon></div>
     {#each pageList as page}
         <div
-            class={page === currentPage ? "button-light" : "button"}
+            class={page === currentPage ? "square-button button-light" : "square-button button-dark"}
             on:click={() => setCurrentPage(page)}
             on:keypress={() => setCurrentPage(page)}
         >{page}</div>
     {/each}
     <div
-        class="button-light"
+        class="square-button button-light"
         on:click={() => setCurrentPage(currentPage + 1)}
         on:keypress={() => setCurrentPage(currentPage + 1)}
     ><SvgIcon name="chevron_right"></SvgIcon></div>
 </div>
+
+<style>
+    .pagination {
+        height: 60px;
+    }
+    .pagination > div {
+        width: 60px;
+    }
+
+    .pagination > div:first-child,
+    .pagination > div:last-child {
+        width: 80px;
+    }
+</style>

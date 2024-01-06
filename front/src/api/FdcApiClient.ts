@@ -19,7 +19,7 @@ export async function getFoodSearch($searchQuery: string, pageNumber: number = 1
     try {
         $searchQuery = $searchQuery ? $searchQuery : "%20";
         const response = await axios.get(`${API_BASE_URL}foods/search/${$searchQuery}/${pageNumber}`);
-        return response.data.products;
+        return response.data;
     } catch (error) {
         console.error(error);
     }

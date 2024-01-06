@@ -6,7 +6,7 @@
     export let iconName: string|null = null;
 </script>
 
-<button class="button" on:click={handleClick}>
+<button class="button button-dark" on:click={handleClick}>
     <span>{text}</span>
     {#if iconName}
         <SvgIcon name={iconName}></SvgIcon>

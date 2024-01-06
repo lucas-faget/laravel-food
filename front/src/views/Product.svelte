@@ -34,6 +34,10 @@
     function getProportionalAmountString(amount: number, servingSize: number): string {
         return getAmountString(getProportionalAmount(amount, servingSize));
     }
+
+    function addToServingSize(amount: number): void {
+        servingSize += amount;
+    }
 </script>
 
 <div class="product">
@@ -45,9 +49,9 @@
             <div class="right">
                 <div class="flex flex-column" style="gap: 30px;">
                     <div class="flex flex-column" style="gap: 10px;">
-                        <h2>{product.name}</h2>
+                        <h2 class="text-capitalize">{product.name}</h2>
                         {#if product.brand}
-                            <h3>{product.brand}</h3>
+                            <h3 class="text-uppercase">{product.brand}</h3>
                         {/if}
                     </div>
                     {#if product.tags}
@@ -55,52 +59,42 @@
                             {#each product.tags.split(',') as tag}
                                 <div class="label">{tag}</div>
                             {/each}
+                            {#if product.country}
+                                <div class="label">{product.country}</div>
+                            {/if}
                         </div>
                     {/if}
                     {#if product.description}
                         <p class="text-capitalize">{product.description}</p>
                     {/if}
-                    <button class="button justify-between" style="border-radius: 50px;">
+                    <button class="button button-dark justify-between" style="border-radius: 50px;">
                         <span>Add to favorite</span>
                         <SvgIcon name="favorite_white"></SvgIcon>
                     </button>
-                    <button class="button justify-between" style="border-radius: 50px;">
+                    <button class="button button-dark justify-between" style="border-radius: 50px;">
                         <span>Add an intake</span>
                         <SvgIcon name="add_white"></SvgIcon>
                     </button>
                 </div>
             </div>
         </div>
-        <!-- <div class="bottom flex flex-column" style="gap: 20px;">
-            <div class="flex align-stretch" style="gap: 1px;">
-                <div class="flex flex-column flex-1" style="gap: 1px;">
-                    <button class="button justify-center" on:click={() => changeQuantity(-10)}>-10</button>
-                    <button class="button justify-center" on:click={() => changeQuantity(-100)}>-100</button>
-                </div>
-                <div class="flex-2">
-                    <button class="button justify-center h-100 w-100" on:click={() => changeQuantity(-1)}>
-                        <SvgIcon name="remove_circle"></SvgIcon>
-                    </button>
-                </div>
-                <div class="flex-5">
-                    <input class="input text-center" style="height: 100%; width: 100%; font-size: 30px;" type="number" min="{MinQuantity}" max="{MaxQuantity}" placeholder="Quantity" bind:value="{quantity}" />
-                </div>
-                <div class="flex-2">
-                    <button class="button justify-center h-100 w-100" on:click={() => changeQuantity(1)}>
-                        <SvgIcon name="add_circle"></SvgIcon>
-                    </button>
-                </div>
-                <div class="flex flex-column flex-1" style="gap: 1px;">
-                    <button class="button justify-center" on:click={() => changeQuantity(10)}>+10</button>
-                    <button class="button justify-center" on:click={() => changeQuantity(100)}>+100</button>
-                </div>
+        <div class="bottom grid">
+            <div class="flex">
+                <button class="square-button button-dark" style="border-radius: 100% 0 0 100%;" on:click={() => addToServingSize(-1)}>
+                    <SvgIcon name="remove_circle" size={35}></SvgIcon>
+                </button>
+                <input class="input flex-1" type="number" placeholder="Serving size" bind:value="{servingSize}" min={MinServingSize} max={MaxServingSize} />
+                <button class="square-button button-dark" style="border-radius: 0 100% 100% 0;" on:click={() => addToServingSize(1)}>
+                    <SvgIcon name="add_circle" size={35}></SvgIcon>
+                </button>
             </div>
-              
-            <div class="flex" style="gap: 10px;">
-                <input class="input" style="flex: 2;" type="date" />
-                <button class="button justify-center" style="flex: 1;">Add intake</button>
+            <div>
+                <input class="input w-100" type="date" />
             </div>
-        </div> -->
+            <div>
+                <button class="button button-dark w-100 text-center">Add intake</button>
+            </div>
+        </div>
         <div class="bottom">
             <Table header={
                 ["Serving size", getAmountString(StandardServingSize), getAmountString(product.serving_size), getAmountString(servingSize)]
@@ -160,6 +154,42 @@
 
     .right {
         padding-inline: min(100px, 10vw);
+    }
+
+    .grid {
+        display: grid;
+        grid-gap: 20px;
+    }
+
+    .grid > div:nth-child(1) { grid-area: a; }
+    .grid > div:nth-child(2) { grid-area: b; }
+    .grid > div:nth-child(3) { grid-area: c; }
+
+    @media only screen and (min-width: 1001px) {
+        .grid {
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-areas: 
+                "a b c";
+        }
+    }
+
+    @media only screen and (min-width: 801px) and (max-width: 1000px) {
+        .grid {
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-areas: 
+                "a a"
+                "b c";
+        }
+    }
+
+    @media only screen and (max-width: 800px) {
+        .grid {
+            grid-template-columns: 1fr;
+            grid-template-areas: 
+                "a"
+                "b"
+                "c";
+        }
     }
 
     @media only screen and (max-width: 800px) {

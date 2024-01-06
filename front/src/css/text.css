@@ -25,6 +25,10 @@ p {
     text-align: center;
 }
 
+.text-uppercase {
+    text-transform: uppercase;
+}
+
 .text-capitalize {
     text-transform: capitalize;
 }

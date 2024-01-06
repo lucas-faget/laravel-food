@@ -44,7 +44,7 @@ class FoodDataCentralApiController extends Controller
         $products = collect($apiResult['foods'])->map(function ($apiFood) {
             $product = new Product([
                 'api_id' => $apiFood['fdcId'] ?? null,
-                'name'   => $apiFood['description'] ?? null,
+                'name'   => $apiFood['description'] ? strtolower($apiFood['description']) : null,
                 'image'  => null,
                 'brand'  => $apiFood['brandName'] ?? ($apiFood['brandOwner'] ?? null),
             ]);
@@ -78,11 +78,11 @@ class FoodDataCentralApiController extends Controller
 
         $product = new Product([
             'api_id'            => $apiFood['fdcId'] ?? null,
-            'name'              => $apiFood['description'] ?? null,
+            'name'              => $apiFood['description'] ? strtolower($apiFood['description']) : null,
             'image'             => null,
             'country'           => $apiFood['marketCountry'] ?? null,
             'brand'             => $apiFood['brandName'] ?? ($apiFood['brandOwner'] ?? null),
-            'description'       => $apiFood['description'] ?? null,
+            'description'       => $apiFood['description'] ? strtolower($apiFood['description']) : null,
             'category'          => null,
             'tags'              => $apiFood['brandedFoodCategory'] ? str_replace(', ', ',', $apiFood['brandedFoodCategory']) : null,
             'ingredients'       => $apiFood['ingredients'] ? str_replace(', ', ',', rtrim(preg_replace('/\([^)]+\)/', '', $apiFood['ingredients']), '.')) : null,

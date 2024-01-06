@@ -55,10 +55,12 @@
     .product-name {
         color: var(--color-green);
         font-size: 18px;
+        text-transform: capitalize;
         font-family: 'Anton', sans-serif;
     }
 
     .product-brand {
         color: var(--color-light-green);
+        text-transform: uppercase;
     }
 </style>
