@@ -7,13 +7,12 @@
 
     export let id: number|string;
 
-    const Unit = 'g';
-    const MinQuantity = 0;
-    const MaxQuantity = 10000;
+    const MinServingSize = 0;
+    const MaxServingSize = 10000;
+    const StandardServingSize: number = 100;
 
     let product = null;
-    let quantity = 0;
-    $: quantityString = (quantity ?? 0) + Unit;
+    let servingSize = 0;
 
     onMount(async () => {
         const data = await getFood(id);
@@ -24,13 +23,16 @@
         }
     });
 
-    function changeQuantity(grams: number)
-    {
-        if (quantity + grams < 0) {
-            quantity = 0;
-        } else {
-            quantity += grams
-        }
+    function getAmountString(amount: number): string {
+        return `${Math.round(amount)} ${product.serving_size_unit}`;
+    }
+
+    function getProportionalAmount(amount: number, servingSize: number): number {
+        return (amount * servingSize) / product.serving_size;
+    }
+
+    function getProportionalAmountString(amount: number, servingSize: number): string {
+        return getAmountString(getProportionalAmount(amount, servingSize));
     }
 </script>
 
@@ -101,12 +103,12 @@
         </div> -->
         <div class="bottom">
             <Table header={
-                ["Serving size", `${product.serving_size}${product.serving_size_unit}`, quantityString]
+                ["Serving size", getAmountString(StandardServingSize), getAmountString(product.serving_size), getAmountString(servingSize)]
             } rows={[
-                ["Calories",      `${product.calories}${product.serving_size_unit}`, "0g"],
-                ["Fat",           `${product.fat}${product.serving_size_unit}`, "0g"],
-                ["Carbohydrates", `${product.carbohydrates}${product.serving_size_unit}`, "0g"],
-                ["Protein",       `${product.protein}${product.serving_size_unit}`, "0g"],
+                ["Calories",      getProportionalAmountString(product.calories, StandardServingSize),      getAmountString(product.calories),      getProportionalAmountString(product.calories, servingSize),    ],
+                ["Fat",           getProportionalAmountString(product.fat, StandardServingSize),           getAmountString(product.fat),           getProportionalAmountString(product.fat, servingSize),         ],
+                ["Carbohydrates", getProportionalAmountString(product.carbohydrates, StandardServingSize), getAmountString(product.carbohydrates), getProportionalAmountString(product.carbohydrates, servingSize)],
+                ["Protein",       getProportionalAmountString(product.protein, StandardServingSize),       getAmountString(product.protein),       getProportionalAmountString(product.protein, servingSize),     ],
             ]}></Table>
         </div>
         {#if product.ingredients}

@@ -11,6 +11,7 @@ class FoodDataCentralApiController extends Controller
     protected $client;
     protected static $apiKey;
     protected static $pageSize = 12;
+    protected static $enableGoogleImageApi = false;
 
     public function __construct()
     {
@@ -48,10 +49,12 @@ class FoodDataCentralApiController extends Controller
                 'brand'  => $apiFood['brandName'] ?? ($apiFood['brandOwner'] ?? null),
             ]);
 
-            // $googleApiController = new GoogleApiController();
-            // $query = $product->brand ? "$product->brand $product->name" : $product->name;
-            // $googleImage = $googleApiController->getGoogleImage($query);
-            // $product->image = $googleImage;
+            if (self::$enableGoogleImageApi) {
+                $googleApiController = new GoogleApiController();
+                $query = $product->brand ? "$product->brand $product->name" : $product->name;
+                $googleImage = $googleApiController->getGoogleImage($query);
+                $product->image = $googleImage;
+            }
 
             return $product;
         });
@@ -91,10 +94,12 @@ class FoodDataCentralApiController extends Controller
             'protein'           => $apiFood['labelNutrients']['protein']['value'] ?? 0,
         ]);
 
-        $googleApiController = new GoogleApiController();
-        $query = $product->brand ? "$product->brand $product->name" : $product->name;
-        $googleImage = $googleApiController->getGoogleImage($query);
-        $product->image = $googleImage;
+        if (self::$enableGoogleImageApi) {
+            $googleApiController = new GoogleApiController();
+            $query = $product->brand ? "$product->brand $product->name" : $product->name;
+            $googleImage = $googleApiController->getGoogleImage($query);
+            $product->image = $googleImage;
+        }
 
         return response()->json($product);
     }
