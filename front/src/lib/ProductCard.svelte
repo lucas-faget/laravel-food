@@ -6,12 +6,12 @@
   
 <div class="product-card">
     <div class="favorite-icon">
-        <SvgIcon name="favorite"></SvgIcon>
+        <SvgIcon name="favorite_fill"></SvgIcon>
     </div>
     <div class="square">
         <img class="product-image" src={product.image} alt={product.name} />
     </div>
-    <div>
+    <div class="flex flex-column" style="gap: 5px;">
         <div class="product-name">
             {product.name}
         </div>

@@ -6,7 +6,7 @@ h2 {
     color: var(--color-green);
     font-size: 50px;
     font-family: 'Anton', sans-serif;
-    text-transform: uppercase;
+    text-transform: capitalize;
 }
 
 h3 {

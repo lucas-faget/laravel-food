@@ -44,7 +44,7 @@
             </div>
             <div class="right">
                 <div class="flex flex-column" style="gap: 30px;">
-                    <div class="flex flex-column">
+                    <div class="flex flex-column" style="gap: 10px;">
                         <h2>{product.name}</h2>
                         {#if product.brand}
                             <h3>{product.brand}</h3>
@@ -62,11 +62,11 @@
                     {/if}
                     <button class="button justify-between" style="border-radius: 50px;">
                         <span>Add to favorite</span>
-                        <SvgIcon name="favorite"></SvgIcon>
+                        <SvgIcon name="favorite_white"></SvgIcon>
                     </button>
                     <button class="button justify-between" style="border-radius: 50px;">
                         <span>Add an intake</span>
-                        <SvgIcon name="add"></SvgIcon>
+                        <SvgIcon name="add_white"></SvgIcon>
                     </button>
                 </div>
             </div>

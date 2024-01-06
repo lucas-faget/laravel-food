@@ -35,7 +35,7 @@
         <div>
             <button class="button flex" style="height: 50px; gap: 8px;" on:click={handleProductSearch}>
                 <span>SEARCH</span>
-                <SvgIcon name="search"></SvgIcon>
+                <SvgIcon name="search_white"></SvgIcon>
             </button>
         </div>
         <div class="flex-1">
