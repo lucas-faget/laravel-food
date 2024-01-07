@@ -22,9 +22,9 @@
 
     $: hasScrolled = scrollTop < (50 * viewportHeight) / 100;
 
-    $: isWideNav = hasScrolled && !isMobileNavVisible;
+    $: isWide = hasScrolled && !isMobileNavVisible;
 
-    $: isDarkNav = !isWideNav;
+    $: isDark = !isWide;
 
     $: isMobileNavVisible = isMobileNavOpen && viewportWidth <= maxMobileNavViewportWidth;
   
@@ -40,13 +40,13 @@
 </script>
 
 <Router>
-    <nav class={isDarkNav ? 'nav-dark ' : 'nav-light '}{isWideNav ? 'nav-wide' : 'nav-thin'}>
+    <nav class={isDark ? 'nav-dark ' : 'nav-light '}{isWide ? 'nav-wide' : 'nav-thin'}>
         <Link to="/" style="text-decoration: none;">
             <div class="logo">Healthy</div>
         </Link>
 
         <div on:click={toggleMobileNav} on:keydown={handleKeyDown}>
-            <MobileNavToggle isColoredDark={!isDarkNav} isMobileNavOpen={isMobileNavOpen} />
+            <MobileNavToggle isColoredDark={!isDark} isMobileNavOpen={isMobileNavOpen} />
         </div>
         
         <div class="links" aria-expanded={isMobileNavOpen}>
@@ -54,7 +54,7 @@
                 {#each routes as route}
                     <Link to={route.path} style={isMobileNavVisible ? "text-decoration: none;" : "text-decoration: none; height: 100%;"}>
                         <li on:mouseenter={() => route.isHovered = true} on:mouseleave={() => route.isHovered = false}>
-                            <SvgIcon name={(isDarkNav && !route.isHovered || !isDarkNav && route.isHovered) ? route.icon.dark : route.icon.light}></SvgIcon>
+                            <SvgIcon name={(isDark && !route.isHovered || !isDark && route.isHovered) ? route.icon.dark : route.icon.light}></SvgIcon>
                             <div>{route.title}</div>
                         </li>
                     </Link>

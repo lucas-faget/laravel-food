@@ -1,9 +1,47 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
+    import { writable } from 'svelte/store';
+    import { getFoodSearch } from '../api/FdcApiClient';
+    import { Category } from '../enums/Category';
     import ProductCategories from '../lib/ProductCategories.svelte';
     import ProductCatalog from '../lib/ProductCatalog.svelte';
-    import { Category } from '../enums/Category';
 
     let currentCategory: Category = Category.All_products;
+    let isLoading: boolean = false;
+
+    let productList = writable({
+        products: [],
+        currentPageNumber: 1,
+        maxPageNumber: 1,
+        searchQuery: "",
+    });
+
+    onMount(async () => {
+        updateProductList();
+    });
+
+    const updateProductList = async () => {
+        isLoading = true;
+        let data = await getFoodSearch($productList.searchQuery, $productList.currentPageNumber);
+        productList.update((prev) => ({
+            ...prev,
+            products: data.products,
+            maxPageNumber: data.totalPages,
+        }));
+        isLoading = false;
+    }
+
+    const handleProductSearch = async () => {
+        productList.update((prev) => ({
+            ...prev,
+            currentPageNumber: 1,
+        }));
+        updateProductList()
+    }
+
+    const handlePageChange = () => {
+        updateProductList();
+    }
 </script>
   
 <div class="products">
@@ -17,7 +55,7 @@
             <ProductCategories bind:currentCategory={currentCategory} />
         </div>
         <div class="catalog">
-            <ProductCatalog />
+            <ProductCatalog bind:productList={$productList} isLoading={isLoading} on:handleProductSearch={handleProductSearch} on:handlePageChange={handlePageChange} />
         </div>
     </div>
 </div>

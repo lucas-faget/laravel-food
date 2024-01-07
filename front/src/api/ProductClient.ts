@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { Product } from '../types/Product';
 
-const API_BASE_URL = "http://localhost:8000/products";
+const API_BASE_URL = "http://localhost:8000/api/products";
 
 export const getAllProducts = async () => {
     try {

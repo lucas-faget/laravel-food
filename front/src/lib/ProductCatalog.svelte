@@ -1,35 +1,21 @@
 <script lang="ts">
+    import { createEventDispatcher } from 'svelte';
+    import SvgIcon from "./SvgIcon.svelte";
     import SearchBar from './SearchBar.svelte';
     import ProductCard from './ProductCard.svelte';
-    import { onMount } from 'svelte';
-    import { writable } from 'svelte/store';
-    import { getFoodSearch, fakeProducts } from '../api/FdcApiClient';
-    import SvgIcon from "./SvgIcon.svelte";
     import Pagination from "./Pagination.svelte";
 
-    let products = writable([]);
-    let maxPage: number;
-    //products.set(fakeProducts(20));
-    let currentPage: number = 1;
-    let searchQuery: string = "";
-    let isLoading: boolean = false;
+    const dispatch = createEventDispatcher();
 
-    onMount(async () => {
-        handleProductSearch();
-    });
+    export let productList: any;
+    export let isLoading: boolean;
 
-    const handleProductSearch = async () => {
-        isLoading = true;
-        let data: any;
-        data = await getFoodSearch(searchQuery, currentPage);
-        products.set(data.products);
-        maxPage = data.totalPages;
-        console.log(maxPage)
-        isLoading = false;
+    function handleProductSearch() {
+        dispatch('handleProductSearch');
     }
 
     function handlePageChange() {
-        handleProductSearch();
+        dispatch('handlePageChange');
     }
 </script>
   
@@ -42,7 +28,7 @@
             </button>
         </div>
         <div class="flex-1">
-            <SearchBar bind:searchQuery={searchQuery}></SearchBar>
+            <SearchBar bind:searchQuery={productList.searchQuery}></SearchBar>
         </div>
     </div>
 
@@ -51,9 +37,9 @@
             <img src="/loading-icon.gif" alt="Loading icon" style="height: 100%; width: 100%;"/>
         </div>
     {:else}
-        {#if products && $products.length !== 0}
+        {#if productList.products && productList.products.length !== 0}
             <div class="product-list">
-                {#each $products as product}
+                {#each productList.products as product}
                     <a href="/products/{product.api_id}" style="text-decoration: none;">
                         <ProductCard product={product} />
                     </a>
@@ -64,7 +50,7 @@
         {/if}
     {/if}
 
-    <Pagination bind:currentPage={currentPage} bind:maxPage={maxPage} on:pageChanged={handlePageChange}></Pagination>
+    <Pagination bind:currentPage={productList.currentPageNumber} bind:maxPage={productList.maxPageNumber} on:pageChanged={handlePageChange}></Pagination>
 </div>
 
 <style>

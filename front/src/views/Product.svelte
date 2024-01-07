@@ -1,6 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { getFood, fakeProducts } from '../api/FdcApiClient';
+    import { createProduct } from '../api/ProductClient';
     import List from '../lib/List.svelte';
     import Table from '../lib/Table.svelte';
     import SvgIcon from '../lib/SvgIcon.svelte';
@@ -43,6 +44,15 @@
     function getProportionalAmountString(amount: number, servingSize: number): string {
         return getAmountString(getProportionalAmount(amount, servingSize));
     }
+
+    const createProductHandler = async () => {
+        try {
+            console.log(product);
+            await createProduct(product);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 </script>
 
 <div class="product">
@@ -76,7 +86,7 @@
                     {#if product.description}
                         <p class="text-capitalize">{product.description}</p>
                     {/if}
-                    <button class="button button-dark justify-between" style="border-radius: 50px;">
+                    <button class="button button-dark justify-between" style="border-radius: 50px;" on:click={createProductHandler}>
                         <span>Add to favorite</span>
                         <SvgIcon name="favorite_white"></SvgIcon>
                     </button>

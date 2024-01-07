@@ -17,4 +17,13 @@ export const routes = [
         },
         isHovered: false,
     },
+    {
+        path: '/basket',
+        title: 'Basket',
+        icon: {
+            light: 'shopping_basket',
+            dark: 'shopping_basket_white',
+        },
+        isHovered: false,
+    },
 ];
