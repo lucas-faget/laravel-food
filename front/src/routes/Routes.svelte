@@ -8,8 +8,8 @@
 </script>
 
 <div>
-    <Route path="/" component="{Home}" />
-    <Route path="/products" component="{Products}" />
+    <Route path="/"><Home /></Route>
+    <Route path="/products"><Products /></Route>
     <Route path="/products/:id" component="{Product}" />
-    <Route path="/basket" component="{Basket}" />
+    <Route path="/basket"><Basket /></Route>
 </div>

@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\FoodDataCentralApiController;
+use App\Http\Controllers\FoodDataCentralController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,15 +20,18 @@ Route::get('/', function () {
 });
 
 Route::prefix('/api/products')->group(function () {
-    Route::get('/', [ProductController::class, 'index']);
-    Route::post('/', [ProductController::class, 'store']);
-    Route::get('/{product}', [ProductController::class, 'show']);
-    Route::put('/{product}', [ProductController::class, 'update']);
-    Route::delete('/{product}', [ProductController::class, 'destroy']);
+    $controller = ProductController::class;
+
+    Route::get('/', [$controller, 'index']);
+    Route::get('/page/{pageNumber?}', [$controller, 'page']);
+    Route::post('/', [$controller, 'store']);
+    Route::get('/{product}', [$controller, 'show']);
+    Route::put('/{product}', [$controller, 'update']);
+    Route::delete('/{product}', [$controller, 'destroy']);
 });
 
 Route::prefix('/fdc')->group(function () {
-    $controller = FoodDataCentralApiController::class;
+    $controller = FoodDataCentralController::class;
 
     Route::get('/foods/search/{searchQuery}/{pageNumber?}', [$controller, 'foodSearch']);
     Route::get('/food/{id}', [$controller, 'food']);

@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { writable } from 'svelte/store';
-    import { getFoodSearch } from '../api/FdcApiClient';
+    import { getFoodSearch } from '../api/FdcClient';
     import { Category } from '../enums/Category';
     import ProductCategories from '../lib/ProductCategories.svelte';
     import ProductCatalog from '../lib/ProductCatalog.svelte';
@@ -23,17 +23,17 @@
     const updateProductList = async () => {
         isLoading = true;
         let data = await getFoodSearch($productList.searchQuery, $productList.currentPageNumber);
-        productList.update((prev) => ({
-            ...prev,
+        productList.update((previous) => ({
+            ...previous,
             products: data.products,
-            maxPageNumber: data.totalPages,
+            maxPageNumber: Math.max(1, data.totalPages),
         }));
         isLoading = false;
     }
 
     const handleProductSearch = async () => {
-        productList.update((prev) => ({
-            ...prev,
+        productList.update((previous) => ({
+            ...previous,
             currentPageNumber: 1,
         }));
         updateProductList()

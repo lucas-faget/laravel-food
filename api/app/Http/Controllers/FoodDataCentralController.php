@@ -6,7 +6,7 @@ use App\Models\Product;
 use GuzzleHttp\Client;
 use App\Http\Controllers\GoogleApiController;
 
-class FoodDataCentralApiController extends Controller
+class FoodDataCentralController extends Controller
 {
     protected $client;
     protected static $apiKey;
@@ -27,7 +27,7 @@ class FoodDataCentralApiController extends Controller
         header("Access-Control-Allow-Headers: Content-Type");
     }
 
-    public function foodSearch(string $searchQuery, $pageNumber = 1)
+    public function foodSearch(string $searchQuery, int $pageNumber = 1)
     {
         $response = $this->client->request('GET', 'foods/search', [
             'query' => [

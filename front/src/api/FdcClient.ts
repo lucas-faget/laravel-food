@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:8000/fdc/";
+const API_BASE_URL = "http://localhost:8000/fdc";
 
 export const fakeProducts = (productNumber: number) => {
     let products = [];
@@ -18,7 +18,7 @@ export const fakeProducts = (productNumber: number) => {
 export async function getFoodSearch($searchQuery: string, pageNumber: number = 1) {
     try {
         $searchQuery = $searchQuery ? $searchQuery : "%20";
-        const response = await axios.get(`${API_BASE_URL}foods/search/${$searchQuery}/${pageNumber}`);
+        const response = await axios.get(`${API_BASE_URL}/foods/search/${$searchQuery}/${pageNumber}`);
         return response.data;
     } catch (error) {
         console.error(error);
@@ -27,7 +27,7 @@ export async function getFoodSearch($searchQuery: string, pageNumber: number = 1
 
 export async function getFood(id: number|string) {
     try {
-        const response = await axios.get(`${API_BASE_URL}food/${id}`);
+        const response = await axios.get(`${API_BASE_URL}/food/${id}`);
         return response.data;
     } catch (error) {
         console.error(error);

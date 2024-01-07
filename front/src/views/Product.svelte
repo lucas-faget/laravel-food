@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { getFood, fakeProducts } from '../api/FdcApiClient';
+    import { getFood } from '../api/FdcClient';
     import { createProduct } from '../api/ProductClient';
     import List from '../lib/List.svelte';
     import Table from '../lib/Table.svelte';
@@ -22,11 +22,7 @@
 
     onMount(async () => {
         const data = await getFood(id);
-        if (data) {
-            product = data;
-        } else {
-            product = fakeProducts(1).shift();
-        }
+        product = data;
     });
 
     function clamp(value: number, min: number, max: number) {

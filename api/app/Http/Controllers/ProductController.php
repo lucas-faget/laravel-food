@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    protected static $pageSize = 12;
+
     public function index()
     {
         $products = Product::all();
@@ -14,13 +16,26 @@ class ProductController extends Controller
         return response()->json($products);
     }
 
+    public function page(int $pageNumber = 1)
+    {
+        $offset = ($pageNumber - 1) * self::$pageSize;
+
+        $products = Product::skip($offset)->take(self::$pageSize)->get();
+        $totalPages = ceil(Product::count() / self::$pageSize);
+
+        return response()->json([
+            'products' => $products,
+            'totalPages' => $totalPages
+        ]);
+    }
+
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $request->validate([
             'name' => 'required'
         ]);
 
-        $product = Product::create($validatedData);
+        $product = Product::create($request->all());
 
         return response()->json($product, 201);
     }
@@ -32,11 +47,11 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
-        $validatedData = $request->validate([
+        $request->validate([
             'name' => 'required'
         ]);
 
-        $product->update($validatedData);
+        $product->update($request->all());
 
         return response()->json($product);
     }
