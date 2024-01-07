@@ -17,18 +17,11 @@ class Intake extends Model
     protected $fillable = [
         'user_id',
         'product_id',
-        'grams',
-        'date',
-        'time'
+        'amount',
     ];
 
     protected $casts = [
-        'grams' => 'float',
-    ];
-
-    protected $dates = [
-        'date',
-        'time'
+        'amount' => 'float',
     ];
 
     public function user()

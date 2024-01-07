@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\User;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,6 +14,7 @@ class Product extends Model
     protected $table = 'products';
     protected $primaryKey = 'id';
     protected $fillable = [
+        'user_id',
         'api_id',
         'name',
         'image',
@@ -26,7 +29,7 @@ class Product extends Model
         'calories',
         'fat',
         'carbohydrates',
-        'protein'
+        'protein',
     ];
 
     protected $casts = [
@@ -34,6 +37,11 @@ class Product extends Model
         'calories' => 'float',
         'fat' => 'float',
         'carbohydrates' => 'float',
-        'protein' => 'float'
+        'protein' => 'float',
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_product');
+    }
 }
