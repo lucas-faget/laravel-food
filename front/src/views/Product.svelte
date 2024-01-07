@@ -4,6 +4,7 @@
     import List from '../lib/List.svelte';
     import Table from '../lib/Table.svelte';
     import SvgIcon from '../lib/SvgIcon.svelte';
+    import { randomFruitImage } from '../api/fruits';
 
     export let id: number|string;
 
@@ -51,7 +52,7 @@
                 {#if product.image}
                     <img class="product-image" src={product.image} alt={product.name} />
                 {:else}
-                    <img class="product-image" src="/food/apple.svg" alt={product.name} />
+                    <img class="product-image" src={randomFruitImage()} alt={product.name} />
                 {/if}
             </div>
             <div class="right">

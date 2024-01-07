@@ -1,5 +1,6 @@
 <script lang="ts">
     import SvgIcon from "./SvgIcon.svelte";
+    import { randomFruitImage } from "../api/fruits";
 
     export let product;
 </script>
@@ -12,7 +13,7 @@
         {#if product.image}
             <img class="product-image" src={product.image} alt={product.name} />
         {:else}
-            <img class="product-image" src="/food/apple.svg" alt={product.name} />
+            <img class="product-image" src={randomFruitImage()} alt={product.name} />
         {/if}
     </div>
     <div class="flex flex-column" style="gap: 5px;">
