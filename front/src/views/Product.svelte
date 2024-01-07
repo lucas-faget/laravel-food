@@ -48,7 +48,11 @@
     {#if product}
         <div class="top">
             <div class="left">
-                <img class="product-image" src={product.image} alt={product.name} />
+                {#if product.image}
+                    <img class="product-image" src={product.image} alt={product.name} />
+                {:else}
+                    <img class="product-image" src="/food/apple.svg" alt={product.name} />
+                {/if}
             </div>
             <div class="right">
                 <div class="flex flex-column" style="gap: 30px;">
