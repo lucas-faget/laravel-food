@@ -43,6 +43,7 @@
 
     const createProductHandler = async () => {
         try {
+            product.user_id = 1;
             console.log(product);
             await createProduct(product);
         } catch (error) {

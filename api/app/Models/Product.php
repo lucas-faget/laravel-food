@@ -15,6 +15,7 @@ class Product extends Model
     protected $primaryKey = 'id';
     protected $fillable = [
         'api_id',
+        'user_id',
         'name',
         'image',
         'country',
@@ -39,8 +40,8 @@ class Product extends Model
         'protein' => 'float',
     ];
 
-    public function users()
+    public function user()
     {
-        return $this->belongsToMany(User::class, 'user_product');
+        return $this->belongsTo(User::class);
     }
 }
