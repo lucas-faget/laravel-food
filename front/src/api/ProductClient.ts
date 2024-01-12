@@ -3,9 +3,9 @@ import type { Product } from '../types/Product';
 
 const API_BASE_URL = "http://localhost:8000/api";
 
-export const getProductPage = async (pageNumber: number = 1) => {
+export const getProductPage = async (userId: number, pageNumber: number = 1) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/products/page/${pageNumber}`);
+        const response = await axios.get(`${API_BASE_URL}/products/page/${userId}/${pageNumber}`);
         return response.data;
     } catch (error) {
         console.error(error);

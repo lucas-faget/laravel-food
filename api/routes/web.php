@@ -23,7 +23,7 @@ Route::prefix('/api/products')->group(function () {
     $controller = ProductController::class;
 
     Route::get('/', [$controller, 'index']);
-    Route::get('/page/{pageNumber?}', [$controller, 'page']);
+    Route::get('/page/{user}/{pageNumber?}', [$controller, 'page']);
     Route::post('/', [$controller, 'store']);
     Route::get('/{product}', [$controller, 'show']);
     Route::put('/{product}', [$controller, 'update']);

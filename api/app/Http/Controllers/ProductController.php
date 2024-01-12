@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -16,11 +17,15 @@ class ProductController extends Controller
         return response()->json($products);
     }
 
-    public function page(int $pageNumber = 1)
+    public function page(User $user, int $pageNumber = 1)
     {
         $offset = ($pageNumber - 1) * self::$pageSize;
 
-        $products = Product::skip($offset)->take(self::$pageSize)->get();
+        $products = $user->products()
+            ->skip($offset)
+            ->take(self::$pageSize)
+            ->get();
+
         $totalPages = ceil(Product::count() / self::$pageSize);
 
         return response()->json([
@@ -35,6 +40,7 @@ class ProductController extends Controller
             'name' => 'required'
         ]);
 
+        $request['user_id'] = env('CONNECTED_USER_ID');
         $product = Product::create($request->all());
 
         return response()->json($product, 201);

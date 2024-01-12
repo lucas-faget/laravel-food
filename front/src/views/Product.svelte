@@ -1,11 +1,11 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { getFood } from '../api/FdcClient';
+    import { randomFruitImage } from '../api/fruits';
     import { createProduct } from '../api/ProductClient';
     import List from '../lib/List.svelte';
     import Table from '../lib/Table.svelte';
     import SvgIcon from '../lib/SvgIcon.svelte';
-    import { randomFruitImage } from '../api/fruits';
 
     export let id: number|string;
 
@@ -43,7 +43,6 @@
 
     const createProductHandler = async () => {
         try {
-            product.user_id = 1;
             console.log(product);
             await createProduct(product);
         } catch (error) {
