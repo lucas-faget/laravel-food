@@ -12,7 +12,7 @@
     let productList = writable({
         products: [],
         currentPageNumber: 1,
-        maxPageNumber: 1,
+        pageCount: 1,
         searchQuery: "",
     });
 
@@ -27,7 +27,7 @@
         productList.update((previous) => ({
             ...previous,
             products: data.products,
-            maxPageNumber: Math.max(1, data.totalPages),
+            pageCount: Math.max(1, data.pageCount),
         }));
         isLoading = false;
     }

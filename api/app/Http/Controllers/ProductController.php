@@ -26,11 +26,11 @@ class ProductController extends Controller
             ->take(self::$pageSize)
             ->get();
 
-        $totalPages = ceil(Product::count() / self::$pageSize);
+        $pageCount = ceil($user->products()->count() / self::$pageSize);
 
         return response()->json([
             'products' => $products,
-            'totalPages' => $totalPages
+            'pageCount' => $pageCount
         ]);
     }
 

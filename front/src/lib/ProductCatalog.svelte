@@ -50,7 +50,7 @@
         {/if}
     {/if}
 
-    <Pagination bind:currentPage={productList.currentPageNumber} bind:maxPage={productList.maxPageNumber} on:pageChanged={handlePageChange}></Pagination>
+    <Pagination bind:currentPageNumber={productList.currentPageNumber} bind:pageCount={productList.pageCount} on:pageChanged={handlePageChange}></Pagination>
 </div>
 
 <style>

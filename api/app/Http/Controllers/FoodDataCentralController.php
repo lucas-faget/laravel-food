@@ -61,7 +61,7 @@ class FoodDataCentralController extends Controller
         
         return response()->json([
             'products'   => $products,
-            'totalPages' => $apiResult['totalPages'],
+            'pageCount' => $apiResult['totalPages'],
         ]);
     }
 
