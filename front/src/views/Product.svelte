@@ -62,7 +62,7 @@
                 {/if}
             </div>
             <div class="right">
-                <div class="flex flex-column bg-light p-50 br-50" style="gap: 30px;">
+                <div class="flex flex-column bg-light padding border-radius" style="gap: 30px;">
                     <div class="flex flex-column" style="gap: 10px;">
                         <h2 class="text-capitalize">{product.name}</h2>
                         {#if product.brand}
@@ -93,7 +93,7 @@
                 </div>
             </div>
         </div>
-        <div class="bottom intake-form-grid bg-light-green p-50-relative">
+        <div class="bottom intake-form-grid bg-light-green padding-relative">
             <div class="flex">
                 <button class="square-button button-dark" style="border-radius: 100% 0 0 100%;" on:click={() => servingSize--}>
                     <SvgIcon name="remove_circle" size={35}></SvgIcon>
@@ -110,7 +110,7 @@
                 <button class="button button-dark w-100 text-center">Add intake</button>
             </div>
         </div>
-        <div class="bottom p-50-relative">
+        <div class="bottom padding-relative">
             <Table header={
                 ["Serving size", getAmountString(StandardServingSize), getAmountString(product.serving_size), getAmountString(servingSize)]
             } rows={[
@@ -121,8 +121,8 @@
             ]}></Table>
         </div>
         {#if product.ingredients}
-            <div class="bg-light-green p-50-relative">
-                <div class="bottom bg-light p-50 br-50">
+            <div class="bg-light-green padding-relative">
+                <div class="bottom bg-light padding border-radius">
                     <List title="composition" items={product.ingredients.split(',')}></List>
                 </div>
             </div>
@@ -135,6 +135,12 @@
 </div>
 
 <style>
+    :root {
+        --padding: 50px;
+        --relative-padding: min(5vw, 50px);
+        --border-radius: 50px;
+    }
+
     .loading-icon {
         position: fixed;
         top: calc(50vh - 50px);
@@ -143,16 +149,16 @@
         width: 100px;
     }
 
-    .p-50 {
-        padding: 50px;
+    .padding {
+        padding: var(--padding);
     }
 
-    .p-50-relative {
-        padding: min(5vw, 50px);
+    .padding-relative {
+        padding: var(--relative-padding);
     }
 
-    .br-50 {
-        border-radius: 50px;
+    .border-radius {
+        border-radius: var(--border-radius);
     }
 
     .product {
@@ -162,10 +168,10 @@
     }
 
     .top {
-        padding-top: min(5vw, 50px);
-        padding-inline: min(5vw, 50px);
+        padding-top: var(--relative-padding);
+        padding-inline: var(--relative-padding);
         display: flex;
-        gap: min(5vw, 50px);
+        gap: var(--relative-padding);
     }
 
     @media only screen and (max-width: 1000px) {

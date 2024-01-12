@@ -83,7 +83,7 @@
     }
 
     .nav-light {
-        background-color: transparent;
+        background-color: var(--color-light);
     }
 
     .nav-wide {
@@ -117,7 +117,7 @@
     }
 
     .nav-dark ul li {
-        color: #fff;
+        color: var(--color-light);
     }
 
     .nav-light ul li {
@@ -129,7 +129,7 @@
     }
 
     .nav-light ul li:hover {
-        color: #fff;
+        color: var(--color-light);
     }
     
     .logo {
@@ -140,7 +140,7 @@
     }
 
     .nav-dark .logo {
-        color: #fff;
+        color: var(--color-light);
     }
 
     .nav-light .logo {
@@ -170,7 +170,7 @@
         }
 
         .nav-dark ul li:hover {
-            background-color: #fff;
+            background-color: var(--color-light);
         }
 
         .nav-light ul li:hover {
