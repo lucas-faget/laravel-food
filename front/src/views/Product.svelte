@@ -54,15 +54,15 @@
 <div class="product">
     {#if product}
         <div class="top">
-            <div class="left">
+            <div class="left bg-light-green p-50">
                 {#if product.image}
                     <img class="product-image" src={product.image} alt={product.name} />
                 {:else}
                     <img class="product-image" src={randomFruitImage()} alt={product.name} />
                 {/if}
             </div>
-            <div class="right">
-                <div class="flex flex-column" style="gap: 30px;">
+            <div class="right bg-light-green p-50-relative">
+                <div class="flex flex-column bg-light p-50 br-50" style="gap: 30px;">
                     <div class="flex flex-column" style="gap: 10px;">
                         <h2 class="text-capitalize">{product.name}</h2>
                         {#if product.brand}
@@ -93,7 +93,7 @@
                 </div>
             </div>
         </div>
-        <div class="bottom grid">
+        <div class="bottom grid bg-light-green p-50-relative">
             <div class="flex">
                 <button class="square-button button-dark" style="border-radius: 100% 0 0 100%;" on:click={() => servingSize--}>
                     <SvgIcon name="remove_circle" size={35}></SvgIcon>
@@ -110,7 +110,7 @@
                 <button class="button button-dark w-100 text-center">Add intake</button>
             </div>
         </div>
-        <div class="bottom">
+        <div class="bottom p-50-relative">
             <Table header={
                 ["Serving size", getAmountString(StandardServingSize), getAmountString(product.serving_size), getAmountString(servingSize)]
             } rows={[
@@ -121,8 +121,10 @@
             ]}></Table>
         </div>
         {#if product.ingredients}
-            <div class="bottom">
-                <List title="composition" items={product.ingredients.split(',')}></List>
+            <div class="bg-light-green p-50-relative">
+                <div class="bottom bg-light p-50 br-50">
+                    <List title="composition" items={product.ingredients.split(',')}></List>
+                </div>
             </div>
         {/if}
     {:else}
@@ -141,34 +143,47 @@
         width: 100px;
     }
 
+    .p-50 {
+        padding: 50px;
+    }
+
+    .p-50-relative {
+        padding: min(5vw, 50px);
+    }
+
+    .br-50 {
+        border-radius: 50px;
+    }
+
     .product {
         display: flex;
         flex-direction: column;
-        padding-bottom: min(100px, 10vw);
-    }
-
-    .product-image {
-        height: 500px;
+        margin-top: 100px;
     }
 
     .top {
         display: flex;
     }
 
-    .left, .right {   
-        display: flex;
-        align-items: center;
+    @media only screen and (max-width: 1000px) {
+        .top {
+            flex-direction: column;
+        }
+    }
+
+    .product-image {
+        max-width: min(100%, 500px);
+        max-height: min(100%, 500px);
+    }
+
+    .left, .right {
         flex: 0 0 50%;
     }
 
     .left {
-        background-color: var(--color-green);
+        display: flex;
         justify-content: center;
-        border-radius: 0 10vw 0 10vw;
-    }
-
-    .right {
-        padding-inline: min(100px, 10vw);
+        align-items: center;
     }
 
     .grid {
@@ -205,31 +220,5 @@
                 "b"
                 "c";
         }
-    }
-
-    @media only screen and (max-width: 800px) {
-        .top {
-            flex-direction: column;
-            margin-top: 100px;
-        }
-
-        .left, .right {
-            padding-block: min(100px, 10vw);
-        }
-    }
-
-    @media only screen and (min-width: 801px) {
-        .left, .right {
-            min-height: 100vh;
-        }
-
-        .right {
-            padding-block: calc(100px + 5vw);
-        }
-    }
-
-    .bottom {
-        padding-top: min(100px, 10vw);
-        padding-inline: min(100px, 10vw);
     }
 </style>

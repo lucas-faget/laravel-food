@@ -1,0 +1,31 @@
+.color-white {
+    color: #fff;
+}
+
+.color-light {
+    color: var(--color-light);
+}
+
+.color-light-green {
+    color: var(--color-light-green);
+}
+
+.color-green {
+    color: var(--color-green);
+}
+
+.bg-white {
+    background-color: #fff;
+}
+
+.bg-light {
+    background-color: var(--color-light);
+}
+
+.bg-light-green {
+    background-color: var(--color-light-green);
+}
+
+.bg-green {
+    background-color: var(--color-green);
+}

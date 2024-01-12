@@ -54,7 +54,8 @@
     }
 
     .product-image {
-        width: 150px;
+        max-width: 70%;
+        max-height: 70%;
     }
 
     .product-name {

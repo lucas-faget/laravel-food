@@ -72,7 +72,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        width: 100vw;
+        width: 100%;
         padding-inline: 30px;
         box-sizing: border-box;
         z-index: 100;
@@ -111,7 +111,6 @@
     nav ul li {
         display: flex;
         gap: 10px;
-        border-radius: 20px 0 20px 0;
         font-size: 20px;
         font-family: 'Anton', sans-serif;
         cursor: pointer;
@@ -157,7 +156,7 @@
         }
     }
 
-    @media only screen and (min-width: 601px)
+    @media only screen and (min-width: 801px)
     {
         nav ul {
             gap: 15px;
@@ -183,7 +182,7 @@
         }
     }
 
-    @media only screen and (max-width: 600px)
+    @media only screen and (max-width: 800px)
     {
         .links[aria-expanded="true"] {
             top: 0;
