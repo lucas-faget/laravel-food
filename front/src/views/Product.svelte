@@ -53,15 +53,15 @@
 
 <div class="product">
     {#if product}
-        <div class="top">
-            <div class="left bg-light-green p-50">
+        <div class="top bg-light-green">
+            <div class="left">
                 {#if product.image}
                     <img class="product-image" src={product.image} alt={product.name} />
                 {:else}
                     <img class="product-image" src={randomFruitImage()} alt={product.name} />
                 {/if}
             </div>
-            <div class="right bg-light-green p-50-relative">
+            <div class="right">
                 <div class="flex flex-column bg-light p-50 br-50" style="gap: 30px;">
                     <div class="flex flex-column" style="gap: 10px;">
                         <h2 class="text-capitalize">{product.name}</h2>
@@ -93,7 +93,7 @@
                 </div>
             </div>
         </div>
-        <div class="bottom grid bg-light-green p-50-relative">
+        <div class="bottom intake-form-grid bg-light-green p-50-relative">
             <div class="flex">
                 <button class="square-button button-dark" style="border-radius: 100% 0 0 100%;" on:click={() => servingSize--}>
                     <SvgIcon name="remove_circle" size={35}></SvgIcon>
@@ -162,22 +162,21 @@
     }
 
     .top {
+        padding-top: min(5vw, 50px);
+        padding-inline: min(5vw, 50px);
         display: flex;
+        gap: min(5vw, 50px);
     }
 
     @media only screen and (max-width: 1000px) {
         .top {
-            flex-direction: column;
+            flex-direction: column-reverse;
         }
     }
 
     .product-image {
-        max-width: min(100%, 500px);
-        max-height: min(100%, 500px);
-    }
-
-    .left, .right {
-        flex: 0 0 50%;
+        max-width: min(100%, 400px);
+        max-height: min(100%, 400px);
     }
 
     .left {
@@ -186,17 +185,27 @@
         align-items: center;
     }
 
-    .grid {
+    @media only screen and (min-width: 1001px) {
+        .left {
+            flex-basis: 40%;
+        }
+
+        .right {
+            flex-basis: 60%;
+        }
+    }
+
+    .intake-form-grid {
         display: grid;
         grid-gap: 20px;
     }
 
-    .grid > div:nth-child(1) { grid-area: a; }
-    .grid > div:nth-child(2) { grid-area: b; }
-    .grid > div:nth-child(3) { grid-area: c; }
+    .intake-form-grid > div:nth-child(1) { grid-area: a; }
+    .intake-form-grid > div:nth-child(2) { grid-area: b; }
+    .intake-form-grid > div:nth-child(3) { grid-area: c; }
 
     @media only screen and (min-width: 1001px) {
-        .grid {
+        .intake-form-grid {
             grid-template-columns: repeat(3, 1fr);
             grid-template-areas: 
                 "a b c";
@@ -204,7 +213,7 @@
     }
 
     @media only screen and (min-width: 801px) and (max-width: 1000px) {
-        .grid {
+        .intake-form-grid {
             grid-template-columns: repeat(2, 1fr);
             grid-template-areas: 
                 "a a"
@@ -213,7 +222,7 @@
     }
 
     @media only screen and (max-width: 800px) {
-        .grid {
+        .intake-form-grid {
             grid-template-columns: 1fr;
             grid-template-areas: 
                 "a"
