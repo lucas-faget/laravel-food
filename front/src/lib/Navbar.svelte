@@ -159,7 +159,6 @@
     @media only screen and (min-width: 801px)
     {
         nav ul {
-            gap: 15px;
             height: 100%;
         }
 

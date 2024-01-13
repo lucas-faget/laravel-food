@@ -9,7 +9,7 @@
     <div class="favorite-icon">
         <SvgIcon name="favorite_fill"></SvgIcon>
     </div>
-    <div class="square">
+    <div class="image-container">
         {#if product.image}
             <img class="product-image" src={product.image} alt={product.name} />
         {:else}
@@ -43,7 +43,7 @@
         right: 10px;
     }
 
-    .square {
+    .image-container {
         background-color: hsl(0, 0%, 100%);
         display: flex;
         justify-content: center;

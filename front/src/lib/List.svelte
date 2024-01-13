@@ -1,9 +1,9 @@
 <script lang="ts">
-    export let title: String;
+    export let title: string = "";
     export let items: Array<String>
 </script>
 
-<div class="list">
+<div class="flex flex-column" style="gap: 20px;">
     {#if title}
         <span class="list-title">
             {title}
@@ -19,19 +19,13 @@
 </div>
   
 <style>
-    .list {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
     .list-title {
         color: var(--color-green);
         font-size: 20px;
         text-transform: capitalize;
     }
 
-    .list > ul {
+    ul {
         list-style: none;
     }
 

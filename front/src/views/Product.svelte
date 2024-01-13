@@ -86,10 +86,6 @@
                         <span>Add to favorite</span>
                         <SvgIcon name="favorite_white"></SvgIcon>
                     </button>
-                    <button class="button button-dark justify-between" style="border-radius: 50px;">
-                        <span>Add an intake</span>
-                        <SvgIcon name="add_white"></SvgIcon>
-                    </button>
                 </div>
             </div>
         </div>
@@ -111,14 +107,16 @@
             </div>
         </div>
         <div class="bottom padding-relative">
-            <Table header={
-                ["Serving size", getAmountString(StandardServingSize), getAmountString(product.serving_size), getAmountString(servingSize)]
-            } rows={[
-                ["Calories",      getProportionalAmountString(product.calories, StandardServingSize),      getAmountString(product.calories),      getProportionalAmountString(product.calories, servingSize),    ],
-                ["Fat",           getProportionalAmountString(product.fat, StandardServingSize),           getAmountString(product.fat),           getProportionalAmountString(product.fat, servingSize),         ],
-                ["Carbohydrates", getProportionalAmountString(product.carbohydrates, StandardServingSize), getAmountString(product.carbohydrates), getProportionalAmountString(product.carbohydrates, servingSize)],
-                ["Protein",       getProportionalAmountString(product.protein, StandardServingSize),       getAmountString(product.protein),       getProportionalAmountString(product.protein, servingSize),     ],
-            ]}></Table>
+            <Table
+                title="nutrition facts label"
+                header={["Serving size", getAmountString(StandardServingSize), getAmountString(product.serving_size), getAmountString(servingSize)]} 
+                rows={[
+                    ["Calories",      getProportionalAmountString(product.calories, StandardServingSize),      getAmountString(product.calories),      getProportionalAmountString(product.calories, servingSize),    ],
+                    ["Fat",           getProportionalAmountString(product.fat, StandardServingSize),           getAmountString(product.fat),           getProportionalAmountString(product.fat, servingSize),         ],
+                    ["Carbohydrates", getProportionalAmountString(product.carbohydrates, StandardServingSize), getAmountString(product.carbohydrates), getProportionalAmountString(product.carbohydrates, servingSize)],
+                    ["Protein",       getProportionalAmountString(product.protein, StandardServingSize),       getAmountString(product.protein),       getProportionalAmountString(product.protein, servingSize),     ],
+                ]}>
+            </Table>
         </div>
         {#if product.ingredients}
             <div class="bg-light-green padding-relative">
