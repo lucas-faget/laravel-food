@@ -67,11 +67,6 @@
         padding-bottom: 50px;
     }
 
-    .loading-icon {
-        height: 50px;
-        width: 50px;
-    }
-
     .search-filter {
         display: flex;
         gap: 20px;
