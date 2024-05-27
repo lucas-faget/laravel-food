@@ -2,7 +2,12 @@
     export let searchQuery: string;
 </script>
 
-<input class="input-text" type="text" placeholder="What are you searching for ?" bind:value={searchQuery} />
+<input
+    class="input-text"
+    type="text"
+    placeholder="What are you searching for ?"
+    bind:value={searchQuery}
+/>
 
 <style>
     .input-text {
@@ -15,7 +20,7 @@
         border-bottom: 5px solid var(--color-light-green);
         outline: none;
         font-size: 18px;
-        font-family: 'Roboto';
+        font-family: "Roboto";
     }
 
     .input-text:focus {

@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import { writable } from 'svelte/store';
-    import { getFoodSearch } from '../api/FdcClient';
-    import { Category } from '../enums/Category';
-    import ProductCategories from '../lib/ProductCategories.svelte';
-    import ProductCatalog from '../lib/ProductCatalog.svelte';
+    import { onMount } from "svelte";
+    import { writable } from "svelte/store";
+    import { getFoodSearch } from "../api/FdcClient";
+    import { Category } from "../enums/Category";
+    import ProductCategories from "../lib/ProductCategories.svelte";
+    import ProductCatalog from "../lib/ProductCatalog.svelte";
 
     let currentCategory: Category = Category.All_products;
     let isLoading: boolean = false;
@@ -29,33 +29,38 @@
             pageCount: Math.max(1, data.pageCount),
         }));
         isLoading = false;
-    }
+    };
 
     const handleProductSearch = async () => {
         productList.update((previous) => ({
             ...previous,
             currentPageNumber: 1,
         }));
-        updateProductList()
-    }
+        updateProductList();
+    };
 
     const handlePageChange = () => {
         updateProductList();
-    }
+    };
 </script>
-  
+
 <div class="products">
     <div class="header">
         <div class="title">
-            { currentCategory }
+            {currentCategory}
         </div>
     </div>
     <div class="catalog-with-categories">
         <div class="categories">
-            <ProductCategories bind:currentCategory={currentCategory} />
+            <ProductCategories bind:currentCategory />
         </div>
         <div class="catalog">
-            <ProductCatalog bind:productList={$productList} isLoading={isLoading} on:handleProductSearch={handleProductSearch} on:handlePageChange={handlePageChange} />
+            <ProductCatalog
+                bind:productList={$productList}
+                {isLoading}
+                on:handleProductSearch={handleProductSearch}
+                on:handlePageChange={handlePageChange}
+            />
         </div>
     </div>
 </div>
@@ -81,7 +86,7 @@
     .title {
         color: var(--color-green);
         font-size: 100px;
-        font-family: 'Anton', sans-serif;
+        font-family: "Anton", sans-serif;
         text-transform: uppercase;
     }
 

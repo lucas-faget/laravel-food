@@ -25,11 +25,11 @@
         {/each}
     </table>
 </div>
-  
+
 <style>
     .table-title {
         color: var(--color-green);
-        font-family: 'Anton';
+        font-family: "Anton";
         font-size: 25px;
         text-transform: capitalize;
     }
@@ -47,7 +47,8 @@
         border-top: 1px solid var(--color-light-green);
     }
 
-    th, td {
+    th,
+    td {
         padding-block: 25px;
     }
 

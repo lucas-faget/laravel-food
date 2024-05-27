@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { createEventDispatcher } from 'svelte';
+    import { createEventDispatcher } from "svelte";
     import SvgIcon from "./SvgIcon.svelte";
-    import SearchBar from './SearchBar.svelte';
-    import ProductCard from './ProductCard.svelte';
+    import SearchBar from "./SearchBar.svelte";
+    import ProductCard from "./ProductCard.svelte";
     import Pagination from "./Pagination.svelte";
 
     const dispatch = createEventDispatcher();
@@ -11,18 +11,22 @@
     export let isLoading: boolean;
 
     function handleProductSearch() {
-        dispatch('handleProductSearch');
+        dispatch("handleProductSearch");
     }
 
     function handlePageChange() {
-        dispatch('handlePageChange');
+        dispatch("handlePageChange");
     }
 </script>
-  
+
 <div class="product-catalog">
     <div class="search-filter">
         <div>
-            <button class="button button-dark flex" style="height: 50px; gap: 8px;" on:click={handleProductSearch}>
+            <button
+                class="button button-dark flex"
+                style="height: 50px; gap: 8px;"
+                on:click={handleProductSearch}
+            >
                 <span>SEARCH</span>
                 <SvgIcon name="search_white" size={30}></SvgIcon>
             </button>
@@ -34,23 +38,25 @@
 
     {#if isLoading}
         <div class="loading-icon">
-            <img src="/loading-icon.gif" alt="Loading icon" style="height: 100%; width: 100%;"/>
+            <img src="/loading-icon.gif" alt="Loading icon" style="height: 100%; width: 100%;" />
+        </div>
+    {:else if productList.products && productList.products.length !== 0}
+        <div class="product-list">
+            {#each productList.products as product}
+                <a href="/products/{product.api_id}" style="text-decoration: none;">
+                    <ProductCard {product} />
+                </a>
+            {/each}
         </div>
     {:else}
-        {#if productList.products && productList.products.length !== 0}
-            <div class="product-list">
-                {#each productList.products as product}
-                    <a href="/products/{product.api_id}" style="text-decoration: none;">
-                        <ProductCard product={product} />
-                    </a>
-                {/each}
-            </div>
-        {:else}
-            <p>No product found</p>
-        {/if}
+        <p>No product found</p>
     {/if}
 
-    <Pagination bind:currentPageNumber={productList.currentPageNumber} bind:pageCount={productList.pageCount} on:pageChanged={handlePageChange}></Pagination>
+    <Pagination
+        bind:currentPageNumber={productList.currentPageNumber}
+        bind:pageCount={productList.pageCount}
+        on:pageChanged={handlePageChange}
+    ></Pagination>
 </div>
 
 <style>

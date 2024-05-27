@@ -1,5 +1,5 @@
-import axios from 'axios';
-import type { Product } from '../types/Product';
+import axios from "axios";
+import type { Product } from "../types/Product";
 
 const API_BASE_URL = "http://localhost:8000/api";
 
@@ -13,7 +13,7 @@ export const getProductPage = async (userId: number, pageNumber: number = 1) => 
     }
 };
 
-export const getProductById = async (productId: string|number) => {
+export const getProductById = async (productId: string | number) => {
     try {
         const response = await axios.get(`${API_BASE_URL}/products/${productId}`);
         return response.data;
@@ -25,7 +25,7 @@ export const getProductById = async (productId: string|number) => {
 
 export const createProduct = async (product: Product) => {
     try {
-        console.log(JSON.stringify(product))
+        console.log(JSON.stringify(product));
         const response = await axios.post(`${API_BASE_URL}/products`, product);
         return response.data;
     } catch (error) {

@@ -10,6 +10,6 @@
 <div>
     <Route path="/"><Home /></Route>
     <Route path="/products"><Products /></Route>
-    <Route path="/products/:id" component="{Product}" />
+    <Route path="/products/:id" component={Product} />
     <Route path="/basket"><Basket /></Route>
 </div>

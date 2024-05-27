@@ -1,18 +1,20 @@
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     font-weight: normal;
 }
 
 h2 {
     color: var(--color-green);
     font-size: 50px;
-    font-family: 'Anton', sans-serif;
+    font-family: "Anton", sans-serif;
     text-transform: capitalize;
 }
 
 h3 {
     color: var(--color-light-green);
     font-size: 30px;
-    font-family: 'Anton', sans-serif;
+    font-family: "Anton", sans-serif;
     text-transform: capitalize;
 }
 

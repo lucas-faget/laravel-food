@@ -4,7 +4,7 @@
 
     export let product;
 </script>
-  
+
 <div class="product-card">
     <div class="favorite-icon">
         <SvgIcon name="favorite_fill"></SvgIcon>
@@ -62,7 +62,7 @@
         color: var(--color-green);
         font-size: 18px;
         text-transform: capitalize;
-        font-family: 'Anton', sans-serif;
+        font-family: "Anton", sans-serif;
     }
 
     .product-brand {

@@ -6,7 +6,7 @@
 </script>
 
 <div class="svg-icon" style="height: {size}px; width: {size}px;">
-    <img src={src} alt={name} />
+    <img {src} alt={name} />
 </div>
 
 <style>

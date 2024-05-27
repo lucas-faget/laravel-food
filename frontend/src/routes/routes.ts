@@ -1,28 +1,28 @@
 export const routes = [
     {
-        path: '/',
-        title: 'Home',
+        path: "/",
+        title: "Home",
         icon: {
-            light: 'home',
-            dark: 'home_white',
+            light: "home",
+            dark: "home_white",
         },
         isHovered: false,
     },
     {
-        path: '/products',
-        title: 'Products',
+        path: "/products",
+        title: "Products",
         icon: {
-            light: 'sort',
-            dark: 'sort_white',
+            light: "sort",
+            dark: "sort_white",
         },
         isHovered: false,
     },
     {
-        path: '/basket',
-        title: 'Basket',
+        path: "/basket",
+        title: "Basket",
         icon: {
-            light: 'shopping_basket',
-            dark: 'shopping_basket_white',
+            light: "shopping_basket",
+            dark: "shopping_basket_white",
         },
         isHovered: false,
     },

@@ -3,7 +3,7 @@
 
     export let text: string;
     export let handleClick: () => void;
-    export let iconName: string|null = null;
+    export let iconName: string | null = null;
 </script>
 
 <button class="button button-dark" on:click={handleClick}>
@@ -12,7 +12,7 @@
         <SvgIcon name={iconName}></SvgIcon>
     {/if}
 </button>
-  
+
 <style>
     .button {
         color: #fff;
@@ -25,7 +25,7 @@
         border: none;
         outline: none;
         font-size: 20px;
-        font-family: 'Anton', sans-serif;
+        font-family: "Anton", sans-serif;
         cursor: pointer;
     }
 

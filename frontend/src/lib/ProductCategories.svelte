@@ -4,25 +4,28 @@
     const categories = Object.values(Category);
 
     export let currentCategory: Category;
-    
+
     function handleClickCategory(category: Category) {
         currentCategory = category;
     }
 
     function handleKeyDown(event: KeyboardEvent, category: Category) {
-    if (event.key === 'Enter' || event.key === ' ') {
-        handleClickCategory(category);
+        if (event.key === "Enter" || event.key === " ") {
+            handleClickCategory(category);
+        }
     }
-}
 </script>
-  
+
 <div class="product-categories">
     {#each categories as category}
-        <div 
-            on:click={() => handleClickCategory(category)} 
-            on:keydown={(event) => handleKeyDown(event, category)} 
-            class={currentCategory === category ? "category color-green" : "category color-light-green"}>
-            { category }
+        <div
+            on:click={() => handleClickCategory(category)}
+            on:keydown={(event) => handleKeyDown(event, category)}
+            class={currentCategory === category
+                ? "category color-green"
+                : "category color-light-green"}
+        >
+            {category}
         </div>
     {/each}
 </div>
@@ -33,7 +36,7 @@
         flex-direction: column;
         padding-inline: 20px;
         font-size: 40px;
-        font-family: 'Anton', sans-serif;
+        font-family: "Anton", sans-serif;
         text-transform: capitalize;
     }
 

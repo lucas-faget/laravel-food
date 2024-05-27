@@ -4,19 +4,19 @@
     import Routes from "../routes/Routes.svelte";
     import MobileNavToggle from "./MobileNavToggle.svelte";
     import SvgIcon from "./SvgIcon.svelte";
-  
+
     const maxMobileNavViewportWidth: number = 600;
     let viewportHeight: number = window.innerHeight || document.documentElement.clientHeight;
     let viewportWidth: number = window.innerWidth || document.documentElement.clientWidth;
     let scrollTop: number = document.documentElement.scrollTop;
     let isMobileNavOpen: boolean = false;
 
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
         viewportWidth = window.innerWidth || document.documentElement.clientWidth;
         viewportHeight = window.innerHeight || document.documentElement.clientHeight;
     });
 
-    window.addEventListener('scroll', () => {
+    window.addEventListener("scroll", () => {
         scrollTop = document.documentElement.scrollTop;
     });
 
@@ -27,11 +27,11 @@
     $: isDark = !isWide;
 
     $: isMobileNavVisible = isMobileNavOpen && viewportWidth <= maxMobileNavViewportWidth;
-  
+
     function toggleMobileNav() {
         isMobileNavOpen = !isMobileNavOpen;
     }
-  
+
     function handleKeyDown(event: KeyboardEvent) {
         if (event.key === "Enter" || event.key === " ") {
             toggleMobileNav();
@@ -40,21 +40,33 @@
 </script>
 
 <Router>
-    <nav class={isDark ? 'nav-dark ' : 'nav-light '}{isWide ? 'nav-wide' : 'nav-thin'}>
+    <nav class="{isDark ? 'nav-dark ' : 'nav-light '}{isWide ? 'nav-wide' : 'nav-thin'}">
         <Link to="/" style="text-decoration: none;">
             <div class="logo">Healthy</div>
         </Link>
 
         <div on:click={toggleMobileNav} on:keydown={handleKeyDown}>
-            <MobileNavToggle isColoredDark={!isDark} isMobileNavOpen={isMobileNavOpen} />
+            <MobileNavToggle isColoredDark={!isDark} {isMobileNavOpen} />
         </div>
-        
+
         <div class="links" aria-expanded={isMobileNavOpen}>
             <ul>
                 {#each routes as route}
-                    <Link to={route.path} style={isMobileNavVisible ? "text-decoration: none;" : "text-decoration: none; height: 100%;"}>
-                        <li on:mouseenter={() => route.isHovered = true} on:mouseleave={() => route.isHovered = false}>
-                            <SvgIcon name={(isDark && !route.isHovered || !isDark && route.isHovered) ? route.icon.dark : route.icon.light}></SvgIcon>
+                    <Link
+                        to={route.path}
+                        style={isMobileNavVisible
+                            ? "text-decoration: none;"
+                            : "text-decoration: none; height: 100%;"}
+                    >
+                        <li
+                            on:mouseenter={() => (route.isHovered = true)}
+                            on:mouseleave={() => (route.isHovered = false)}
+                        >
+                            <SvgIcon
+                                name={(isDark && !route.isHovered) || (!isDark && route.isHovered)
+                                    ? route.icon.dark
+                                    : route.icon.light}
+                            ></SvgIcon>
                             <div>{route.title}</div>
                         </li>
                     </Link>
@@ -64,7 +76,7 @@
     </nav>
     <Routes />
 </Router>
-  
+
 <style>
     nav {
         top: 0;
@@ -112,7 +124,7 @@
         display: flex;
         gap: 10px;
         font-size: 20px;
-        font-family: 'Anton', sans-serif;
+        font-family: "Anton", sans-serif;
         cursor: pointer;
     }
 
@@ -131,11 +143,11 @@
     .nav-light ul li:hover {
         color: var(--color-light);
     }
-    
+
     .logo {
         position: relative;
         font-size: 25px;
-        font-family: 'Anton', sans-serif;
+        font-family: "Anton", sans-serif;
         z-index: 1000;
     }
 
@@ -156,8 +168,7 @@
         }
     }
 
-    @media only screen and (min-width: 801px)
-    {
+    @media only screen and (min-width: 801px) {
         nav ul {
             height: 100%;
         }
@@ -181,8 +192,7 @@
         }
     }
 
-    @media only screen and (max-width: 800px)
-    {
+    @media only screen and (max-width: 800px) {
         .links[aria-expanded="true"] {
             top: 0;
         }
@@ -214,7 +224,7 @@
 
         nav ul li {
             font-size: 50px;
-            font-family: 'Anton', sans-serif;
+            font-family: "Anton", sans-serif;
         }
     }
 </style>

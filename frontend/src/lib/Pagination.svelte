@@ -36,8 +36,7 @@
     });
 
     function setCurrentPage(page: number): void {
-        if (page >= FirstPageNumber && page <= lastPageNumber)
-            currentPageNumber = page;
+        if (page >= FirstPageNumber && page <= lastPageNumber) currentPageNumber = page;
     }
 
     afterUpdate(() => {
@@ -53,29 +52,41 @@
         class="square-button button-light"
         on:click={() => setCurrentPage(FirstPageNumber)}
         on:keypress={() => setCurrentPage(FirstPageNumber)}
-    ><SvgIcon name="first_page"></SvgIcon></div>
+    >
+        <SvgIcon name="first_page"></SvgIcon>
+    </div>
     <div
         class="square-button button-light"
         on:click={() => setCurrentPage(currentPageNumber - 1)}
         on:keypress={() => setCurrentPage(currentPageNumber - 1)}
-    ><SvgIcon name="chevron_left"></SvgIcon></div>
+    >
+        <SvgIcon name="chevron_left"></SvgIcon>
+    </div>
     {#each pageList as page}
         <div
-            class={page === currentPageNumber ? "square-button button-light" : "square-button button-dark"}
+            class={page === currentPageNumber
+                ? "square-button button-light"
+                : "square-button button-dark"}
             on:click={() => setCurrentPage(page)}
             on:keypress={() => setCurrentPage(page)}
-        >{page}</div>
+        >
+            {page}
+        </div>
     {/each}
     <div
         class="square-button button-light"
         on:click={() => setCurrentPage(currentPageNumber + 1)}
         on:keypress={() => setCurrentPage(currentPageNumber + 1)}
-    ><SvgIcon name="chevron_right"></SvgIcon></div>
+    >
+        <SvgIcon name="chevron_right"></SvgIcon>
+    </div>
     <div
         class="square-button button-light"
         on:click={() => setCurrentPage(lastPageNumber)}
         on:keypress={() => setCurrentPage(lastPageNumber)}
-    ><SvgIcon name="last_page"></SvgIcon></div>
+    >
+        <SvgIcon name="last_page"></SvgIcon>
+    </div>
 </div>
 
 <style>

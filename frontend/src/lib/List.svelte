@@ -1,6 +1,6 @@
 <script lang="ts">
     export let title: string = "";
-    export let items: Array<String>
+    export let items: Array<String>;
 </script>
 
 <div class="flex flex-column" style="gap: 20px;">
@@ -17,7 +17,7 @@
         {/each}
     </ul>
 </div>
-  
+
 <style>
     .list-title {
         color: var(--color-green);
@@ -33,7 +33,7 @@
         color: var(--color-green);
         text-align: left;
         border-bottom: 1px solid var(--color-light-green);
-        font-family: 'Anton', sans-serif;
+        font-family: "Anton", sans-serif;
         font-size: 40px;
         text-transform: uppercase;
     }
