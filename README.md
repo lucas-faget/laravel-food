@@ -1,11 +1,10 @@
-# Laravel and Svelte
+# Laravel Food API
 
 ## Prerequisites
 
-* PHP 7.4 or higher
-* Composer
-* Node.js
-* npm
+-   PHP 8.1 or higher
+-   Composer
+-   npm
 
 ## Installation
 
@@ -18,23 +17,16 @@ $ git clone <repository URL>
 2. Install Laravel dependencies
 
 ```
-$ cd api
 $ composer install
 ```
 
-3. Install Vue.js dependencies
-
-```
-$ npm install
-```
-
-4. Copy the .env.example file to create a .env file
+3. Copy the .env.example file to create a .env file
 
 ```
 $ cp .env.example .env
 ```
 
-5. Generate an application key
+4. Generate an application key
 
 ```
 $ php artisan key:generate
@@ -47,19 +39,3 @@ $ php artisan serve
 ```
 
 Access the api in your browser by visiting http://localhost:8000.
-
-## Compiling Assets
-
-To compile assets for the development environment, run the following command:
-
-```
-$ npm run dev
-```
-
-Access the application in your browser by visiting http://localhost:5173.
-
-To compile assets for the production environment, run the following command:
-
-```
-$ npm run prod
-```
