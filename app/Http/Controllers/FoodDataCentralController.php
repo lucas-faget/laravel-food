@@ -60,7 +60,7 @@ class FoodDataCentralController extends Controller
         });
         
         return response()->json([
-            'products'   => $products,
+            'products'  => $products,
             'pageCount' => $apiResult['totalPages'],
         ]);
     }
@@ -74,7 +74,6 @@ class FoodDataCentralController extends Controller
         ]);
 
         $apiFood = json_decode($response->getBody()->getContents(), true);
-
 
         $product = new Product([
             'api_id'            => $apiFood['fdcId'] ?? null,

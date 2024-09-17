@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OpenFoodFactsController;
 use App\Http\Controllers\FoodDataCentralController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,9 +27,16 @@ Route::prefix('/api/products')->group(function () {
     Route::delete('/{product}', [$controller, 'destroy']);
 });
 
+Route::prefix('/off')->group(function () {
+    $controller = OpenFoodFactsController::class;
+
+    Route::get('/food/search/{searchQuery}/{pageNumber?}', [$controller, 'foodSearch']);
+    Route::get('/food/{id}', [$controller, 'food']);
+});
+
 Route::prefix('/fdc')->group(function () {
     $controller = FoodDataCentralController::class;
 
-    Route::get('/foods/search/{searchQuery}/{pageNumber?}', [$controller, 'foodSearch']);
+    Route::get('/food/search/{searchQuery}/{pageNumber?}', [$controller, 'foodSearch']);
     Route::get('/food/{id}', [$controller, 'food']);
 });
