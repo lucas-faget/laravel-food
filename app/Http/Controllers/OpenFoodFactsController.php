@@ -5,6 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use GuzzleHttp\Client;
 
+/**
+ * @OA\Tag(
+ *     name="Open Food Facts",
+ *     description="Fetch Open Food Facts API (https://fr.openfoodfacts.org/)"
+ * )
+ */
 class OpenFoodFactsController extends Controller
 {
     protected $client;
@@ -20,7 +26,80 @@ class OpenFoodFactsController extends Controller
         ]);
     }
 
-    public function food(string $id)
+    /**
+     * @OA\Get(
+     *     path="/off/food/search/{query}/{page}",
+     *     tags={"Open Food Facts"},
+     *     summary="Search for food",
+     *     @OA\Parameter(
+     *         name="query",
+     *         in="path",
+     *         required=true,
+     *         description="Search query",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="path",
+     *         required=false,
+     *         description="Page number",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="List of food products from Open Food Facts"
+     *     )
+     * )
+     */
+    public function search(string $query, int $page = 1)
+    {
+        $response = $this->client->request('GET', "search", [
+            'query' => [
+                'categories_tags_fr' => $query,
+                'page_size' => self::$pageSize,
+                'page' => $page,
+                'fields' => self::$fields
+            ]
+        ]);
+
+        $apiResult = json_decode($response->getBody()->getContents(), true);
+
+        $products = collect($apiResult['products'])->map(function ($apiProduct) {
+            $product = new Product([
+                'api_id' => $apiProduct['code'] ?? null,
+                'name'   => $apiProduct['product_name'] ?? null,
+                'image'  => $apiProduct['image_url'] ?? null,
+                'brand'  => $apiProduct['brands'] ?? null,
+            ]);
+
+            return $product;
+        });
+
+        return response()->json([
+            'products'  => $products,
+            'pageCount' => ceil($apiResult['count'] / $apiResult['page_size']),
+        ]);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/off/food/{id}",
+     *     tags={"Open Food Facts"},
+     *     summary="Get food product",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="Product ID",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Product"
+     *     )
+     * )
+     */
+    public function show(string $id)
     {
         $response = $this->client->request('GET', "product/$id");
 
@@ -46,35 +125,5 @@ class OpenFoodFactsController extends Controller
         ]);
 
         return response()->json($product);
-    }
-
-    public function foodSearch(string $searchQuery, int $pageNumber = 1)
-    {
-        $response = $this->client->request('GET', "search", [
-            'query' => [
-                'categories_tags_fr' => $searchQuery,
-                'page_size' => self::$pageSize,
-                'page' => $pageNumber,
-                'fields' => self::$fields
-            ]
-        ]);
-
-        $apiResult = json_decode($response->getBody()->getContents(), true);
-
-        $products = collect($apiResult['products'])->map(function ($apiProduct) {
-            $product = new Product([
-                'api_id' => $apiProduct['code'] ?? null,
-                'name'   => $apiProduct['product_name'] ?? null,
-                'image'  => $apiProduct['image_url'] ?? null,
-                'brand'  => $apiProduct['brands'] ?? null,
-            ]);
-
-            return $product;
-        });
-
-        return response()->json([
-            'products'  => $products,
-            'pageCount' => ceil($apiResult['count'] / $apiResult['page_size']),
-        ]);
     }
 }

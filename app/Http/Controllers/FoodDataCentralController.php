@@ -6,6 +6,12 @@ use App\Models\Product;
 use GuzzleHttp\Client;
 use App\Http\Controllers\GoogleApiController;
 
+/**
+ * @OA\Tag(
+ *     name="FoodData Central",
+ *     description="Fetch FoodData Central API (https://fdc.nal.usda.gov/)"
+ * )
+ */
 class FoodDataCentralController extends Controller
 {
     protected $client;
@@ -27,14 +33,39 @@ class FoodDataCentralController extends Controller
         header("Access-Control-Allow-Headers: Content-Type");
     }
 
-    public function foodSearch(string $searchQuery, int $pageNumber = 1)
+    /**
+     * @OA\Get(
+     *     path="/fdc/food/search/{query}/{page}",
+     *     tags={"FoodData Central"},
+     *     summary="Search for food",
+     *     @OA\Parameter(
+     *         name="query",
+     *         in="path",
+     *         required=true,
+     *         description="Search query",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="path",
+     *         required=false,
+     *         description="Page number",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="List of food products from FoodData Central"
+     *     )
+     * )
+     */
+    public function search(string $query, int $page = 1)
     {
         $response = $this->client->request('GET', 'foods/search', [
             'query' => [
                 'api_key'    => self::$apiKey,
-                'query'      => $searchQuery,
+                'query'      => $query,
                 'pageSize'   => self::$pageSize,
-                'pageNumber' => $pageNumber,
+                'pageNumber' => $page,
                 'dataType'   => 'Branded',
             ],
         ]);
@@ -65,7 +96,25 @@ class FoodDataCentralController extends Controller
         ]);
     }
 
-    public function food(string $id)
+    /**
+     * @OA\Get(
+     *     path="/fdc/food/{id}",
+     *     tags={"FoodData Central"},
+     *     summary="Get food product",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="Product ID",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Product"
+     *     )
+     * )
+     */
+    public function show(string $id)
     {
         $response = $this->client->request('GET', "food/$id", [
             'query' => [

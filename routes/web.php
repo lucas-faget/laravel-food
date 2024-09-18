@@ -1,8 +1,5 @@
 <?php
 
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\OpenFoodFactsController;
-use App\Http\Controllers\FoodDataCentralController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,28 +12,3 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::prefix('/api/products')->group(function () {
-    $controller = ProductController::class;
-
-    Route::get('/', [$controller, 'index']);
-    Route::get('/page/{user}/{pageNumber?}', [$controller, 'page']);
-    Route::post('/', [$controller, 'store']);
-    Route::get('/{product}', [$controller, 'show']);
-    Route::put('/{product}', [$controller, 'update']);
-    Route::delete('/{product}', [$controller, 'destroy']);
-});
-
-Route::prefix('/off')->group(function () {
-    $controller = OpenFoodFactsController::class;
-
-    Route::get('/food/search/{searchQuery}/{pageNumber?}', [$controller, 'foodSearch']);
-    Route::get('/food/{id}', [$controller, 'food']);
-});
-
-Route::prefix('/fdc')->group(function () {
-    $controller = FoodDataCentralController::class;
-
-    Route::get('/food/search/{searchQuery}/{pageNumber?}', [$controller, 'foodSearch']);
-    Route::get('/food/{id}', [$controller, 'food']);
-});

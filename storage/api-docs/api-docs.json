@@ -1,0 +1,430 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Food API Documentation",
+        "version": "0.1"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000/api",
+            "description": "Food API"
+        }
+    ],
+    "paths": {
+        "/fdc/food/search/{query}/{page}": {
+            "get": {
+                "tags": [
+                    "FoodData Central"
+                ],
+                "summary": "Search for food",
+                "operationId": "e0be62c9e7fbe7d4a5e77f95b20bb521",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "path",
+                        "description": "Search query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "path",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of food products from FoodData Central"
+                    }
+                }
+            }
+        },
+        "/fdc/food/{id}": {
+            "get": {
+                "tags": [
+                    "FoodData Central"
+                ],
+                "summary": "Get food product",
+                "operationId": "a1ae73a1f86e97bee27c0ddbcc523536",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Product ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Product"
+                    }
+                }
+            }
+        },
+        "/off/food/search/{query}/{page}": {
+            "get": {
+                "tags": [
+                    "Open Food Facts"
+                ],
+                "summary": "Search for food",
+                "operationId": "f75a26492983967dc95631e9e14cad35",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "path",
+                        "description": "Search query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "path",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of food products from Open Food Facts"
+                    }
+                }
+            }
+        },
+        "/off/food/{id}": {
+            "get": {
+                "tags": [
+                    "Open Food Facts"
+                ],
+                "summary": "Get food product",
+                "operationId": "765edf11ba09ff124f48924edd2e288b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Product ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Product"
+                    }
+                }
+            }
+        },
+        "/products": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get all products",
+                "description": "Get all products",
+                "operationId": "c1ff6f862214e1896c59cfe0491ce0e8",
+                "responses": {
+                    "200": {
+                        "description": "All Products"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Create a product",
+                "description": "Create a product",
+                "operationId": "399770d33fa4672f1216707d0e236763",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "api_id": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "country": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "brand": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "category": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "tags": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "ingredients": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "serving_size_unit": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "serving_size": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "nullable": true
+                                    },
+                                    "calories": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "default": 0
+                                    },
+                                    "fat": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "default": 0
+                                    },
+                                    "carbohydrates": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "default": 0
+                                    },
+                                    "protein": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "default": 0
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Product created successfully"
+                    }
+                }
+            }
+        },
+        "/products/{id}": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get a product by ID",
+                "description": "Get a product by ID",
+                "operationId": "b46f4aa73232d0368eee698a082342a4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Product ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Product"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Update a product",
+                "description": "Update a product",
+                "operationId": "1419d479f9340e30e67fe21a2ca525b7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Product ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "The name of the product",
+                                        "type": "string",
+                                        "example": "Coca Cola"
+                                    },
+                                    "api_id": {
+                                        "description": "External API ID for the product",
+                                        "type": "string",
+                                        "example": "1234",
+                                        "nullable": true
+                                    },
+                                    "image": {
+                                        "description": "URL of the product image",
+                                        "type": "string",
+                                        "example": "http://example.com/image.png",
+                                        "nullable": true
+                                    },
+                                    "country": {
+                                        "description": "Country of origin of the product",
+                                        "type": "string",
+                                        "example": "France",
+                                        "nullable": true
+                                    },
+                                    "brand": {
+                                        "description": "The brand of the product",
+                                        "type": "string",
+                                        "example": "Coca Cola Company",
+                                        "nullable": true
+                                    },
+                                    "description": {
+                                        "description": "Description of the product",
+                                        "type": "string",
+                                        "example": "A refreshing soda.",
+                                        "nullable": true
+                                    },
+                                    "category": {
+                                        "description": "Category of the product",
+                                        "type": "string",
+                                        "example": "Beverages",
+                                        "nullable": true
+                                    },
+                                    "tags": {
+                                        "description": "Tags associated with the product",
+                                        "type": "string",
+                                        "example": "soda,beverage,refreshing",
+                                        "nullable": true
+                                    },
+                                    "ingredients": {
+                                        "description": "Ingredients of the product",
+                                        "type": "string",
+                                        "example": "Water, Sugar, Carbon Dioxide",
+                                        "nullable": true
+                                    },
+                                    "serving_size_unit": {
+                                        "description": "Unit of the serving size",
+                                        "type": "string",
+                                        "example": "ml",
+                                        "nullable": true
+                                    },
+                                    "serving_size": {
+                                        "description": "Size of one serving",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 330,
+                                        "nullable": true
+                                    },
+                                    "calories": {
+                                        "description": "Calories per serving",
+                                        "type": "number",
+                                        "format": "float",
+                                        "default": 0,
+                                        "example": 139
+                                    },
+                                    "fat": {
+                                        "description": "Fat content per serving",
+                                        "type": "number",
+                                        "format": "float",
+                                        "default": 0,
+                                        "example": 0
+                                    },
+                                    "carbohydrates": {
+                                        "description": "Carbohydrates per serving",
+                                        "type": "number",
+                                        "format": "float",
+                                        "default": 0,
+                                        "example": 35
+                                    },
+                                    "protein": {
+                                        "description": "Protein content per serving",
+                                        "type": "number",
+                                        "format": "float",
+                                        "default": 0,
+                                        "example": 0
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Product updated successfully"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Delete a product",
+                "operationId": "fe34b364a3f192305598b65d04d06b5d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Product ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Product deleted successfully"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "FoodData Central",
+            "description": "Fetch FoodData Central API (https://fdc.nal.usda.gov/)"
+        },
+        {
+            "name": "Open Food Facts",
+            "description": "Fetch Open Food Facts API (https://fr.openfoodfacts.org/)"
+        },
+        {
+            "name": "Products",
+            "description": "Products"
+        }
+    ]
+}
