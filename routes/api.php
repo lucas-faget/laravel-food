@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\OpenFoodFactsController;
 use App\Http\Controllers\FoodDataCentralController;
+use App\Http\Controllers\IntakeController;
 use App\Http\Controllers\ProductController;
 
 /*
@@ -43,4 +44,14 @@ Route::prefix('/products')->group(function () {
     Route::post('/', [$controller, 'store']);
     Route::put('/{product}', [$controller, 'update']);
     Route::delete('/{product}', [$controller, 'destroy']);
+});
+
+Route::prefix('/intakes')->group(function () {
+    $controller = IntakeController::class;
+
+    Route::get('/', [$controller, 'index']);
+    Route::get('/{intake}', [$controller, 'show']);
+    Route::post('/', [$controller, 'store']);
+    Route::put('/{intake}', [$controller, 'update']);
+    Route::delete('/{intake}', [$controller, 'destroy']);
 });

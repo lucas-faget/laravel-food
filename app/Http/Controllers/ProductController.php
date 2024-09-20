@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 /**
@@ -16,6 +16,27 @@ class ProductController extends Controller
 {
     protected static $pageSize = 12;
 
+    protected function validateProduct(Request $request)
+    {
+        return $request->validate([
+            'name' => 'string',
+            'api_id' => 'nullable|string',
+            'image' => 'nullable|string',
+            'country' => 'nullable|string',
+            'brand' => 'nullable|string',
+            'description' => 'nullable|string',
+            'category' => 'nullable|string',
+            'tags' => 'nullable|string',
+            'ingredients' => 'nullable|string',
+            'serving_size_unit' => 'nullable|string',
+            'serving_size' => 'numeric',
+            'calories' => 'numeric',
+            'fat' => 'numeric',
+            'carbohydrates' => 'numeric',
+            'protein' => 'numeric',
+        ]);
+    }
+
     /**
      * @OA\Get(
      *     path="/products",
@@ -24,7 +45,7 @@ class ProductController extends Controller
      *     description="Get all products",
      *     @OA\Response(
      *         response=200,
-     *         description="All Products"
+     *         description="All products"
      *     )
      * )
      */
@@ -83,7 +104,8 @@ class ProductController extends Controller
      *             @OA\Property(property="calories", type="number", format="float", default=0),
      *             @OA\Property(property="fat", type="number", format="float", default=0),
      *             @OA\Property(property="carbohydrates", type="number", format="float", default=0),
-     *             @OA\Property(property="protein", type="number", format="float", default=0)
+     *             @OA\Property(property="protein", type="number", format="float", default=0),
+     *             @OA\Property(property="user_id", type="integer"),
      *         )
      *     ),
      *     @OA\Response(
@@ -95,10 +117,12 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required'
+            'name' => 'required',
+            'user_id' => 'required|exists:users,id',
         ]);
 
-        $request['user_id'] = 1;
+        $this->validateProduct($request);
+
         $product = Product::create($request->all());
 
         return response()->json($product, 201);
@@ -121,21 +145,21 @@ class ProductController extends Controller
      *         required=true,
      *         @OA\JsonContent(
      *             type="object",
-     *             @OA\Property(property="name", type="string", description="The name of the product", example="Coca Cola"),
-     *             @OA\Property(property="api_id", type="string", nullable=true, description="External API ID for the product", example="1234"),
-     *             @OA\Property(property="image", type="string", nullable=true, description="URL of the product image", example="http://example.com/image.png"),
-     *             @OA\Property(property="country", type="string", nullable=true, description="Country of origin of the product", example="France"),
-     *             @OA\Property(property="brand", type="string", nullable=true, description="The brand of the product", example="Coca Cola Company"),
-     *             @OA\Property(property="description", type="string", nullable=true, description="Description of the product", example="A refreshing soda."),
-     *             @OA\Property(property="category", type="string", nullable=true, description="Category of the product", example="Beverages"),
-     *             @OA\Property(property="tags", type="string", nullable=true, description="Tags associated with the product", example="soda,beverage,refreshing"),
-     *             @OA\Property(property="ingredients", type="string", nullable=true, description="Ingredients of the product", example="Water, Sugar, Carbon Dioxide"),
-     *             @OA\Property(property="serving_size_unit", type="string", nullable=true, description="Unit of the serving size", example="ml"),
-     *             @OA\Property(property="serving_size", type="number", format="float", nullable=true, description="Size of one serving", example=330),
-     *             @OA\Property(property="calories", type="number", format="float", default=0, description="Calories per serving", example=139),
-     *             @OA\Property(property="fat", type="number", format="float", default=0, description="Fat content per serving", example=0),
-     *             @OA\Property(property="carbohydrates", type="number", format="float", default=0, description="Carbohydrates per serving", example=35),
-     *             @OA\Property(property="protein", type="number", format="float", default=0, description="Protein content per serving", example=0)
+     *             @OA\Property(property="name", type="string"),
+     *             @OA\Property(property="api_id", type="string", nullable=true),
+     *             @OA\Property(property="image", type="string", nullable=true),
+     *             @OA\Property(property="country", type="string", nullable=true),
+     *             @OA\Property(property="brand", type="string", nullable=true),
+     *             @OA\Property(property="description", type="string", nullable=true),
+     *             @OA\Property(property="category", type="string", nullable=true),
+     *             @OA\Property(property="tags", type="string", nullable=true),
+     *             @OA\Property(property="ingredients", type="string", nullable=true),
+     *             @OA\Property(property="serving_size_unit", type="string", nullable=true),
+     *             @OA\Property(property="serving_size", type="number", format="float", nullable=true),
+     *             @OA\Property(property="calories", type="number", format="float", default=0),
+     *             @OA\Property(property="fat", type="number", format="float", default=0),
+     *             @OA\Property(property="carbohydrates", type="number", format="float", default=0),
+     *             @OA\Property(property="protein", type="number", format="float", default=0),
      *         )
      *     ),
      *     @OA\Response(
@@ -146,13 +170,11 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $request->validate([
-            'name' => 'required'
-        ]);
+        $this->validateProduct($request);
 
         $product->update($request->all());
 
-        return response()->json($product);
+        return response()->json($product, 200);
     }
 
     /**
@@ -178,22 +200,5 @@ class ProductController extends Controller
         $product->delete();
 
         return response()->json(null, 204);
-    }
-
-    public function page(User $user, int $pageNumber = 1)
-    {
-        $offset = ($pageNumber - 1) * self::$pageSize;
-
-        $products = $user->products()
-            ->skip($offset)
-            ->take(self::$pageSize)
-            ->get();
-
-        $pageCount = ceil($user->products()->count() / self::$pageSize);
-
-        return response()->json([
-            'products' => $products,
-            'pageCount' => $pageCount
-        ]);
     }
 }

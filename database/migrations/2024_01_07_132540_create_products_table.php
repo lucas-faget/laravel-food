@@ -24,7 +24,7 @@ return new class extends Migration
             $table->text('tags')->nullable();
             $table->text('ingredients')->nullable();
             $table->string('serving_size_unit')->nullable();
-            $table->float('serving_size')->nullable();
+            $table->float('serving_size')->default(0);
             $table->float('calories')->default(0);
             $table->float('fat')->default(0);
             $table->float('carbohydrates')->default(0);

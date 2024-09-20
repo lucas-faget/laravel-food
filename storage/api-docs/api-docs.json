@@ -70,6 +70,153 @@
                 }
             }
         },
+        "/intakes": {
+            "get": {
+                "tags": [
+                    "Intakes"
+                ],
+                "summary": "Get all intakes",
+                "description": "Get all intakes",
+                "operationId": "2fd2d876107aabea55cd8837f2a3ecf4",
+                "responses": {
+                    "200": {
+                        "description": "All intakes"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Intakes"
+                ],
+                "summary": "Create an intake",
+                "description": "Create an intake",
+                "operationId": "0935d69845b8db6f05f8af1fffecc3d3",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user_id": {
+                                        "type": "integer"
+                                    },
+                                    "product_id": {
+                                        "type": "integer"
+                                    },
+                                    "amount": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "default": 0
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Intake created successfully"
+                    }
+                }
+            }
+        },
+        "/intakes/{id}": {
+            "get": {
+                "tags": [
+                    "Intakes"
+                ],
+                "summary": "Get an intake by ID",
+                "description": "Get an intake by ID",
+                "operationId": "833d923f86839c35b77c600cc329df28",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Intake ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Intake"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Intakes"
+                ],
+                "summary": "Update an intake",
+                "description": "Update an intake",
+                "operationId": "ac8036738f33eda4ccb6e2c90621a75c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Intake ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user_id": {
+                                        "type": "integer"
+                                    },
+                                    "product_id": {
+                                        "type": "integer"
+                                    },
+                                    "amount": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "default": 0
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Intake updated successfully"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Intakes"
+                ],
+                "summary": "Delete an intake",
+                "operationId": "e139088a773f74dbed12edbe54c26a6e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Intake ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Intake deleted successfully"
+                    }
+                }
+            }
+        },
         "/off/food/search/{query}/{page}": {
             "get": {
                 "tags": [
@@ -139,7 +286,7 @@
                 "operationId": "c1ff6f862214e1896c59cfe0491ce0e8",
                 "responses": {
                     "200": {
-                        "description": "All Products"
+                        "description": "All products"
                     }
                 }
             },
@@ -219,6 +366,9 @@
                                         "type": "number",
                                         "format": "float",
                                         "default": 0
+                                    },
+                                    "user_id": {
+                                        "type": "integer"
                                     }
                                 },
                                 "type": "object"
@@ -283,98 +433,68 @@
                             "schema": {
                                 "properties": {
                                     "name": {
-                                        "description": "The name of the product",
-                                        "type": "string",
-                                        "example": "Coca Cola"
+                                        "type": "string"
                                     },
                                     "api_id": {
-                                        "description": "External API ID for the product",
                                         "type": "string",
-                                        "example": "1234",
                                         "nullable": true
                                     },
                                     "image": {
-                                        "description": "URL of the product image",
                                         "type": "string",
-                                        "example": "http://example.com/image.png",
                                         "nullable": true
                                     },
                                     "country": {
-                                        "description": "Country of origin of the product",
                                         "type": "string",
-                                        "example": "France",
                                         "nullable": true
                                     },
                                     "brand": {
-                                        "description": "The brand of the product",
                                         "type": "string",
-                                        "example": "Coca Cola Company",
                                         "nullable": true
                                     },
                                     "description": {
-                                        "description": "Description of the product",
                                         "type": "string",
-                                        "example": "A refreshing soda.",
                                         "nullable": true
                                     },
                                     "category": {
-                                        "description": "Category of the product",
                                         "type": "string",
-                                        "example": "Beverages",
                                         "nullable": true
                                     },
                                     "tags": {
-                                        "description": "Tags associated with the product",
                                         "type": "string",
-                                        "example": "soda,beverage,refreshing",
                                         "nullable": true
                                     },
                                     "ingredients": {
-                                        "description": "Ingredients of the product",
                                         "type": "string",
-                                        "example": "Water, Sugar, Carbon Dioxide",
                                         "nullable": true
                                     },
                                     "serving_size_unit": {
-                                        "description": "Unit of the serving size",
                                         "type": "string",
-                                        "example": "ml",
                                         "nullable": true
                                     },
                                     "serving_size": {
-                                        "description": "Size of one serving",
                                         "type": "number",
                                         "format": "float",
-                                        "example": 330,
                                         "nullable": true
                                     },
                                     "calories": {
-                                        "description": "Calories per serving",
                                         "type": "number",
                                         "format": "float",
-                                        "default": 0,
-                                        "example": 139
+                                        "default": 0
                                     },
                                     "fat": {
-                                        "description": "Fat content per serving",
                                         "type": "number",
                                         "format": "float",
-                                        "default": 0,
-                                        "example": 0
+                                        "default": 0
                                     },
                                     "carbohydrates": {
-                                        "description": "Carbohydrates per serving",
                                         "type": "number",
                                         "format": "float",
-                                        "default": 0,
-                                        "example": 35
+                                        "default": 0
                                     },
                                     "protein": {
-                                        "description": "Protein content per serving",
                                         "type": "number",
                                         "format": "float",
-                                        "default": 0,
-                                        "example": 0
+                                        "default": 0
                                     }
                                 },
                                 "type": "object"
@@ -417,6 +537,10 @@
         {
             "name": "FoodData Central",
             "description": "Fetch FoodData Central API (https://fdc.nal.usda.gov/)"
+        },
+        {
+            "name": "Intakes",
+            "description": "Intakes"
         },
         {
             "name": "Open Food Facts",
