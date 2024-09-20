@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 /**
  * @OA\Tag(
  *     name="Intakes",
- *     description="Intakes"
+ *     description="Intakes",
  * )
  */
 class IntakeController extends Controller
@@ -26,10 +26,11 @@ class IntakeController extends Controller
      *     tags={"Intakes"},
      *     summary="Get all intakes",
      *     description="Get all intakes",
+     *     security={{"bearer":{}}},
      *     @OA\Response(
      *         response=200,
-     *         description="All intakes"
-     *     )
+     *         description="All intakes",
+     *     ),
      * )
      */
     public function index()
@@ -45,6 +46,7 @@ class IntakeController extends Controller
      *     tags={"Intakes"},
      *     summary="Get an intake by ID",
      *     description="Get an intake by ID",
+     *     security={{"bearer":{}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -54,8 +56,8 @@ class IntakeController extends Controller
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Intake"
-     *     )
+     *         description="Intake",
+     *     ),
      * )
      */
     public function show(Intake $intake)
@@ -69,6 +71,7 @@ class IntakeController extends Controller
      *     tags={"Intakes"},
      *     summary="Create an intake",
      *     description="Create an intake",
+     *     security={{"bearer":{}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -81,7 +84,7 @@ class IntakeController extends Controller
      *     @OA\Response(
      *         response=201,
      *         description="Intake created successfully",
-     *     )
+     *     ),
      * )
      */
     public function store(Request $request)
@@ -105,6 +108,7 @@ class IntakeController extends Controller
      *     tags={"Intakes"},
      *     summary="Update an intake",
      *     description="Update an intake",
+     *     security={{"bearer":{}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -124,7 +128,7 @@ class IntakeController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Intake updated successfully",
-     *     )
+     *     ),
      * )
      */
     public function update(Request $request, Intake $intake)
@@ -141,6 +145,8 @@ class IntakeController extends Controller
      *     path="/intakes/{id}",
      *     tags={"Intakes"},
      *     summary="Delete an intake",
+     *     description="Delete an intake",
+     *     security={{"bearer":{}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -150,8 +156,8 @@ class IntakeController extends Controller
      *     ),
      *     @OA\Response(
      *         response=204,
-     *         description="Intake deleted successfully"
-     *     )
+     *         description="Intake deleted successfully",
+     *     ),
      * )
      */
     public function destroy(Intake $intake)

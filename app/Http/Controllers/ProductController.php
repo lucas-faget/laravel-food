@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 /**
  * @OA\Tag(
  *     name="Products",
- *     description="Products"
+ *     description="Products",
  * )
  */
 class ProductController extends Controller
@@ -43,10 +42,11 @@ class ProductController extends Controller
      *     tags={"Products"},
      *     summary="Get all products",
      *     description="Get all products",
+     *     security={{"bearer":{}}},
      *     @OA\Response(
      *         response=200,
-     *         description="All products"
-     *     )
+     *         description="All products",
+     *     ),
      * )
      */
     public function index()
@@ -62,6 +62,7 @@ class ProductController extends Controller
      *     tags={"Products"},
      *     summary="Get a product by ID",
      *     description="Get a product by ID",
+     *     security={{"bearer":{}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -71,8 +72,8 @@ class ProductController extends Controller
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Product"
-     *     )
+     *         description="Product",
+     *     ),
      * )
      */
     public function show(Product $product)
@@ -86,6 +87,7 @@ class ProductController extends Controller
      *     tags={"Products"},
      *     summary="Create a product",
      *     description="Create a product",
+     *     security={{"bearer":{}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -111,7 +113,7 @@ class ProductController extends Controller
      *     @OA\Response(
      *         response=201,
      *         description="Product created successfully",
-     *     )
+     *     ),
      * )
      */
     public function store(Request $request)
@@ -134,6 +136,7 @@ class ProductController extends Controller
      *     tags={"Products"},
      *     summary="Update a product",
      *     description="Update a product",
+     *     security={{"bearer":{}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -165,7 +168,7 @@ class ProductController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Product updated successfully",
-     *     )
+     *     ),
      * )
      */
     public function update(Request $request, Product $product)
@@ -182,6 +185,8 @@ class ProductController extends Controller
      *     path="/products/{id}",
      *     tags={"Products"},
      *     summary="Delete a product",
+     *     description="Delete a product",
+     *     security={{"bearer":{}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -191,8 +196,8 @@ class ProductController extends Controller
      *     ),
      *     @OA\Response(
      *         response=204,
-     *         description="Product deleted successfully"
-     *     )
+     *         description="Product deleted successfully",
+     *     ),
      * )
      */
     public function destroy(Product $product)

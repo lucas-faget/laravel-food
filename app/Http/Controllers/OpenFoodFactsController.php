@@ -43,7 +43,10 @@ class OpenFoodFactsController extends Controller
      *         in="path",
      *         required=false,
      *         description="Page number",
-     *         @OA\Schema(type="integer")
+     *         @OA\Schema(
+     *             type="integer",
+     *             default=1,
+     *         )
      *     ),
      *     @OA\Response(
      *         response=200,
