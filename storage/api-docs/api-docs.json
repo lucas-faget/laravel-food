@@ -186,7 +186,8 @@
                         "description": "Page number",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "default": 1
                         }
                     }
                 ],
@@ -228,11 +229,13 @@
                     "Intakes"
                 ],
                 "summary": "Get all intakes",
-                "description": "Get all intakes",
                 "operationId": "2fd2d876107aabea55cd8837f2a3ecf4",
                 "responses": {
                     "200": {
                         "description": "All intakes"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
                     }
                 },
                 "security": [
@@ -246,7 +249,6 @@
                     "Intakes"
                 ],
                 "summary": "Create an intake",
-                "description": "Create an intake",
                 "operationId": "0935d69845b8db6f05f8af1fffecc3d3",
                 "requestBody": {
                     "required": true,
@@ -254,9 +256,6 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "user_id": {
-                                        "type": "integer"
-                                    },
                                     "product_id": {
                                         "type": "integer"
                                     },
@@ -274,6 +273,9 @@
                 "responses": {
                     "201": {
                         "description": "Intake created successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
                     }
                 },
                 "security": [
@@ -289,7 +291,6 @@
                     "Intakes"
                 ],
                 "summary": "Get an intake by ID",
-                "description": "Get an intake by ID",
                 "operationId": "833d923f86839c35b77c600cc329df28",
                 "parameters": [
                     {
@@ -305,6 +306,12 @@
                 "responses": {
                     "200": {
                         "description": "Intake"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Intake not found"
                     }
                 },
                 "security": [
@@ -337,12 +344,6 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "user_id": {
-                                        "type": "integer"
-                                    },
-                                    "product_id": {
-                                        "type": "integer"
-                                    },
                                     "amount": {
                                         "type": "number",
                                         "format": "float",
@@ -357,6 +358,12 @@
                 "responses": {
                     "200": {
                         "description": "Intake updated successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Intake not found"
                     }
                 },
                 "security": [
@@ -386,6 +393,12 @@
                 "responses": {
                     "204": {
                         "description": "Intake deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Intake not found"
                     }
                 },
                 "security": [
@@ -461,11 +474,13 @@
                     "Products"
                 ],
                 "summary": "Get all products",
-                "description": "Get all products",
                 "operationId": "c1ff6f862214e1896c59cfe0491ce0e8",
                 "responses": {
                     "200": {
                         "description": "All products"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
                     }
                 },
                 "security": [
@@ -479,7 +494,6 @@
                     "Products"
                 ],
                 "summary": "Create a product",
-                "description": "Create a product",
                 "operationId": "399770d33fa4672f1216707d0e236763",
                 "requestBody": {
                     "required": true,
@@ -550,9 +564,6 @@
                                         "type": "number",
                                         "format": "float",
                                         "default": 0
-                                    },
-                                    "user_id": {
-                                        "type": "integer"
                                     }
                                 },
                                 "type": "object"
@@ -563,6 +574,9 @@
                 "responses": {
                     "201": {
                         "description": "Product created successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
                     }
                 },
                 "security": [
@@ -578,7 +592,6 @@
                     "Products"
                 ],
                 "summary": "Get a product by ID",
-                "description": "Get a product by ID",
                 "operationId": "b46f4aa73232d0368eee698a082342a4",
                 "parameters": [
                     {
@@ -594,6 +607,12 @@
                 "responses": {
                     "200": {
                         "description": "Product"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Product not found"
                     }
                 },
                 "security": [
@@ -607,7 +626,6 @@
                     "Products"
                 ],
                 "summary": "Update a product",
-                "description": "Update a product",
                 "operationId": "1419d479f9340e30e67fe21a2ca525b7",
                 "parameters": [
                     {
@@ -699,6 +717,12 @@
                 "responses": {
                     "200": {
                         "description": "Product updated successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Product not found"
                     }
                 },
                 "security": [
@@ -712,7 +736,6 @@
                     "Products"
                 ],
                 "summary": "Delete a product",
-                "description": "Delete a product",
                 "operationId": "fe34b364a3f192305598b65d04d06b5d",
                 "parameters": [
                     {
@@ -728,6 +751,12 @@
                 "responses": {
                     "204": {
                         "description": "Product deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Product not found"
                     }
                 },
                 "security": [

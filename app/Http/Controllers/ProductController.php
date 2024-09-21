@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @OA\Tag(
@@ -15,43 +16,49 @@ class ProductController extends Controller
 {
     protected static $pageSize = 12;
 
-    protected function validateProduct(Request $request)
-    {
-        return $request->validate([
-            'name' => 'string',
-            'api_id' => 'nullable|string',
-            'image' => 'nullable|string',
-            'country' => 'nullable|string',
-            'brand' => 'nullable|string',
-            'description' => 'nullable|string',
-            'category' => 'nullable|string',
-            'tags' => 'nullable|string',
-            'ingredients' => 'nullable|string',
-            'serving_size_unit' => 'nullable|string',
-            'serving_size' => 'numeric',
-            'calories' => 'numeric',
-            'fat' => 'numeric',
-            'carbohydrates' => 'numeric',
-            'protein' => 'numeric',
-        ]);
-    }
+    protected $validations = [
+        'name' => 'string|max:255',
+        'api_id' => 'nullable|string|max:255',
+        'image' => 'nullable|string',
+        'country' => 'nullable|string|max:255',
+        'brand' => 'nullable|string|max:255',
+        'description' => 'nullable|string',
+        'category' => 'nullable|string|max:255',
+        'tags' => 'nullable|string',
+        'ingredients' => 'nullable|string',
+        'serving_size_unit' => 'nullable|string|max:50',
+        'serving_size' => 'nullable|numeric|min:0',
+        'calories' => 'nullable|numeric|min:0',
+        'fat' => 'nullable|numeric|min:0',
+        'carbohydrates' => 'nullable|numeric|min:0',
+        'protein' => 'nullable|numeric|min:0',
+    ];
 
     /**
      * @OA\Get(
      *     path="/products",
      *     tags={"Products"},
      *     summary="Get all products",
-     *     description="Get all products",
      *     security={{"bearer":{}}},
      *     @OA\Response(
      *         response=200,
      *         description="All products",
      *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *     ),
      * )
      */
     public function index()
     {
-        $products = Product::all();
+        $user = Auth::user();
+    
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $products = $user->products;
 
         return response()->json($products);
     }
@@ -61,7 +68,6 @@ class ProductController extends Controller
      *     path="/products/{id}",
      *     tags={"Products"},
      *     summary="Get a product by ID",
-     *     description="Get a product by ID",
      *     security={{"bearer":{}}},
      *     @OA\Parameter(
      *         name="id",
@@ -74,10 +80,28 @@ class ProductController extends Controller
      *         response=200,
      *         description="Product",
      *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Product not found",
+     *     ),
      * )
      */
     public function show(Product $product)
     {
+        $user = Auth::user();
+
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        if ($product->user_id !== $user->id) {
+            return response()->json(['message' => 'Product not found'], 404);
+        }
+
         return response()->json($product);
     }
 
@@ -86,7 +110,6 @@ class ProductController extends Controller
      *     path="/products",
      *     tags={"Products"},
      *     summary="Create a product",
-     *     description="Create a product",
      *     security={{"bearer":{}}},
      *     @OA\RequestBody(
      *         required=true,
@@ -107,25 +130,29 @@ class ProductController extends Controller
      *             @OA\Property(property="fat", type="number", format="float", default=0),
      *             @OA\Property(property="carbohydrates", type="number", format="float", default=0),
      *             @OA\Property(property="protein", type="number", format="float", default=0),
-     *             @OA\Property(property="user_id", type="integer"),
      *         )
      *     ),
      *     @OA\Response(
      *         response=201,
      *         description="Product created successfully",
      *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *     ),
      * )
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'user_id' => 'required|exists:users,id',
-        ]);
+        $user = $request->user();
 
-        $this->validateProduct($request);
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
 
-        $product = Product::create($request->all());
+        $validatedProduct = $request->validate($this->validations);
+
+        $product = $user->products()->create($validatedProduct);
 
         return response()->json($product, 201);
     }
@@ -135,7 +162,6 @@ class ProductController extends Controller
      *     path="/products/{id}",
      *     tags={"Products"},
      *     summary="Update a product",
-     *     description="Update a product",
      *     security={{"bearer":{}}},
      *     @OA\Parameter(
      *         name="id",
@@ -169,13 +195,31 @@ class ProductController extends Controller
      *         response=200,
      *         description="Product updated successfully",
      *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Product not found",
+     *     ),
      * )
      */
     public function update(Request $request, Product $product)
     {
-        $this->validateProduct($request);
+        $user = Auth::user();
 
-        $product->update($request->all());
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        if ($product->user_id !== $user->id) {
+            return response()->json(['message' => 'Product not found'], 404);
+        }
+
+        $validatedProduct = $request->validate($this->validations);
+
+        $product->update($validatedProduct);
 
         return response()->json($product, 200);
     }
@@ -185,7 +229,6 @@ class ProductController extends Controller
      *     path="/products/{id}",
      *     tags={"Products"},
      *     summary="Delete a product",
-     *     description="Delete a product",
      *     security={{"bearer":{}}},
      *     @OA\Parameter(
      *         name="id",
@@ -198,10 +241,28 @@ class ProductController extends Controller
      *         response=204,
      *         description="Product deleted successfully",
      *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Product not found",
+     *     ),
      * )
      */
     public function destroy(Product $product)
     {
+        $user = Auth::user();
+
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        if ($product->user_id !== $user->id) {
+            return response()->json(['message' => 'Product not found'], 404);
+        }
+
         $product->delete();
 
         return response()->json(null, 204);
