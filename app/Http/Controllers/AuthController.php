@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
 /**
@@ -11,12 +12,6 @@ use App\Models\User;
  *     name="Authentification",
  *     description="Authentification",
  * ),
- * @OA\SecurityScheme(
- *     securityScheme="bearer",
- *     type="http",
- *     scheme="bearer",
- *     bearerFormat="JWT",
- * )
  */
 class AuthController extends Controller
 {
@@ -38,7 +33,7 @@ class AuthController extends Controller
      *     ),
      *     @OA\Response(
      *         response=201,
-     *         description="User created successfully",
+     *         description="User successfully created",
      *     ),
      *     @OA\Response(
      *         response=422,
@@ -48,16 +43,16 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-        $user = $request->validate([
+        $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string|min:8',
         ]);
 
         User::create([
-            'name' => $user['name'],
-            'email' => $user['email'],
-            'password' => Hash::make($user['password']),
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
         ]);
 
         return response()->json(null, 201);
@@ -80,11 +75,9 @@ class AuthController extends Controller
      *     ),
      *     @OA\Response(
      *         response=201,
-     *         description="User created successfully",
+     *         description="Logged in",
      *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="User created successfully"),
-     *             @OA\Property(property="access_token", type="string"),
-     *             @OA\Property(property="token_type", type="string", example="Bearer")
+     *             @OA\Property(property="message", type="string"),
      *         )
      *     ),
      *     @OA\Response(
@@ -99,35 +92,35 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $credentials = $request->validate([
+        $request->validate([
             'email' => 'required|string|email',
-            'password' => 'required|string|min:8',
+            'password' => 'required|string',
         ]);
 
-        $user = User::where('email', $credentials['email'])->first();
+        $credentials = $request->only('email', 'password');
 
-        if (!$user || !Hash::check($credentials['password'], $user->password)) {
-            return response()->json(['message' => 'Wrong Credentials'], 401);
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            
+            return response()->json([
+                'message' => 'User successfully logged in'
+            ], 200);
         }
 
-        $token = $user->createToken($user->name.'_auth_token')->plainTextToken;
-
         return response()->json([
-            'message' => 'User successfully logged in',
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-        ]);
+            'message' => 'Wrong Credentials'
+        ], 401);
     }
 
     /**
      * @OA\Get(
      *     path="/user",
      *     tags={"Authentification"},
-     *     summary="Get user data",
-     *     description="Get user data",
+     *     summary="Get authenticated user",
+     *     description="Get authenticated user",
      *     @OA\Response(
      *         response=200,
-     *         description="User data",
+     *         description="Authenticated user",
      *     ),
      *     @OA\Response(
      *         response=401,
@@ -146,7 +139,6 @@ class AuthController extends Controller
      *     tags={"Authentification"},
      *     summary="Logout",
      *     description="Logout",
-     *     security={{"bearer":{}}},
      *     @OA\Response(
      *         response=200,
      *         description="Logged out",
@@ -159,8 +151,13 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
+        Auth::logout();
+        
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-        return response()->json(null, 200);
+        return response()->json([
+            'message' => 'User successfully logged out'
+        ], 200);
     }
 }

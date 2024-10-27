@@ -39,7 +39,6 @@ class ProductController extends Controller
      *     path="/products",
      *     tags={"Products"},
      *     summary="Get all products",
-     *     security={{"bearer":{}}},
      *     @OA\Response(
      *         response=200,
      *         description="All products",
@@ -68,7 +67,6 @@ class ProductController extends Controller
      *     path="/products/{id}",
      *     tags={"Products"},
      *     summary="Get a product by ID",
-     *     security={{"bearer":{}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -110,7 +108,6 @@ class ProductController extends Controller
      *     path="/products",
      *     tags={"Products"},
      *     summary="Create a product",
-     *     security={{"bearer":{}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -162,7 +159,6 @@ class ProductController extends Controller
      *     path="/products/{id}",
      *     tags={"Products"},
      *     summary="Update a product",
-     *     security={{"bearer":{}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -229,7 +225,6 @@ class ProductController extends Controller
      *     path="/products/{id}",
      *     tags={"Products"},
      *     summary="Delete a product",
-     *     security={{"bearer":{}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",

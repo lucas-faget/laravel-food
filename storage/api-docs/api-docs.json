@@ -13,9 +13,7 @@
     "paths": {
         "/register": {
             "post": {
-                "tags": [
-                    "Authentification"
-                ],
+                "tags": ["Authentification"],
                 "summary": "Register",
                 "description": "Register",
                 "operationId": "0903f2e0df1a8857bee538fc055417f0",
@@ -24,11 +22,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": [
-                                    "name",
-                                    "email",
-                                    "password"
-                                ],
+                                "required": ["name", "email", "password"],
                                 "properties": {
                                     "name": {
                                         "type": "string"
@@ -49,7 +43,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "User created successfully"
+                        "description": "User successfully created"
                     },
                     "422": {
                         "description": "Validation error"
@@ -59,9 +53,7 @@
         },
         "/login": {
             "post": {
-                "tags": [
-                    "Authentification"
-                ],
+                "tags": ["Authentification"],
                 "summary": "Login",
                 "description": "Login",
                 "operationId": "2dd578ff7aba2721293dac66833b27d1",
@@ -70,10 +62,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": [
-                                    "email",
-                                    "password"
-                                ],
+                                "required": ["email", "password"],
                                 "properties": {
                                     "email": {
                                         "type": "string",
@@ -91,21 +80,13 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "User created successfully",
+                        "description": "Logged in",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
-                                            "type": "string",
-                                            "example": "User created successfully"
-                                        },
-                                        "access_token": {
                                             "type": "string"
-                                        },
-                                        "token_type": {
-                                            "type": "string",
-                                            "example": "Bearer"
                                         }
                                     },
                                     "type": "object"
@@ -124,15 +105,13 @@
         },
         "/user": {
             "get": {
-                "tags": [
-                    "Authentification"
-                ],
-                "summary": "Get user data",
-                "description": "Get user data",
+                "tags": ["Authentification"],
+                "summary": "Get authenticated user",
+                "description": "Get authenticated user",
                 "operationId": "99e9c2c91427f6bf63c2f0ef765a768f",
                 "responses": {
                     "200": {
-                        "description": "User data"
+                        "description": "Authenticated user"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -142,9 +121,7 @@
         },
         "/logout": {
             "post": {
-                "tags": [
-                    "Authentification"
-                ],
+                "tags": ["Authentification"],
                 "summary": "Logout",
                 "description": "Logout",
                 "operationId": "68a6108af04af5e3bc1ea68a6c6f1299",
@@ -155,19 +132,12 @@
                     "401": {
                         "description": "Unauthorized"
                     }
-                },
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
+                }
             }
         },
         "/fdc/food/search/{query}/{page}": {
             "get": {
-                "tags": [
-                    "FoodData Central"
-                ],
+                "tags": ["FoodData Central"],
                 "summary": "Search for food",
                 "operationId": "e0be62c9e7fbe7d4a5e77f95b20bb521",
                 "parameters": [
@@ -200,9 +170,7 @@
         },
         "/fdc/food/{id}": {
             "get": {
-                "tags": [
-                    "FoodData Central"
-                ],
+                "tags": ["FoodData Central"],
                 "summary": "Get food product",
                 "operationId": "a1ae73a1f86e97bee27c0ddbcc523536",
                 "parameters": [
@@ -225,9 +193,7 @@
         },
         "/intakes": {
             "get": {
-                "tags": [
-                    "Intakes"
-                ],
+                "tags": ["Intakes"],
                 "summary": "Get all intakes",
                 "operationId": "2fd2d876107aabea55cd8837f2a3ecf4",
                 "responses": {
@@ -245,9 +211,7 @@
                 ]
             },
             "post": {
-                "tags": [
-                    "Intakes"
-                ],
+                "tags": ["Intakes"],
                 "summary": "Create an intake",
                 "operationId": "0935d69845b8db6f05f8af1fffecc3d3",
                 "requestBody": {
@@ -276,6 +240,9 @@
                     },
                     "401": {
                         "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Product not found"
                     }
                 },
                 "security": [
@@ -287,9 +254,7 @@
         },
         "/intakes/{id}": {
             "get": {
-                "tags": [
-                    "Intakes"
-                ],
+                "tags": ["Intakes"],
                 "summary": "Get an intake by ID",
                 "operationId": "833d923f86839c35b77c600cc329df28",
                 "parameters": [
@@ -321,9 +286,7 @@
                 ]
             },
             "put": {
-                "tags": [
-                    "Intakes"
-                ],
+                "tags": ["Intakes"],
                 "summary": "Update an intake",
                 "description": "Update an intake",
                 "operationId": "ac8036738f33eda4ccb6e2c90621a75c",
@@ -373,9 +336,7 @@
                 ]
             },
             "delete": {
-                "tags": [
-                    "Intakes"
-                ],
+                "tags": ["Intakes"],
                 "summary": "Delete an intake",
                 "description": "Delete an intake",
                 "operationId": "e139088a773f74dbed12edbe54c26a6e",
@@ -410,9 +371,7 @@
         },
         "/off/food/search/{query}/{page}": {
             "get": {
-                "tags": [
-                    "Open Food Facts"
-                ],
+                "tags": ["Open Food Facts"],
                 "summary": "Search for food",
                 "operationId": "f75a26492983967dc95631e9e14cad35",
                 "parameters": [
@@ -445,9 +404,7 @@
         },
         "/off/food/{id}": {
             "get": {
-                "tags": [
-                    "Open Food Facts"
-                ],
+                "tags": ["Open Food Facts"],
                 "summary": "Get food product",
                 "operationId": "765edf11ba09ff124f48924edd2e288b",
                 "parameters": [
@@ -470,9 +427,7 @@
         },
         "/products": {
             "get": {
-                "tags": [
-                    "Products"
-                ],
+                "tags": ["Products"],
                 "summary": "Get all products",
                 "operationId": "c1ff6f862214e1896c59cfe0491ce0e8",
                 "responses": {
@@ -482,17 +437,10 @@
                     "401": {
                         "description": "Unauthorized"
                     }
-                },
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
+                }
             },
             "post": {
-                "tags": [
-                    "Products"
-                ],
+                "tags": ["Products"],
                 "summary": "Create a product",
                 "operationId": "399770d33fa4672f1216707d0e236763",
                 "requestBody": {
@@ -578,19 +526,12 @@
                     "401": {
                         "description": "Unauthorized"
                     }
-                },
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
+                }
             }
         },
         "/products/{id}": {
             "get": {
-                "tags": [
-                    "Products"
-                ],
+                "tags": ["Products"],
                 "summary": "Get a product by ID",
                 "operationId": "b46f4aa73232d0368eee698a082342a4",
                 "parameters": [
@@ -614,17 +555,10 @@
                     "404": {
                         "description": "Product not found"
                     }
-                },
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
+                }
             },
             "put": {
-                "tags": [
-                    "Products"
-                ],
+                "tags": ["Products"],
                 "summary": "Update a product",
                 "operationId": "1419d479f9340e30e67fe21a2ca525b7",
                 "parameters": [
@@ -724,17 +658,10 @@
                     "404": {
                         "description": "Product not found"
                     }
-                },
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
+                }
             },
             "delete": {
-                "tags": [
-                    "Products"
-                ],
+                "tags": ["Products"],
                 "summary": "Delete a product",
                 "operationId": "fe34b364a3f192305598b65d04d06b5d",
                 "parameters": [
@@ -758,21 +685,7 @@
                     "404": {
                         "description": "Product not found"
                     }
-                },
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
-            }
-        }
-    },
-    "components": {
-        "securitySchemes": {
-            "bearer": {
-                "type": "http",
-                "bearerFormat": "JWT",
-                "scheme": "bearer"
+                }
             }
         }
     },

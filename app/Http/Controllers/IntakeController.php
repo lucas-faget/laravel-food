@@ -19,7 +19,6 @@ class IntakeController extends Controller
      *     path="/intakes",
      *     tags={"Intakes"},
      *     summary="Get all intakes",
-     *     security={{"bearer":{}}},
      *     @OA\Response(
      *         response=200,
      *         description="All intakes",
@@ -48,7 +47,6 @@ class IntakeController extends Controller
      *     path="/intakes/{id}",
      *     tags={"Intakes"},
      *     summary="Get an intake by ID",
-     *     security={{"bearer":{}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -90,7 +88,6 @@ class IntakeController extends Controller
      *     path="/intakes",
      *     tags={"Intakes"},
      *     summary="Create an intake",
-     *     security={{"bearer":{}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -143,7 +140,6 @@ class IntakeController extends Controller
      *     tags={"Intakes"},
      *     summary="Update an intake",
      *     description="Update an intake",
-     *     security={{"bearer":{}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -195,7 +191,6 @@ class IntakeController extends Controller
      *     tags={"Intakes"},
      *     summary="Delete an intake",
      *     description="Delete an intake",
-     *     security={{"bearer":{}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
