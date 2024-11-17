@@ -33,7 +33,10 @@ class AuthController extends Controller
      *     ),
      *     @OA\Response(
      *         response=201,
-     *         description="User successfully created",
+     *         description="Account created",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string"),
+     *         )
      *     ),
      *     @OA\Response(
      *         response=422,
@@ -49,13 +52,16 @@ class AuthController extends Controller
             'password' => 'required|string|min:8',
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
         ]);
 
-        return response()->json(null, 201);
+        return response()->json([
+            'message' => 'User succesfully registered',
+            'user' => $user,
+        ], 201);
     }
 
     /**
@@ -74,7 +80,7 @@ class AuthController extends Controller
      *         )
      *     ),
      *     @OA\Response(
-     *         response=201,
+     *         response=200,
      *         description="Logged in",
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string"),
@@ -83,6 +89,9 @@ class AuthController extends Controller
      *     @OA\Response(
      *         response=401,
      *         description="Wrong Credentials",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string"),
+     *         )
      *     ),
      *     @OA\Response(
      *         response=422,
@@ -142,6 +151,9 @@ class AuthController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Logged out",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string"),
+     *         )
      *     ),
      *     @OA\Response(
      *         response=401,
@@ -151,7 +163,7 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
-        Auth::logout();
+        // Auth::logout();
         
         $request->session()->invalidate();
         $request->session()->regenerateToken();
