@@ -80,6 +80,8 @@ class OpenFoodFactsController extends Controller
 
         return response()->json([
             'products'  => $products,
+            'productCount' => $apiResult['count'],
+            'perPage' => $apiResult['page_size'],
             'pageCount' => ceil($apiResult['count'] / $apiResult['page_size']),
         ]);
     }
