@@ -21,13 +21,13 @@ use App\Http\Controllers\ProductController;
 
 Route::prefix('/off')->group(function () {
     $controller = OpenFoodFactsController::class;
-    Route::get('/food/search/{query}/{page}', [$controller, 'search']);
+    Route::get('/food/search', [$controller, 'search']);
     Route::get('/food/{id}', [$controller, 'show']);
 });
 
 Route::prefix('/fdc')->group(function () {
     $controller = FoodDataCentralController::class;
-    Route::get('/food/search/{query}/{page}', [$controller, 'search']);
+    Route::get('/food/search', [$controller, 'search']);
     Route::get('/food/{id}', [$controller, 'show']);
 });
 

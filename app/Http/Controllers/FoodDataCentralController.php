@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use GuzzleHttp\Client;
 use App\Http\Controllers\GoogleApiController;
+use Illuminate\Http\Request;
 
 /**
  * @OA\Tag(
@@ -16,7 +17,7 @@ class FoodDataCentralController extends Controller
 {
     protected $client;
     protected static $apiKey;
-    protected static $pageSize = 12;
+    protected static $pageSize = 10;
     protected static $enableGoogleImageApi = false;
 
     public function __construct()
@@ -31,19 +32,19 @@ class FoodDataCentralController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/fdc/food/search/{query}/{page}",
+     *     path="/fdc/food/search",
      *     tags={"FoodData Central"},
      *     summary="Search for food",
      *     @OA\Parameter(
      *         name="query",
-     *         in="path",
+     *         in="query",
      *         required=true,
      *         description="Search query",
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
      *         name="page",
-     *         in="path",
+     *         in="query",
      *         required=false,
      *         description="Page number",
      *         @OA\Schema(
@@ -57,8 +58,11 @@ class FoodDataCentralController extends Controller
      *     )
      * )
      */
-    public function search(string $query, int $page = 1)
+    public function search(Request $request)
     {
+        $query = $request->query('query', "");
+        $page = $request->query('page', 1);
+
         $response = $this->client->request('GET', 'foods/search', [
             'query' => [
                 'api_key'    => self::$apiKey,

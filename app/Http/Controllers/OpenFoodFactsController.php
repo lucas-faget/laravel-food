@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use GuzzleHttp\Client;
+use Illuminate\Http\Request;
 
 /**
  * @OA\Tag(
@@ -14,7 +15,8 @@ use GuzzleHttp\Client;
 class OpenFoodFactsController extends Controller
 {
     protected $client;
-    protected static $pageSize = 12;
+    protected static $pageSize = 10;
+    protected static $maxProductCount = 500;
     protected static $fields = "code,product_name,brands,image_url";
 
 
@@ -28,19 +30,19 @@ class OpenFoodFactsController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/off/food/search/{query}/{page}",
+     *     path="/off/food/search",
      *     tags={"Open Food Facts"},
      *     summary="Search for food",
      *     @OA\Parameter(
      *         name="query",
-     *         in="path",
+     *         in="query",
      *         required=true,
      *         description="Search query",
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
      *         name="page",
-     *         in="path",
+     *         in="query",
      *         required=false,
      *         description="Page number",
      *         @OA\Schema(
@@ -54,8 +56,11 @@ class OpenFoodFactsController extends Controller
      *     )
      * )
      */
-    public function search(string $query, int $page = 1)
+    public function search(Request $request)
     {
+        $query = $request->query('query', "");
+        $page = $request->query('page', 1);
+
         $response = $this->client->request('GET', "search", [
             'query' => [
                 'categories_tags_fr' => $query,
@@ -68,21 +73,22 @@ class OpenFoodFactsController extends Controller
         $apiResult = json_decode($response->getBody()->getContents(), true);
 
         $products = collect($apiResult['products'])->map(function ($apiProduct) {
-            $product = new Product([
+            return new Product([
                 'api_id' => $apiProduct['code'] ?? null,
                 'name'   => $apiProduct['product_name'] ?? null,
                 'image'  => $apiProduct['image_url'] ?? null,
                 'brand'  => $apiProduct['brands'] ?? null,
             ]);
-
-            return $product;
         });
 
+        $productCount = min($apiResult['count'], self::$maxProductCount);
+        $pageCount = ceil($productCount / $apiResult['page_size']);
+
         return response()->json([
-            'products'  => $products,
-            'productCount' => $apiResult['count'],
-            'perPage' => $apiResult['page_size'],
-            'pageCount' => ceil($apiResult['count'] / $apiResult['page_size']),
+            'products'    => $products,
+            'productCount' => $productCount,
+            'perPage'     => $apiResult['page_size'],
+            'pageCount'   => $pageCount,
         ]);
     }
 
