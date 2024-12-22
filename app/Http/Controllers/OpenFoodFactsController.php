@@ -85,10 +85,10 @@ class OpenFoodFactsController extends Controller
         $pageCount = ceil($productCount / $apiResult['page_size']);
 
         return response()->json([
-            'products'    => $products,
+            'products'     => $products,
             'productCount' => $productCount,
-            'perPage'     => $apiResult['page_size'],
-            'pageCount'   => $pageCount,
+            'perPage'      => $apiResult['page_size'],
+            'pageCount'    => $pageCount,
         ]);
     }
 

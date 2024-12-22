@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Auth;
  */
 class ProductController extends Controller
 {
-    protected static $pageSize = 12;
+    protected static $pageSize = 10;
+    protected static $maxProductCount = 500;
 
     protected $validations = [
         'name' => 'string|max:255',
@@ -60,6 +61,33 @@ class ProductController extends Controller
         $products = $user->products;
 
         return response()->json($products);
+    }
+
+    public function search(Request $request)
+    {
+        $user = $request->user();
+    
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $query = $request->query('query', "");
+        $page = $request->query('page', 1);
+
+        $productQuery = $user->products()->where(function ($queryBuilder) use ($query) {
+            $queryBuilder->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($query) . '%'])
+                         ->orWhereRaw('LOWER(brand) LIKE ?', ['%' . strtolower($query) . '%']);
+        })->paginate(self::$pageSize, ['*'], 'page', $page);
+
+        $productCount = min($productQuery->total(), self::$maxProductCount);
+        $pageCount = ceil($productCount / self::$pageSize);
+
+        return response()->json([
+            'products'     => $productQuery->items(),
+            'productCount' => $productCount,
+            'perPage'      => $productQuery->perPage(),
+            'pageCount'    => $pageCount,
+        ]);
     }
 
     /**

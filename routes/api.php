@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
 use App\Http\Controllers\OpenFoodFactsController;
 use App\Http\Controllers\FoodDataCentralController;
 use App\Http\Controllers\IntakeController;
@@ -35,12 +34,13 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::middleware('auth:sanctum')->get('/user', [AuthController::class, 'user']);
-    Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/user', [AuthController::class, 'user']);
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     
     Route::prefix('/products')->group(function () {
         $controller = ProductController::class;
         Route::get('/', [$controller, 'index']);
+        Route::get('/search', [$controller, 'search']);
         Route::get('/{product}', [$controller, 'show']);
         Route::post('/', [$controller, 'store']);
         Route::put('/{product}', [$controller, 'update']);
